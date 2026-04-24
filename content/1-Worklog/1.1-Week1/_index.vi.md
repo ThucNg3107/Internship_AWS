@@ -1,15 +1,10 @@
 ---
 title: "Worklog Tuần 1"
-date: 2024-04-20
+date: 2026-04-20
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
-
 ### Mục tiêu tuần 1:
 
 * Kết nối, làm quen với các thành viên trong First Cloud Journey.
@@ -20,11 +15,11 @@ pre: " <b> 1.1. </b> "
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
 | 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 20/04/2026   | 20/04/2026      |
 | 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 21/04/2026   | 21/04/2026      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 22/04/2026   | 22/04/2026      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   |  | 23/04/2026   | /04/2026      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   |  | 24/08/2025   | /04/2026      | <https://cloudjourney.awsstudygroup.com/> |
-
-
+| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 22/04/2026   | 22/04/2026      | <https://000001.awsstudygroup.com/> |
+| 5   | - Quản lý chi phí AWS Budgets <br> - Tìm hiểu về các loại AWS Budgets <br> - Lợi ích và các bước thiết lập để sử dụng hiểu quả <br> - **Thực hành:** <br>&emsp; +Tạo các loại AWS Budgets <br>&emsp; + Xử lí các Budgets khi không cần thiết| 23/04/2026   | 23/04/2026      | <https://000007.awsstudygroup.com/> |
+| 6   | - Tìm hiểu AWS Support <br> &emsp; + Các gói hỗ trợ từ thấp tới cao với từng mục đích sử dụng khác nhau <br>&emsp; + Các loại yêu cầu được phép hỗ trợ: Tài khoản, dịch vụ, kỹ thuật.... <br>&emsp; + Cách thay đổi giữa các gói hỗ trợ <br>&emsp; + Khởi tạo yêu cầu hỗ trợ, mức độ nghiêm trọng và thời gian phản hồi của AWS Support <br> - **Thực hành:** <br>&emsp; + Thay đổi gói hỗ trợ <br>&emsp; + Cách tạo yêu cầu hỗ trợ <br>| 24/04/2026   | 24/04/2026      | <https://000009.awsstudygroup.com/> |
+| 7   | -  <br> &emsp; +  <br>&emsp; +  <br>&emsp; +  <br>&emsp; +  <br> - **Thực hành:** <br>&emsp; +  <br>&emsp; +  <br>| 25/04/2026  | 25/04/2026      | <https://000002.awsstudygroup.com/> |
+| 8  | -  <br> &emsp; +  <br>&emsp; +  <br>&emsp; +  <br>&emsp; +  <br> - **Thực hành:** <br>&emsp; +  <br>&emsp; +  <br>| 26/04/2026  | 26/04/2026      | <https://000003.awsstudygroup.com/> |
 ### Kết quả đạt được tuần 1:
 
 * Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 

@@ -5,11 +5,6 @@ weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
-
 ### Week 1 Objectives:
 
 * Connect and get acquainted with members of First Cloud Journey.
@@ -20,13 +15,14 @@ pre: " <b> 1.1. </b> "
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
 | 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 20/04/2026 | 20/04/2026      |
 | 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 21/04/2026 | 21/04/2026      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 22/04/2026 | 22/04/2026      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   |    | 23/04/2026 | /04/2026      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   |                                                                                | /04/2026 | /04/2026      | <https://cloudjourney.awsstudygroup.com/> |
+| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 22/04/2026 | 22/04/2026      | <https://000001.awsstudygroup.com/> |
+| 5   | - Manage AWS costs with AWS Budgets <br> - Learn about AWS Budget types <br> - Benefits and setup steps for effective usage <br> - **Practice:** <br>&emsp; + Create AWS Budget types <br>&emsp; + Handle unnecessary budgets | 23/04/2026 | 23/04/2026      | <https://000007.awsstudygroup.com/> |
+| 6   | - Learn about AWS Support <br>&emsp; + Support plans from basic to advanced for different usage needs <br>&emsp; + Request types supported: account, service, technical, etc. <br>&emsp; + How to switch between support plans <br>&emsp; + Open support cases, severity levels, and AWS Support response time <br> - **Practice:** <br>&emsp; + Change support plan <br>&emsp; + Create support requests | 24/04/2026 | 24/04/2026      | <https://000009.awsstudygroup.com/> |
+| 7   | -  <br> &emsp; +  <br>&emsp; +  <br>&emsp; +  <br>&emsp; +  <br> - **Practice:** <br>&emsp; +  <br>&emsp; +  <br> | 25/04/2026 | 25/04/2026      | <https://000002.awsstudygroup.com/> |
+| 8 | -  <br> &emsp; +  <br>&emsp; +  <br>&emsp; +  <br>&emsp; +  <br> - **Practice:** <br>&emsp; +  <br>&emsp; +  <br> | 26/04/2026 | 26/04/2026      | <https://000003.awsstudygroup.com/> |
 
 
 ### Week 1 Achievements:
-
 * Understood what AWS is and mastered the basic service groups: 
   * Compute
   * Storage
