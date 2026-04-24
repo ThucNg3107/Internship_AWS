@@ -6,11 +6,6 @@ chapter: false
 ---
 
 # Báo cáo thực tập
-
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
 ### Thông tin sinh viên:
 &emsp; **Họ và tên:** Nguyễn Hiền Thục
 
