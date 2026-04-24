@@ -6,6 +6,11 @@ chapter: false
 ---
 
 # Báo cáo thực tập
+
+{{% notice warning %}}
+⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
+{{% /notice %}}
+
 ### Thông tin sinh viên:
 &emsp; **Họ và tên:** Nguyễn Hiền Thục
 
@@ -25,7 +30,7 @@ chapter: false
 
 &emsp; **Thời gian thực tập:** Từ ngày 17/04/2026 đến ngày 10/07/2026
 
-<img src="images/avatar.png" alt="Ảnh đại diện của bạn" width="180" style="height: auto;" />
+<img src="/images/avatar.png" alt="Ảnh đại diện của bạn" width="380" style="height: auto;" />
 
 
 

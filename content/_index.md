@@ -4,8 +4,7 @@ date: 2024-01-01
 weight: 1
 chapter: false
 ---
-
-    
+ 
 # Internship Report
 
 {{% notice warning %}}
@@ -31,7 +30,7 @@ chapter: false
 
 &emsp; **Internship Duration:** From 17/04/2026 to 10/07/2026
 
-<img src="images/avatar.png" alt="Your profile picture" width="380" style="height: auto;" />
+<img src="/images/avatar.png" alt="Your profile picture" width="380" style="height: auto;" />
 
 ### Report Content
 
