@@ -1,15 +1,10 @@
 ---
 title: "Worklog Tuần 2"
-date: 2024-01-01
-weight: 1
+date: 2026-04-27
+weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
-
 ### Mục tiêu tuần 2:
 
 * Kết nối, làm quen với các thành viên trong First Cloud Journey.
@@ -18,10 +13,10 @@ pre: " <b> 1.2. </b> "
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2   | - Tạo VPC Linux, tạo VPC cho Windows Instance, tạo Security Group cho Linux Istance, tạo Security Group Windows<br> - Amazone EC2 cơ bản và triển khai Node.js trên Amazon Linux Windows<br> - Học được cách chuyển loại instance của EC2, tạo và quản lý được cách làm việc với snapshot EBS , AMI và recovering access của Windows instance                                                                                             | 27/04/2026   | 27/04/2026      | <https://000004.awsstudygroup.com/> |
+| 3   | - Học cách cấp quyền Role EC2 với IAM Role <br>&emsp;                                            | 28/04/2026   | 28/04/2026      | <https://000048.awsstudygroup.com/> |
+| 4   | - Học và biết cách sử dụng và tạo Cloud9 cho môi trường phát triển và làm việc <br>  | 29/04/2026   | 29/04/2026      | <https://000049.awsstudygroup.com/> |
+| 5   | - Tìm hiểu và deploy web hosting bằng S3 <br> - Cách setup RDS                  | 30/04/2025   | 30/04/2025      | <https://000057.awsstudygroup.com/> <https://000005.awsstudygroup.com/> |
 | 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
 
