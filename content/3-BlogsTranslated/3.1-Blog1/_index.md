@@ -1,126 +1,153 @@
 ---
-title: "Blog 1"
+title: "Blog 1: Improving Order History Search"
 date: 2024-01-01
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Improving Order History Search with Semantic Search using Amazon OpenSearch Service
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+If you've ever shopped on Amazon, you're likely familiar with the **Your Orders** page. This feature stores the complete shopping history of customers dating back to 1995, allowing you to track, search, and manage every past transaction. The order history search tool makes it easy to find previously purchased items by typing keywords. Beyond search, it also provides a quick way to reorder past products, saving customers significant time and effort.
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+Many of Amazon's core features in the shopping experience (such as the AI shopping assistant Rufus and the voice assistant Alexa) rely on the order history search tool to help users locate past transactions. As a result, ensuring the accuracy, intuitiveness, and speed of this search system is critically important.
 
----
-
-## Architecture Guidance
-
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
-
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
-
-**The solution architecture is now as follows:**
-
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+This article details how the **Your Orders** development team at Amazon improved the customer experience by incorporating semantic search capabilities into the existing lexical search system, using **Amazon OpenSearch Service** and **Amazon SageMaker**.
 
 ---
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+## Limitations of Lexical Search
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+Previously, order history search relied primarily on **lexical matching** (keyword matching). This mechanism returns items containing at least one of the search keywords. For example, when a customer searches for *"orange juice"*, the system retrieves all orange juice, fresh oranges, or other fruit drinks the customer has previously ordered.
+
+While keyword search is highly effective for exact text matches, it reveals significant limitations:
+
+- **No understanding of synonyms & semantics:** The system cannot handle conceptual or descriptive keywords. For example, a query like *"healthy drinks"* will not return results for *"kombucha"*, *"green tea"*, or *"protein milk"* if those specific keywords don't appear in the product title or description.
+- **Conversational queries:** With the launch of Rufus – Amazon's integrated AI shopping assistant – users tend to search more naturally, such as *"Show me healthy drinks I bought last year"*. To handle this, the underlying system must understand the deeper meaning of queries rather than just matching text literally.
 
 ---
 
-## Technology Choices and Communication Scope
+## Technical Challenges When Deploying at Scale
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+Deploying semantic search for a system at Amazon's scale comes with enormous technical barriers:
 
----
-
-## The Pub/Sub Hub
-
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
-
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+1. **Massive Scale:** The system must support semantic search across billions of order history records from customers worldwide.
+2. **Zero Downtime:** The system must maintain 100% availability and meet strict service level agreement (SLA) commitments throughout database upgrades and migrations.
+3. **Avoiding Search Quality Degradation:** Semantic search aims to improve result quality, but in some cases it can backfire. For example:
+   - When a customer remembers the exact product name and wants to find that specific item, semantic search will surface similar or related products, diluting the results and frustrating the user.
+   - Semantic search is completely ineffective for identifier-based searches (such as searching by **Order ID**), as there is no semantic meaning involved. In these situations, the system must fall back to regular keyword search.
 
 ---
 
-## Core Microservice
+## Solution Architecture Overview
 
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
+Semantic search is powered by **Large Language Models (LLMs)**. These models can take a piece of text (such as a customer's search phrase or a product description) and convert it into a fixed-length sequence of numbers called an **embedding vector**. These vectors encode the semantic meaning of the text; two texts with similar content will have a very high cosine similarity score between their corresponding vectors.
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+Amazon's solution is divided into two major architectural components:
 
----
+1. **System Scalability:** Transitioning to a cell-based architecture to optimize the processing of resource-intensive vector workloads.
+2. **Semantic Pipeline:** Building a pipeline for generating, storing, and retrieving embedding vectors.
 
-## Front Door Microservice
+![Figure 1. Cell-based architecture diagram showing how customer requests are routed to Amazon OpenSearch Service domains via hash-based partitioning](/images/3-BlogsTranslated/Cell-based-arch-blog.png)
 
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
+*Figure 1. Cell-based architecture diagram showing how customer requests are routed to Amazon OpenSearch Service domains via hash-based partitioning*
 
 ---
 
-## Staging ER7 Microservice
+## Scalability and Load Handling: Cell-Based Architecture
 
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
+
+
+To handle the increasing computational load from vector comparisons, the development team adopted a **cell-based architecture** design pattern. This architecture breaks down the entire system into independent, identical blocks called **cells**, where each cell is responsible for processing only a portion of the traffic.
+
+- **Customer partitioning:** Each cell serves a specific group of customers. Cells operate completely independently and do not need to communicate with each other when processing requests.
+- **Routing mechanism:** Customer requests are routed to their corresponding cell at runtime. Cell assignment information can be computed dynamically or retrieved from a cache/data store such as **Amazon DynamoDB**. This makes redistributing data across cells extremely flexible when there is local overload.
+- **High durability:** If one cell fails, the system's serving capacity is only reduced by $1/N$ (where $N$ is the number of cells) rather than a complete system failure. Partition keys can also be mapped to two or more cells for data replication, eliminating the risk of data loss.
+
 
 ---
 
-## New Features in the Solution
+## Semantic Search Deployment
 
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+The process of integrating semantic search requires important decisions about infrastructure and model selection:
+
+![Figure 2. Read-flow and write-flow for semantic search using Amazon OpenSearch Service and embedding vectors from Amazon SageMaker](/images/3-BlogsTranslated/SageMakerFlow.png)
+
+*Figure 2. Read-flow and write-flow for semantic search using Amazon OpenSearch Service and embedding vectors from Amazon SageMaker*
+
+### 1. Model Evaluation & Selection
+
+The development team used an embedding model trained specifically on Amazon's e-commerce data. Domain-specific training helps the model deeply understand product terminology and business context.
+
+To find the best model, they used the **LLM-as-a-judge** approach with Anthropic's Claude on **Amazon Bedrock**. Claude received prompts containing ordered product content and real customer search queries, then ranked and classified them against a ground truth relevance dataset. Candidate models were evaluated using standard ranking metrics:
+
+- **Normalized Discounted Cumulative Gain (NDCG):** Measures ranking quality.
+- **Mean Reciprocal Rank (MRR):** Considers the position of the first relevant result.
+- **Precision & Recall:** Evaluates accuracy and coverage of results.
+
+### 2. Infrastructure Deployment
+
+The selected embedding model was then containerized, registered in **Amazon Elastic Container Registry (Amazon ECR)**, and deployed via **Amazon SageMaker Inference Endpoints** to handle large-scale vector computation with low latency.
+
+### 3. Vector Storage & Search with OpenSearch Service
+
+The system leverages two powerful features of **Amazon OpenSearch Service**:
+
+- **`knn_vector` data type:** Supports direct storage of embedding vectors. Since the number of orders per customer is relatively small, the team chose **exact k-NN search** over approximate k-NN. This allows the system to achieve maximum accuracy while still maintaining performance.
+- **Scripted Scoring:** Uses Painless scripts to compute vector similarity directly on the OpenSearch server, minimizing client-side complexity and maintaining extremely low latency.
+
+---
+
+## Hybrid Search: Combining Keyword & Semantic Search
+
+To optimize search results, Amazon deployed a **Hybrid Search** model. OpenSearch Service's hybrid query feature runs both keyword (BM25) and semantic (vector) queries in parallel.
+
+```
+graph TD
+  Query[Customer search query] --> Lexical[BM25 Keyword Search]
+  Query --> Semantic[Semantic Vector Search]
+  Lexical --> Merge[Merge & normalize scores]
+  Semantic --> Merge
+  Merge --> Sort[Sort by relevance]
+  Sort --> Results[Top K final results]
+```
+
+- **Parallel execution:** Both query types run simultaneously.
+- **Score normalization:** OpenSearch automatically merges and normalizes scores from both search streams.
+- **Fallback mechanism:** For queries without semantic meaning (such as searching by `Order ID`), the system automatically skips semantic search and uses only keyword matching.
+- **Reliability:** If the semantic search stream encounters an error, the system automatically falls back to keyword search results, ensuring results are always returned instead of a blank error page.
+
+---
+
+## Backfilling: Processing Historical Order Data
+
+For semantic search to be truly useful, billions of historical order records need to be supplemented with their corresponding embedding vectors.
+
+The team designed a large-scale data processing pipeline using:
+
+- **AWS Step Functions** to orchestrate the entire backfill workflow across batches of data.
+- **AWS Lambda** to process data batches and call SageMaker endpoints to generate embedding vectors.
+- This pipeline successfully processed billions of records at speeds far exceeding normal data ingestion rates, demonstrating OpenSearch Service's ability to scale under heavy load.
+
+---
+
+## Real-world Impact and Customer Experience
+
+Deploying semantic search delivered significant improvements in both user experience and business metrics:
+
+- **More intuitive shopping experience:** Customers can now search for *"sustainable watch"* to find relevant products, or type *"charger"* to surface adapters and cables, even if the product title doesn't contain that exact word.
+- **10% improvement in Query Recall:** Significantly increased the rate at which searches surface the products customers actually want.
+- **20% increase in search success rate:** More customer searches now return at least one relevant product.
+- **49% expansion in Result Coverage:** Semantic search continuously discovers and surfaces products that traditional keyword search would miss.
+- **Powerful support for Rufus and Alexa:** Helps AI assistants easily retrieve order history information to answer complex questions from users.
+
+---
+
+## Conclusion
+
+By incorporating semantic search into Amazon's order history, the development team successfully combined cutting-edge AI technology with large-scale traditional infrastructure. With **Amazon OpenSearch Service** and **Amazon SageMaker**, this solution not only maintains excellent availability but also opens new directions for personalization features and multi-modal search in the future.
+
+To start building your own semantic search application, you can refer to:
+
+- [Exact k-NN search in OpenSearch](https://docs.opensearch.org/latest/vector-search/vector-search-techniques/knn-score-script/)
+- [Amazon OpenSearch Service Developer Guide](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/gsg.html)

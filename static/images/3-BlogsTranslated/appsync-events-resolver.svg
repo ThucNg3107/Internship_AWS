@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="140" viewBox="0 0 960 140" font-family="Arial, Helvetica, sans-serif" font-size="11.5">
+  <defs>
+    <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <polygon points="0,0 6,3 0,6" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- ===== Lambda Function dashed yellow container ===== -->
+  <rect x="120" y="20" width="290" height="105" rx="3" ry="3"
+        fill="#fffff0" stroke="#e09820" stroke-width="1.3" stroke-dasharray="5,3"/>
+  <!-- "Lambda Function" label INSIDE top-left of box -->
+  <text x="128" y="33" fill="#d4861a" font-size="10.5" font-style="italic">Lambda Function</text>
+
+  <!-- ===== AppSyncEventsResolver box (outside Lambda, to its left) ===== -->
+  <rect x="3" y="55" width="118" height="28" rx="2" ry="2"
+        fill="#f5f5ff" stroke="#9999cc" stroke-width="1.1"/>
+  <text x="62" y="73" text-anchor="middle" fill="#333" font-size="11">AppSyncEventsResolver</text>
+
+  <!-- Arrow: AppSyncEventsResolver → fork point -->
+  <line x1="121" y1="69" x2="148" y2="69" stroke="#666" stroke-width="1.1" marker-end="url(#arr)"/>
+
+  <!-- Fork vertical line -->
+  <line x1="152" y1="52" x2="152" y2="94" stroke="#666" stroke-width="1.1"/>
+  <!-- Upper branch: fork → upper text -->
+  <line x1="152" y1="52" x2="168" y2="52" stroke="#666" stroke-width="1.1"/>
+  <!-- Lower branch: fork → lower text -->
+  <line x1="152" y1="94" x2="168" y2="94" stroke="#666" stroke-width="1.1"/>
+
+  <!-- "Match /default/chat" label (upper) -->
+  <text x="170" y="56" fill="#555" font-size="11">Match /default/chat</text>
+  <!-- Arrow → Chat Handler -->
+  <line x1="267" y1="52" x2="283" y2="52" stroke="#666" stroke-width="1.1" marker-end="url(#arr)"/>
+
+  <!-- Chat Handler box -->
+  <rect x="284" y="38" width="100" height="26" rx="2" ry="2"
+        fill="#ddddf5" stroke="#8888cc" stroke-width="1.1"/>
+  <text x="334" y="55" text-anchor="middle" fill="#333" font-size="11">Chat Handler</text>
+
+  <!-- "Match /notifications/*" label (lower) -->
+  <text x="170" y="98" fill="#555" font-size="11">Match /notifications/*</text>
+  <!-- Arrow → Notification Handler -->
+  <line x1="277" y1="94" x2="283" y2="94" stroke="#666" stroke-width="1.1" marker-end="url(#arr)"/>
+
+  <!-- Notification Handler box -->
+  <rect x="284" y="80" width="118" height="26" rx="2" ry="2"
+        fill="#ddddf5" stroke="#8888cc" stroke-width="1.1"/>
+  <text x="343" y="97" text-anchor="middle" fill="#333" font-size="11">Notification Handler</text>
+
+  <!-- ===== Both handlers merge → Return Chat Payload ===== -->
+  <!-- Chat Handler right → merge -->
+  <line x1="384" y1="51" x2="420" y2="51" stroke="#666" stroke-width="1.1"/>
+  <line x1="420" y1="51" x2="420" y2="72" stroke="#666" stroke-width="1.1"/>
+  <!-- Notification Handler right → merge -->
+  <line x1="402" y1="93" x2="420" y2="93" stroke="#666" stroke-width="1.1"/>
+  <line x1="420" y1="93" x2="420" y2="72" stroke="#666" stroke-width="1.1"/>
+  <!-- merge → Return Chat Payload -->
+  <line x1="420" y1="72" x2="440" y2="72" stroke="#666" stroke-width="1.1" marker-end="url(#arr)"/>
+
+  <!-- Return Chat Payload box -->
+  <rect x="441" y="59" width="118" height="26" rx="2" ry="2"
+        fill="#ddddf5" stroke="#8888cc" stroke-width="1.1"/>
+  <text x="500" y="76" text-anchor="middle" fill="#333" font-size="11">Return Chat Payload</text>
+
+  <!-- Arrow → AWS AppSync Events -->
+  <line x1="559" y1="72" x2="576" y2="72" stroke="#666" stroke-width="1.1" marker-end="url(#arr)"/>
+
+  <!-- AWS AppSync Events box -->
+  <rect x="577" y="59" width="118" height="26" rx="2" ry="2"
+        fill="#ddddf5" stroke="#8888cc" stroke-width="1.1"/>
+  <text x="636" y="76" text-anchor="middle" fill="#333" font-size="11">AWS AppSync Events</text>
+
+  <!-- Arrow → WebSocket Event -->
+  <line x1="695" y1="72" x2="712" y2="72" stroke="#666" stroke-width="1.1" marker-end="url(#arr)"/>
+
+  <!-- WebSocket Event box -->
+  <rect x="713" y="59" width="104" height="26" rx="2" ry="2"
+        fill="#ddddf5" stroke="#8888cc" stroke-width="1.1"/>
+  <text x="765" y="76" text-anchor="middle" fill="#333" font-size="11">WebSocket Event</text>
+
+  <!-- Arrow → AWS Lambda -->
+  <line x1="817" y1="72" x2="834" y2="72" stroke="#666" stroke-width="1.1" marker-end="url(#arr)"/>
+
+  <!-- AWS Lambda box -->
+  <rect x="835" y="59" width="86" height="26" rx="2" ry="2"
+        fill="#ddddf5" stroke="#8888cc" stroke-width="1.1"/>
+  <text x="878" y="76" text-anchor="middle" fill="#333" font-size="11">AWS Lambda</text>
+
+</svg>

@@ -7,48 +7,41 @@ pre: " <b> 1.2. </b> "
 ---
 ### Mục tiêu tuần 2:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Kết nối và phối hợp tốt hơn với các thành viên trong First Cloud Journey.
+* Củng cố kiến thức các dịch vụ AWS nền tảng và cách thao tác qua Console/CLI.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Tạo VPC Linux, tạo VPC cho Windows Instance, tạo Security Group cho Linux Istance, tạo Security Group Windows<br> - Amazone EC2 cơ bản và triển khai Node.js trên Amazon Linux Windows<br> - Học được cách chuyển loại instance của EC2, tạo và quản lý được cách làm việc với snapshot EBS , AMI và recovering access của Windows instance                                                                                             | 27/04/2026   | 27/04/2026      | <https://000004.awsstudygroup.com/> |
-| 3   | - Học cách cấp quyền Role EC2 với IAM Role <br>&emsp;                                            | 28/04/2026   | 28/04/2026      | <https://000048.awsstudygroup.com/> |
-| 4   | - Học và biết cách sử dụng và tạo Cloud9 cho môi trường phát triển và làm việc <br>  | 29/04/2026   | 29/04/2026      | <https://000049.awsstudygroup.com/> |
-| 5   | - Tìm hiểu và deploy web hosting bằng S3 <br> - Cách setup RDS                  | 30/04/2025   | 30/04/2025      | <https://000057.awsstudygroup.com/> <https://000005.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | --- | --- | --- | --- |
+| 2 | - Tạo VPC cho Linux và Windows Instance; cấu hình Security Group cho từng máy <br> - Ôn tập EC2 căn bản và triển khai Node.js trên Amazon Linux/Windows <br> - Thực hành đổi loại instance EC2, tạo/quản lý EBS snapshot, AMI và khôi phục truy cập Windows instance | 27/04/2026 | 27/04/2026 | <https://000004.awsstudygroup.com/> |
+| 3 | - Thực hành cấp quyền EC2 Role thông qua IAM Role <br> - Tìm hiểu và sử dụng Cloud9 cho môi trường phát triển/làm việc | 28/04/2026 | 28/04/2026 | <https://000048.awsstudygroup.com/> |
+| 4 | - Tìm hiểu và triển khai web hosting tĩnh bằng S3 bucket <br> - Thiết lập cơ bản Amazon RDS | 29/04/2026 | 29/04/2026 | <https://000049.awsstudygroup.com/> |
+| 5 | - Thực hành workshop AWS CloudWatch, theo dõi metrics <br> - Triển khai AWS Backup và cấu hình gửi thông báo email <br> - Nhập/xuất máy ảo (VM) với Amazon S3 bucket và EC2 <br> - Thực hành Docker container để làm việc với ECR, RDS... <br> - Tìm hiểu cách triển khai ứng dụng trên Amazon ECS | 30/04/2026 | 30/04/2026 | <https://000057.awsstudygroup.com/> <https://000005.awsstudygroup.com/> |
+| 6 | - Triển khai CI/CD với GitLab, GitHub Actions và AWS CodeBuild; cấu hình giám sát bằng Container Insights <br> - Tìm hiểu AWS Security Hub <br> - Thiết lập VPC Peering để kết nối các VPC <br> - Cấu hình AWS Transit Gateway để kết nối nhiều VPC thay cho mô hình chỉ dùng VPC Peering | 01/05/2026 | 01/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Kết quả đạt được tuần 2:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Mở rộng nền tảng máy chủ và cân bằng tải
+  * Thực hành hiệu quả Amazon EC2 Auto Scaling, Elastic Load Balancing (ELB) và Launch Templates để tăng tính sẵn sàng cho hệ thống.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Lưu trữ và cơ sở dữ liệu
+  * Triển khai thành công website tĩnh (static web hosting) bằng Amazon S3 bucket.
+  * Thiết lập và vận hành cơ sở dữ liệu với Amazon RDS.
+  * Thực hiện thao tác import/export máy ảo (VM) qua Amazon S3 và EC2.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Giám sát hệ thống và mạng nâng cao
+  * Theo dõi hiệu suất hệ thống bằng AWS CloudWatch (metrics, logs, math expressions) và Container Insights.
+  * Thiết lập thành công mô hình Hybrid DNS với Amazon Route 53.
+  * Hoàn thiện kết nối mạng đa VPC thông qua VPC Peering và AWS Transit Gateway.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Công cụ quản trị và sao lưu
+  * Sử dụng thành thạo AWS CLI để tương tác và quản lý tài nguyên AWS.
+  * Triển khai AWS Backup, tạo backup plan tự động và thiết lập thông báo email.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+* Containerization và CI/CD
+  * Ứng dụng Docker container kết hợp các dịch vụ Amazon ECR, RDS và EC2.
+  * Triển khai ứng dụng trên Amazon ECS, gồm cluster, service và namespace với Cloud Map.
+  * Xây dựng pipeline CI/CD bằng GitLab, GitHub Actions và AWS CodeBuild.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Bảo mật đám mây
+  * Củng cố kiến thức quản trị bảo mật tập trung trên AWS thông qua AWS Security Hub.
