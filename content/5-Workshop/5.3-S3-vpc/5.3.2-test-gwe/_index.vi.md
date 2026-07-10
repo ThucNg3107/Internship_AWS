@@ -53,7 +53,7 @@ Session Manager sẽ mở browser tab mới với shell prompt: sh-4.2 $
 ![Success](/images/5-Workshop/5.3-S3-vpc/start-session-success.png)
 
 Bạn đã bắt đầu phiên kết nối đến EC2 trong VPC Cloud thành công. Trong bước tiếp theo, chúng ta sẽ tạo một  S3 bucket và một tệp trong đó.
-#### Create a file and upload to s3 bucket
+#### Tạo file và tải lên S3 bucket
 
 1. Đổi về ssm-user's thư mục bằng lệnh "cd ~" 
 

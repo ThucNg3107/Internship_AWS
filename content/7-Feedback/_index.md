@@ -6,42 +6,41 @@ chapter: false
 pre: " <b> 7. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
-> Here, you can freely share your personal opinions about your experience participating in the First Cloud Journey program. This will help the FCJ team improve any shortcomings based on the following aspects:
-
 ### Overall Evaluation
 
 **1. Working Environment**  
-The working environment is very friendly and open. FCJ members are always willing to help whenever I encounter difficulties, even outside working hours. The workspace is tidy and comfortable, helping me focus better. However, I think it would be nice to have more social gatherings or team bonding activities to strengthen relationships.
+The working environment at AWS Vietnam is extremely professional, dynamic, and follows global standards. The spirit is always clearly demonstrated through how everyone approaches work and new technologies. The open workspace, modern design, and advanced supporting equipment have created ideal conditions for me to research, practice, and develop cloud solutions.
 
 **2. Support from Mentor / Team Admin**  
-The mentor provides very detailed guidance, explains clearly when I don’t understand, and always encourages me to ask questions. The admin team supports administrative tasks, provides necessary documents, and creates favorable conditions for me to work effectively. I especially appreciate that the mentor allows me to try and solve problems myself instead of just giving the answer.
+I am extremely fortunate to receive dedicated guidance from experienced mentors. Instead of hand-holding, the mentors guide self-learning thinking and direct access to standard AWS documents (AWS Whitepapers, Documentation). The admin team of the First Cloud Journey (FCJ) program is also highly professional, quickly resolving any procedural issues and allocating practice resources (AWS Sandbox).
 
 **3. Relevance of Work to Academic Major**  
-The tasks I was assigned align well with the knowledge I learned at university, while also introducing me to new areas I had never encountered before. This allowed me to both strengthen my foundational knowledge and gain practical skills.
+The internship content is highly relevant to my IT major at HUTECH. Theoretical knowledge of computer networks, databases, and security is vividly actualized through hands-on labs in designing infrastructure, deploying Serverless, and optimizing systems on AWS. This has helped me bridge the gap between university lectures and real-world practice.
 
 **4. Learning & Skill Development Opportunities**  
-During the internship, I learned many new skills such as using project management tools, teamwork skills, and professional communication in a corporate environment. The mentor also shared valuable real-world experiences that helped me better plan my career path.
+The internship program offers a great opportunity to train both hard and soft skills. Regarding hard skills, I have gained a deep understanding and can confidently design solutions using VPC, EC2, S3, RDS, Lambda, IAM... Regarding soft skills, I have significantly improved public speaking, teamwork, and professional communication through workshops and writing technical blogs.
 
 **5. Company Culture & Team Spirit**  
-The company culture is very positive: everyone respects each other, works seriously but still keeps things enjoyable. When there are urgent projects, everyone works together and supports one another regardless of their position. This made me feel like a real part of the team, even as an intern.
+Amazon's culture promotes diversity, inclusion, and mutual respect. Although I am an intern, my opinions and contributions are listened to and given constructive feedback by my colleagues. The bond among the members of the FCJ intern generation also creates a very friendly environment for learning and growing together.
 
 **6. Internship Policies / Benefits**  
-The company provides an internship allowance and offers flexible working hours when needed. In addition, having the opportunity to join internal training sessions is a big plus.
+The company creates the best conditions for interns to study by providing practical resources (AWS Sandbox) and abundant learning materials. Working hours are also arranged very flexibly, helping me easily balance the internship with my studying and exam schedules at university. Besides, being able to participate in in-depth internal training sessions is a big plus that helps me accumulate a lot of useful knowledge.
 
----
 
 ### Additional Questions
 - What did you find **most satisfying** during your internship?  
+  That is the opportunity to directly interact with leading Cloud experts, freely create and deploy real projects on AWS Sandbox, along with the bonding experience from the FCJ community.
 - What do you think the company **should improve** for future interns?  
+  I hope the company can organize more Mock Interviews and provide detailed career mentoring in the final stage of the internship.
 - If recommending to a friend, would you **suggest they intern here**? Why or why not?  
+  Definitely yes. This is truly the perfect career launchpad for any IT student who is passionate about Cloud Computing and DevOps, helping to gain the most valuable hands-on experience.
+
+
+### Suggestions & Expectations
+- **Duration extension proposal:** The program could consider extending the internship duration by 1 - 2 months so that students have the opportunity to participate deeper in large projects or more complex real-world case studies.
+- **Desire to accompany:** I wish to continue supporting the First Cloud Journey community in the future as a collaborator or a mentor for subsequent cohorts.
+- **Employment opportunities:** Hopefully, AWS Vietnam will continue to maintain and expand official recruitment opportunities for outstanding interns from the program.
 
 ---
 
-### Suggestions & Expectations
-- Do you have any suggestions to improve the internship experience?  
-- Would you like to continue this program in the future?  
-- Any other comments (free sharing):
+<h4 align="center"><i>I would like to express my sincere gratitude to the entire FCJ team and AWS Vietnam for creating favorable conditions for me throughout the internship!</i></h4>

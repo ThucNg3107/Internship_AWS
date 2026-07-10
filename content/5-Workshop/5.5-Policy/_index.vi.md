@@ -1,5 +1,5 @@
 ---
-title : "VPC Endpoint Policies"
+title : "Chính sách VPC Endpoint"
 date : 2024-01-01
 weight : 5
 chapter : false

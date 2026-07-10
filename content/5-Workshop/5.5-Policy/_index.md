@@ -33,13 +33,9 @@ Successfully create bucket
 
 ![Success](/images/5-Workshop/5.5-Policy/create-bucket-success.png)
 
-3. Navigate to: Services > VPC > Endpoints, then select the Gateway VPC endpoint you created earlier. Click the Policy tab. Click Edit policy.
-
-![policy](/images/5-Workshop/5.5-Policy/policy1.png)
-
 The default policy allows access to all S3 Buckets through the VPC endpoint.
 
-4. In Edit Policy console, copy & Paste the following policy, then replace yourbucketname-2 with your 2nd bucket name. This policy will allow access through the VPC endpoint to your new bucket, but not any other bucket in Amazon S3. Click Save to apply the policy.
+3. In Edit Policy console, copy & Paste the following policy, then replace yourbucketname-2 with your 2nd bucket name. This policy will allow access through the VPC endpoint to your new bucket, but not any other bucket in Amazon S3. Click Save to apply the policy.
 
 ```
 {
@@ -91,8 +87,6 @@ This operation succeeds because it is permitted by the VPC endpoint policy.
 ![fail](/static/images/5-Workshop/5.5-Policy/test2-fail.png)
 
 This command will return an error because access to this bucket is not permitted by your new VPC endpoint policy.
-
-#### Part 3 Summary:
 
 In this section, you created a VPC endpoint policy for Amazon S3, and used the AWS CLI to test the policy. AWS CLI actions targeted to your original S3 bucket failed because you applied a policy that only allowed access to the second bucket you created. AWS CLI actions targeted for your second bucket succeeded because the policy allowed them. These policies can be useful in situations where you need to control access to resources through VPC endpoints.
 

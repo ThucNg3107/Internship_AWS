@@ -5,53 +5,38 @@ weight: 4
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
-
 ### Week 4 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Deploy Java web application (TravelBuddy) to Elastic Beanstalk and study automated CI/CD services on AWS.
+* Develop AWS Lambda functions triggered by S3 events, and automate serverless infrastructure with SAM and CloudFormation.
+* Interact with Amazon DynamoDB database using AWS SDK for Java, and design workflows using Step Functions.
+* Study messaging methods, distinguish between message queues and data streams, and build pub/sub channels via Amazon Kinesis.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+#### Week 4 (From 08/05/2026 – 14/05/2026)
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --- | --- | --- | --- |
+| 2 | - Research how to deploy TravelBuddy web application on AWS; use AWS Toolkit for Eclipse to deploy the Java application to Elastic Beanstalk; configure AWS Elastic Beanstalk CLI; use AWS SDK to query and modify AWS environments | 08/05/2026 | 08/05/2026 | |
+| 3 | - Apply configuration for automated release services: AWS CodeCommit for secure source control, AWS CodeBuild for building source code, AWS CodeDeploy for application deployment, AWS CodePipeline to integrate CodeCommit, CodeBuild, and CodeDeploy into a seamless CI/CD pipeline, and AWS CodeStar to quickly develop, build, and deploy applications on AWS | 09/05/2026 | 09/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | - Deploy an AWS Lambda function; modify the provided Java Lambda function to resize images to thumbnails or delete non-image files, and connect an S3 trigger to test it. <br> - Use AWS Serverless Application Model (SAM) and AWS CloudFormation templates to automate the deployment of the Lambda function, S3 trigger, and S3 bucket. <br> - Identify a candidate microservice within a monolithic codebase, and create an AWS CodeStar project to manage the CI/CD pipeline for that microservice hosted on AWS Lambda | 10/05/2026 | 10/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | - Use AWS SDK for Java to scan Amazon DynamoDB tables and retrieve results; use AWS SDK for Java to query Amazon DynamoDB tables for matching records. <br> - Use indexes in DynamoDB tables to perform lookups on attributes other than the partition key. <br> - Manually create DynamoDB tables via console and seed data. <br> - Create workflows using AWS Step Functions. <br> - Create AWS Lambda functions acting as Task actions for Step Functions | 11/05/2026 | 11/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 6 | - Understand the operations of different messaging methods on AWS; explain the difference between queues and streams. <br> - Use AWS messaging methods from web browsers and write code using Java SDK. <br> - Learn how to read data from Amazon Kinesis streams using Lambda. <br> - Create a pub/sub communication channel between two EC2 instances via Amazon Kinesis streams using AWS SDK for Java. <br> - Learn how to create repositories in AWS CodeCommit and access them in development environments and EC2 instances | 12/05/2026 | 12/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Week 4 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* **Application Deployment & CI/CD Automation:**
+  * Gained hands-on experience deploying Java web applications (TravelBuddy) on AWS Elastic Beanstalk.
+  * Mastered AWS CI/CD services (CodeCommit, CodeBuild, CodeDeploy, CodePipeline, CodeStar).
+  * Mastered version control on AWS by creating Git repositories in CodeCommit and accessing them across multiple environments.
 
-* Successfully created and configured an AWS Free Tier account.
+* **Database & Data Management:**
+  * Used AWS SDK for Java to query and modify DynamoDB, including scanning, querying, and leveraging indexes.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* **Serverless Computing & Workflows:**
+  * Mastered serverless computing with AWS Lambda, SAM, and CloudFormation, including S3 triggers.
+  * Designed and executed workflows using AWS Step Functions, seamlessly integrating with Lambda.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* **Messaging & Application Integration:**
+  * Studied and implemented various messaging methods on AWS, distinguishing between message queues and data streams.
+  * Successfully built a pub/sub communication channel between EC2 instances using Amazon Kinesis and AWS SDK for Java.
 
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...

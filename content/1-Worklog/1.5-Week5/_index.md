@@ -5,53 +5,40 @@ weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
-
 ### Week 5 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Learn and use AWS Systems Manager Session Manager for secure server management.
+* Study Amazon ElastiCache (Redis) service to improve caching/in-memory storage performance.
+* Understand and manage service limits using AWS Service Quotas.
+* Install tools, initialize and deploy applications, and build CI/CD pipelines on OpenShift clusters (ROSA).
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+#### Week 5 (From 15/05/2026 – 21/05/2026)
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --- | --- | --- | --- |
+| 2 | - Learn about Session Manager under AWS Systems Manager to securely manage servers without opening SSH ports, using Bastion Hosts, or managing SSH keys. <br> - Understand how Session Manager simplifies compliance with security policies, centralizes access control using AWS IAM, and logs connection sessions and executed commands. <br> - Understand key benefits: configuring connection without exposing to the internet, quick and simple access to servers with a single click. <br> - Leverage cross-platform support (Linux, Windows, MacOS) of Session Manager to grant user access | 15/05/2026 | 15/05/2026 | |
+| 3 | - Learn about Amazon ElastiCache to easily set up, manage, and scale distributed in-memory data stores or cache environments. <br> - Explore features of ElastiCache for Redis such as automatic failover and node recovery, sharding, flexible Availability Zone placement, and integration with other AWS services (EC2, CloudWatch, SNS, CloudTrail). <br> - Master the architecture and components of ElastiCache: <br>&emsp; - Clusters: Basic collections of cache nodes running Redis, providing compute and data hierarchy, with standard or memory-optimized node types running within a VPC | 16/05/2026 | 16/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | - Learn about AWS Service Quotas to view and manage limits for AWS services from a central interface. <br> - Understand that quotas (service limits) are the maximum resource values or actions allowed for specific resources within an AWS account. <br> - Note that each AWS service defines and sets default values for these quotas. <br> - Learn how to look up current quotas and submit limit increase requests via Service Quotas | 17/05/2026 | 17/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | - Install required tools for ROSA including AWS CLI, ROSA CLI, OpenShift CLI (oc), and configure necessary IAM permissions. <br> - Initialize and set up OpenShift clusters on AWS (ROSA). <br> - Deploy containerized applications to the ROSA cluster. <br> - Implement and automate CI/CD workflows on ROSA using AWS CodePipeline, AWS CodeCommit, and AWS CodeBuild | 18/05/2026 | 18/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 6 | - Practice inspecting and monitoring applications and OpenShift clusters using OpenShift Web Console. <br> - Perform cleanup of all created resources including ROSA cluster, IAM Roles, and related AWS resources to avoid unexpected charges | 19/05/2026 | 19/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Week 5 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* **Server Management & Security (Systems Manager Session Manager):**
+  * Understood the operation of Session Manager under AWS Systems Manager to securely connect and manage servers without opening SSH ports or using Bastion Hosts.
+  * Learned how to authorize access via IAM and track/log user session histories.
 
-* Successfully created and configured an AWS Free Tier account.
+* **Caching & Performance Optimization (Amazon ElastiCache):**
+  * Mastered the architecture and operations of Amazon ElastiCache for Redis (Clusters, Nodes, Shards).
+  * Understood how to configure, auto-failover, and scale in-memory data stores to improve application response times.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* **Resource & Limit Management (AWS Service Quotas):**
+  * Learned to inspect, manage, and submit service quota increase requests for AWS resources from a central console.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* **Container Deployment & CI/CD on AWS ROSA (Red Hat OpenShift on AWS):**
+  * Successfully installed required command-line tools: AWS CLI, ROSA CLI, and OpenShift CLI (oc).
+  * Initialized and configured an OpenShift Cluster on AWS (ROSA).
+  * Successfully deployed containerized applications to the OpenShift Cluster.
+  * Established and successfully operated automated CI/CD pipelines using AWS CodeCommit (source control), AWS CodeBuild (container image compilation and deployment), and AWS CodePipeline (release pipeline orchestration).
+  * Practiced resource cleanup for clusters and IAM roles to avoid unwanted charges.
 
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
