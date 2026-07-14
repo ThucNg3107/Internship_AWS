@@ -34,9 +34,14 @@ pre: " <b> 1.10. </b> "
   * Mastered DRS architecture: successfully installed AWS Replication Agent on source servers for block-level replication to Staging Area VPC on AWS.
   * Practiced disaster recovery workflows: conducted non-disruptive drills, Failover (transition during disaster), and Failback (restoring to source environment).
 
-* **Real-time Data Engineering:**
-  * Built a real-time clickstream analytics pipeline using Apache Flink, Glue Data Catalog, Kinesis Streams, and MSK (Kafka).
+* **Real-time Clickstream Data Analytics (Data Engineering Immersion Day - Lab 1):**
+  * Prepared data infrastructure environment including Amazon S3, Kinesis Stream, and appropriate IAM Roles permissions.
+  * Built Streaming ETL pipeline with AWS Glue by creating a Data Catalog and setting up a Glue ETL Job to process and transform data in real-time.
+  * Practiced real-time streaming by ingesting simulated clickstream data into Amazon Kinesis.
+  * Studied Clickstream Analytics solution using Amazon Managed Streaming for Apache Kafka (Amazon MSK) and Amazon Managed Service for Apache Flink to detect anomalous clickstream flows.
 
-* **Database Migration with AWS DMS:**
-  * Deployed a DMS Migration Lab: configured Replication Instances, Source/Target Endpoints, and executed Database Migration Tasks for data ingestion on AWS.
+* **Database Ingestion and Migration with AWS DMS (Lab 2):**
+  * Understood and practiced database migration process using AWS Database Migration Service (AWS DMS).
+  * Successfully initialized Replication Instance, and configured Source/Target Endpoints.
+  * Set up and ran Database Migration Tasks to migrate data securely and reliably (or automated using CloudFormation).
 

@@ -28,8 +28,8 @@ pre: " <b> 1. </b> "
 
 **Tuần 9:** [Triển khai AWS Managed Microsoft AD, Secrets Manager (Secret Rotation), bảo mật mạng (Network Firewall) và Amazon GuardDuty](1.9-week9/)
 
-**Tuần 10:** [Tự động hóa vá lỗi hệ điều hành, phục hồi thảm họa (AWS DRS) và xử lý dữ liệu luồng thời gian thực (Flink, Kinesis, DMS)](1.10-week10/)
+**Tuần 10:** [Dự án CloudBrief: Xây dựng Worker thu thập dữ liệu](1.10-week10/)
 
-**Tuần 11:** [Biến đổi dữ liệu lớn (Hudi, Lake Formation), xây dựng Dashboard (QuickSight) và kiểm thử, audit bảo mật API dự án CloudBrief](1.11-week11/)
+**Tuần 11:** [Dự án CloudBrief: Tích hợp AI Summarizer Worker](1.11-week11/)
 
-**Tuần 12:** [Chuẩn hóa và tối ưu báo cáo thực tập 11 tuần trước, sửa lỗi hiển thị tiếng Việt (UTF-8), đóng gói deploy và chuẩn bị slide bảo vệ](1.12-week12/)
+**Tuần 12:** [Dự án CloudBrief: Lập trình xử lý ảnh & Cải thiện hệ thống](1.12-week12/)

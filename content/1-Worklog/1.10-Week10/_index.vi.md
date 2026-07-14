@@ -34,9 +34,14 @@ pre: " <b> 1.10. </b> "
   * Hiểu sâu sắc kiến trúc DRS: cài đặt thành công AWS Replication Agent trên máy chủ nguồn để sao chép block-level về Staging Area VPC trên AWS.
   * Thực hành kiểm thử thảm họa thành công qua các thao tác: drill (chạy thử nghiệm không gián đoạn), Failover (chuyển đổi dự phòng khi thảm họa xảy ra) và Failback (phục hồi trở lại môi trường nguồn).
 
-* **Xử lý dữ liệu thời gian thực (Data Engineering):**
-  * Thiết lập thành công luồng xử lý clickstream thời gian thực bằng Flink, Glue Data Catalog, Kinesis Stream, và phân tích sự kiện qua MSK (Kafka).
+* **Phân tích dữ liệu thời gian thực (Data Engineering Immersion Day - Lab 1):**
+  * Chuẩn bị môi trường hạ tầng dữ liệu bao gồm Amazon S3, Kinesis Stream và phân quyền IAM Roles phù hợp.
+  * Xây dựng luồng Streaming ETL với AWS Glue bằng cách tạo Data Catalog và thiết lập Glue ETL Job để xử lý, chuyển đổi dữ liệu real-time.
+  * Thực hành truyền dữ liệu thời gian thực (Real-time Streaming) bằng cách đẩy luồng dữ liệu clickstream mô phỏng vào Amazon Kinesis.
+  * Nghiên cứu giải pháp Clickstream Analytics sử dụng Amazon Managed Streaming for Apache Kafka (Amazon MSK) và Amazon Managed Service for Apache Flink để phát hiện các luồng click chuột bất thường.
 
-* **Chuyển đổi dữ liệu với AWS DMS:**
-  * Triển khai thành công DMS Migration Lab: cấu hình Replication Instance, Source/Target Endpoints và thực thi các Database Migration Tasks để di chuyển cơ sở dữ liệu lên AWS.
+* **Nhập dữ liệu và chuyển dịch cơ sở dữ liệu với AWS DMS (Lab 2):**
+  * Hiểu và thực hành quy trình dịch chuyển cơ sở dữ liệu sử dụng AWS Database Migration Service (AWS DMS).
+  * Khởi tạo thành công Replication Instance, cấu hình các điểm đầu/cuối nguồn và đích (Source/Target Endpoints).
+  * Thiết lập và chạy Database Migration Task để dịch chuyển dữ liệu một cách an toàn và tin cậy (hoặc tự động hóa bằng CloudFormation).
 

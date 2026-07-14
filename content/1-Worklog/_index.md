@@ -26,8 +26,8 @@ pre: " <b> 1. </b> "
 
 **Week 9:** [Implementing AWS Managed Microsoft AD, Secrets Manager credential rotation, remote access security (Network Firewall), and threat detection with GuardDuty](1.9-week9/)
 
-**Week 10:** [Automating OS patching (Image Builder, Systems Manager, CloudFormation blue/green), Disaster Recovery (AWS DRS), and real-time streaming ETL](1.10-week10/)
+**Week 10:** [CloudBrief Project: Building Data Collection Worker](1.10-week10/)
 
-**Week 11:** [Big data transformation (Glue ETL, Hudi, Lake Formation), QuickSight visualization, and QA contract testing/security audit for CloudBrief project](1.11-week11/)
+**Week 11:** [CloudBrief Project: Integrating AI Summarizer Worker](1.11-week11/)
 
-**Week 12:** [Standardizing internship reports, resolving Vietnamese UTF-8 encoding on Hugo website, static site deployment, and final presentation preparation](1.12-week12/)
+**Week 12:** [CloudBrief Project: Image Processing Programming & System Improvement](1.12-week12/)

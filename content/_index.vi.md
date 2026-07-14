@@ -13,13 +13,13 @@ chapter: false
 
 &emsp; **Email:** thucnguyenhien102@gmail.com
 
-&emsp; **Trường:** Đại học Công nghệ TP.HCM
+&emsp; **Trường:** Đại học Công nghệ Thành Phố Hồ Chí Minh
 
 &emsp; **Ngành:** Công nghệ thông tin
 
 &emsp; **Lớp:** 22DTHB4
 
-&emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Vietnam
+&emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Việt Nam
 
 &emsp; **Vị trí thực tập:** FCJ Cloud Intern
 
