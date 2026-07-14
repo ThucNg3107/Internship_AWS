@@ -77,3 +77,7 @@ Tham gia sự kiện giúp tôi tích lũy được nhiều bài học bổ ích
 - **Thực tế trực quan**: Demo trực tiếp luồng serverless với Cognito và Bedrock giúp tôi dễ dàng tiếp cận kiến trúc cloud-native.
 - **Kết nối cộng đồng**: Nhận được định hướng nghề nghiệp quý báu từ các anh chị mentor có kinh nghiệm trong ngành.
 
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+  <img src="/images/4-EventParticipated/sk1_1.jpg" alt="sk1_1" style="width: 30%; min-width: 200px; height: auto;" />
+</div>
+

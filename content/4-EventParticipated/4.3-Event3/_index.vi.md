@@ -96,3 +96,13 @@ Tham gia buổi Meetup ngày Jun 06, 2026 là một hành trình học tập đa
 #### Bài học rút ra
 - Công nghệ chỉ là công cụ, tư duy thiết kế đúng đắn và sự kiên trì trong việc thực hành mới là yếu tố quyết định thành công.
 - Việc hiện đại hóa ứng dụng thông qua Docker và Serverless giúp doanh nghiệp tăng tốc độ ra mắt sản phẩm và giảm thiểu rủi ro vận hành.
+
+<div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+  <img src="/images/4-EventParticipated/sk3_1.jpg" alt="sk3_1" style="width: 30%; min-width: 250px; height: auto;" />
+  <img src="/images/4-EventParticipated/sk3_2.jpg" alt="sk3_2" style="width: 30%; min-width: 250px; height: auto;" />
+  <img src="/images/4-EventParticipated/sk3_3.jpg" alt="sk3_3" style="width: 30%; min-width: 250px; height: auto;" />
+</div>
+<div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
+  <img src="/images/4-EventParticipated/sk3_4.jpg" alt="sk3_4" style="width: 30%; min-width: 250px; height: auto;" />
+  <img src="/images/4-EventParticipated/sk3_5.jpg" alt="sk3_5" style="width: 30%; min-width: 250px; height: auto;" />
+</div>

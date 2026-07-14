@@ -77,3 +77,7 @@ Attending the event helped me gather many useful lessons:
 - **Inspiring**: Stories from student speakers showed that confidence and community-sharing efforts are extremely valuable.
 - **Hands-on visual**: Live serverless demos with Cognito and Bedrock made cloud-native architecture easy to understand.
 - **Networking**: Received valuable career guidance from experienced industry mentors.
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+  <img src="/images/4-EventParticipated/sk1_1.jpg" alt="sk1_1" style="width: 30%; min-width: 200px; height: auto;" />
+</div>

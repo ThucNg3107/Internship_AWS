@@ -101,3 +101,13 @@ Participating in the Meetup on June 06, 2026 was a multi-dimensional learning jo
 #### Lessons Learned
 - Technology is just a tool; the right design mindset and persistence in practice are the deciding factors of success.
 - Modernizing applications through Docker and Serverless helps businesses speed up product launches and minimize operational risks.
+
+<div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+  <img src="/images/4-EventParticipated/sk3_1.jpg" alt="sk3_1" style="width: 30%; min-width: 250px; height: auto;" />
+  <img src="/images/4-EventParticipated/sk3_2.jpg" alt="sk3_2" style="width: 30%; min-width: 250px; height: auto;" />
+  <img src="/images/4-EventParticipated/sk3_3.jpg" alt="sk3_3" style="width: 30%; min-width: 250px; height: auto;" />
+</div>
+<div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
+  <img src="/images/4-EventParticipated/sk3_4.jpg" alt="sk3_4" style="width: 30%; min-width: 250px; height: auto;" />
+  <img src="/images/4-EventParticipated/sk3_5.jpg" alt="sk3_5" style="width: 30%; min-width: 250px; height: auto;" />
+</div>
