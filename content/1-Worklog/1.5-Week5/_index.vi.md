@@ -7,39 +7,37 @@ pre: " <b> 1.5. </b> "
 ---
 ### Mục tiêu tuần 5:
 
-* Tìm hiểu và sử dụng AWS Systems Manager Session Manager để quản lý máy chủ an toàn.
-* Nghiên cứu dịch vụ Amazon ElastiCache (Redis) để cải thiện hiệu năng lưu trữ cache/in-memory.
-* Tìm hiểu và quản lý giới hạn dịch vụ thông qua AWS Service Quotas.
-* Cài đặt công cụ, khởi tạo và triển khai ứng dụng, xây dựng quy trình CI/CD trên OpenShift cluster (ROSA).
+* Khai thác giải pháp AWS Systems Manager Session Manager phục vụ công tác quản trị máy chủ từ xa an toàn, bảo mật.
+* Tối ưu tốc độ xử lý và hiệu năng ứng dụng thông qua bộ nhớ đệm phân tán Amazon ElastiCache (Redis).
+* Chuẩn hóa hoạt động quản trị tài nguyên và theo dõi hạn mức dịch vụ đám mây qua bảng điều khiển AWS Service Quotas.
+* Khởi tạo cụm OpenShift trên đám mây (ROSA), triển khai ứng dụng container hóa và tự động hóa chu kỳ CI/CD.
 
 ### Các công việc cần triển khai trong tuần này:
 #### Tuần 5 (Từ 15/05/2026 – 21/05/2026)
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Tìm hiểu chức năng Session Manager thuộc dịch vụ AWS Systems Manager để quản lý máy chủ an toàn mà không cần mở port SSH, không cần Bastion Host hay quản lý SSH key. <br> - Hiểu cách Session Manager giúp dễ dàng tuân thủ các chính sách bảo mật, kiểm soát quyền truy cập tập trung bằng AWS IAM và ghi log lại các phiên kết nối, câu lệnh đã thực thi. <br> - Nắm bắt các ưu điểm: cấu hình kết nối không cần đi ra ngoài internet, truy cập tới server nhanh chóng, đơn giản bằng một cú click chuột. <br> - Tận dụng khả năng hỗ trợ đa nền tảng (Linux, Windows, MacOS) của Session Manager để cấp quyền truy cập cho người dùng . | 15/05/2026 | 15/05/2026 | |
-| 3   | - Tìm hiểu về dịch vụ Amazon ElastiCache để dễ dàng thiết lập, quản lý và mở rộng kho dữ liệu in-memory phân tán hoặc môi trường cache. <br> - Khám phá các tính năng của ElastiCache for Redis như tự động phát hiện và phục hồi lỗi node, phân vùng dữ liệu , linh hoạt vị trí Availability Zone và tích hợp với các dịch vụ AWS khác (EC2, CloudWatch, SNS, CloudTrail). <br> - Nắm vững kiến trúc và thành phần của ElastiCache: <br>&emsp; - Clusters: Thành phần cơ bản tập hợp các cache node chạy Redis, cung cấp khả năng tính toán, phân cấp dữ liệu, có thể chọn loại node standard hoặc memory-optimized và hoạt động trong VPC | 16/05/2026 | 16/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tìm hiểu về AWS Service Quotas để xem và quản lý mức giới hạn cho các dịch vụ AWS từ một giao diện trung tâm. <br> - Hiểu mức giới hạn (giới hạn dịch vụ) là giá trị tối đa của tài nguyên, hành động trên tài nguyên cụ thể trong tài khoản AWS. <br> - Nắm bắt việc mỗi dịch vụ AWS tự xác định và thiết lập giá trị mặc định cho các mức giới hạn đó. <br> - Biết cách tra cứu mức giới hạn hiện tại và gửi yêu cầu tăng giới hạn thông qua Service Quotas | 17/05/2026 | 17/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Cài đặt các công cụ cần thiết cho ROSA bao gồm: AWS CLI, ROSA CLI, OpenShift CLI (oc) và cấu hình các quyền IAM cần thiết. <br> - Khởi tạo và thiết lập OpenShift cluster trên AWS . <br> - Triển khai ứng dụng container hóa lên ROSA cluster. <br> - Triển khai và tự động hóa quy trình CI/CD trên ROSA sử dụng AWS CodePipeline, AWS CodeCommit, và AWS CodeBuild. | 18/05/2026 | 18/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - Thực hành kiểm tra, giám sát ứng dụng và OpenShift cluster bằng OpenShift Web Console. <br> - Thực hiện dọn dẹp toàn bộ tài nguyên đã tạo bao gồm ROSA cluster, IAM Roles và các tài nguyên AWS liên quan để tránh phát sinh chi phí. | 19/05/2026 | 19/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | --- | --- | --- | --- |
+| 2 | - Tìm hiểu cơ chế quản trị máy chủ an toàn với AWS Systems Manager Session Manager, loại bỏ nhu cầu mở cổng SSH, dùng Bastion Host hoặc quản lý khóa SSH Key thủ công. <br> - Đánh giá vai trò của Session Manager trong việc tuân thủ quy chuẩn an toàn thông tin, tập trung hóa phân quyền qua IAM và lưu vết toàn bộ lịch sử lệnh/phiên kết nối. <br> - Nắm bắt các lợi thế nổi bật: kết nối bảo mật không cần public IP ra internet, truy cập máy chủ tức thì chỉ với một thao tác. <br> - Khai thác khả năng tương thích đa nền tảng (Linux, Windows, macOS) của Session Manager để phân quyền người dùng linh hoạt. | 15/05/2026 | 15/05/2026 | |
+| 3 | - Tìm hiểu kiến trúc bộ nhớ đệm Amazon ElastiCache, quy trình khởi tạo, quản lý và mở rộng hệ thống cache in-memory phân tán. <br> - Khám phá các tính năng cao cấp của ElastiCache cho Redis như tự động khắc phục sự cố node (auto-failover), phân vùng dữ liệu (sharding), phân bổ đa vùng sẵn sàng (Multi-AZ) và tích hợp liền mạch với EC2, CloudWatch, SNS, CloudTrail. <br> - Nắm vững các thành phần cốt lõi của ElastiCache: <br>&emsp; - Clusters: Tập hợp các nút cache chạy Redis, cung cấp năng lực tính toán và bộ nhớ đệm tối ưu (Standard hoặc Memory-Optimized) vận hành trong VPC. | 16/05/2026 | 16/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | - Khai thác giao diện trung tâm AWS Service Quotas để theo dõi và quản lý hạn mức tài nguyên trên các dịch vụ Đám mây. <br> - Thấu hiểu bản chất của Service Quotas là giới hạn tối đa số lượng tài nguyên hoặc hành động được phép trong một tài khoản AWS. <br> - Nắm rõ cơ chế thiết lập giá trị mặc định cho từng dịch vụ từ phía AWS. <br> - Thực hành tra cứu hạn mức thực tế và gửi yêu cầu nâng giới hạn tài nguyên (Quota increase request) qua console. | 17/05/2026 | 17/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | - Cài đặt bộ công cụ điều khiển ROSA gồm AWS CLI, ROSA CLI, OpenShift CLI (oc) và phân quyền IAM Roles tương ứng. <br> - Khởi tạo và cấu hình cụm máy chủ Red Hat OpenShift trên hạ tầng AWS (ROSA). <br> - Đóng gói và phát hành ứng dụng Container hóa lên cụm ROSA Cluster. <br> - Thiết lập đường ống CI/CD tự động hóa trên ROSA với chuỗi dịch vụ AWS CodePipeline, CodeCommit và CodeBuild. | 18/05/2026 | 18/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 6 | - Thực hành công tác theo dõi, giám sát ứng dụng và tình trạng sức khỏe của ROSA cluster bằng OpenShift Web Console. <br> - Thực thi kịch bản hủy bỏ và dọn dẹp triệt để các tài nguyên đã tạo (ROSA cluster, IAM roles, VPC resources) để tối ưu chi phí. | 19/05/2026 | 19/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Kết quả đạt được tuần 5:
 
 * **Quản lý & Bảo mật Máy chủ (Systems Manager Session Manager):**
-  * Hiểu cách hoạt động của Session Manager thuộc dịch vụ AWS Systems Manager để quản lý và kết nối máy chủ an toàn mà không cần mở cổng SSH hay sử dụng Bastion Host.
-  * Biết cách phân quyền truy cập thông qua IAM và theo dõi, ghi nhật ký (log) lịch sử phiên làm việc của người dùng.
+  * Làm chủ phương thức kết nối máy chủ an toàn với Session Manager, loại bỏ hoàn toàn việc mở cổng SSH inbound hay duy trì máy chủ Bastion.
+  * Phân quyền truy cập tập trung qua IAM và lưu trữ nhật ký truy vết (Audit logs) cho toàn bộ phiên làm việc.
 
 * **Môi trường Cache & Tối ưu hiệu năng (Amazon ElastiCache):**
-  * Nắm vững kiến trúc và cách thức hoạt động của Amazon ElastiCache for Redis (Clusters, Nodes, Shards).
-  * Hiểu cách thiết lập, tự động phát hiện lỗi và mở rộng quy mô dữ liệu in-memory để cải thiện tốc độ phản hồi cho ứng dụng.
+  * Thấu hiểu kiến trúc hạ tầng ElastiCache cho Redis (Clusters, Nodes, Shards, Multi-AZ).
+  * Nắm vững phương pháp thiết lập đệm dữ liệu (caching), cơ chế tự động chuyển vùng sự cố (auto-failover) nhằm giảm độ trễ phản hồi cho ứng dụng.
 
 * **Quản lý Tài nguyên & Giới hạn (AWS Service Quotas):**
-  * Biết cách kiểm tra, quản lý và gửi yêu cầu nâng cao hạn mức sử dụng (Service Quotas) tài nguyên dịch vụ AWS từ một bảng điều khiển trung tâm.
+  * Quản trị và đề xuất nâng hạn mức tài nguyên (Service Quotas) chủ động từ bảng điều khiển tập trung.
 
 * **Triển khai Container & CI/CD trên AWS ROSA (Red Hat OpenShift on AWS):**
-  * Cài đặt thành công các công cụ dòng lệnh cần thiết: AWS CLI, ROSA CLI, OpenShift CLI (oc).
-  * Thực hiện khởi tạo và cấu hình OpenShift Cluster trên môi trường AWS (ROSA).
-  * Triển khai thành công ứng dụng container hóa lên OpenShift Cluster.
-  * Thiết lập và vận hành trơn tru quy trình CI/CD tự động sử dụng AWS CodeCommit (kho lưu trữ mã nguồn), AWS CodeBuild (build container image và deploy), và AWS CodePipeline (điều phối toàn bộ quy trình release).
-  * Thực hành dọn dẹp các tài nguyên cluster và IAM roles để tránh phát sinh chi phí phát sinh ngoài ý muốn.
-
-
+  * Cài đặt và chuẩn hóa môi trường làm việc với AWS CLI, ROSA CLI, OpenShift CLI (oc).
+  * Khởi tạo và vận hành thành công cụm máy chủ OpenShift (ROSA) trên hạ tầng AWS.
+  * Triển khai ứng dụng container hóa lên ROSA Cluster đạt độ ổn định cao.
+  * Xây dựng luồng CI/CD tự động hóa hoàn chỉnh với CodeCommit (lưu trữ mã nguồn), CodeBuild (biên dịch image) và CodePipeline (điều phối release).
+  * Thực thi quy trình dọn dẹp tài nguyên và IAM roles đúng chuẩn nhằm phòng tránh chi phí ngoài phát sinh.

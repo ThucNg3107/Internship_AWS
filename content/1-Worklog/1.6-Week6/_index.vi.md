@@ -7,42 +7,40 @@ pre: " <b> 1.6. </b> "
 ---
 ### Mục tiêu tuần 6:
 
-* Xây dựng kiến trúc Data Lake Serverless và đường ống xử lý dữ liệu với S3, Kinesis, Athena và QuickSight.
-* Sử dụng các dịch vụ ETL (AWS Glue, EMR) để biến đổi dữ liệu và lưu trữ vào kho dữ liệu Amazon Redshift.
-* Thiết lập mô hình tin nhắn Pub/Sub sử dụng Amazon SNS và SQS.
-* Phát triển các ứng dụng Serverless bằng AWS Lambda (xử lý ảnh qua S3 trigger, Lambda Layers) và tích hợp với Amazon DynamoDB (CRUD, IAM, Monitoring & Troubleshooting).
+* Xây dựng hạ tầng Data Lake Serverless và thiết lập luồng xử lý dữ liệu thời gian thực tích hợp S3, Kinesis, Athena và QuickSight.
+* Khai thác các dịch vụ trích xuất và biến đổi dữ liệu (ETL) chuyên sâu với AWS Glue, EMR và tải dữ liệu lên kho lưu trữ doanh nghiệp Amazon Redshift.
+* Thiết lập mô hình truyền tin phân tán Publisher/Subscriber kết hợp Amazon SNS và SQS.
+* Phát triển giải pháp không máy chủ (Serverless) với AWS Lambda (tự động xử lý ảnh qua S3 event trigger, tối ưu qua Lambda Layers) và kết nối cơ sở dữ liệu Amazon DynamoDB (thao tác CRUD, phân quyền IAM, giám sát với X-Ray).
 
 ### Các công việc cần triển khai trong tuần này:
 #### Tuần 6 (Từ 22/05/2026 – 28/05/2026)
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | - Thiết kế kiến trúc data lake serverless. <br> - Xây dựng đường ống xử lý dữ liệu và Data Lake bằng cách sử dụng Amazon S3 để lưu trữ dữ liệu. <br> - Sử dụng Amazon Kinesis cho dữ liệu truyền phát thời gian thực. <br> - Sử dụng Amazon Kinesis Data Analytics cho phân tích dữ liệu thời gian thực. <br> - Truy vấn dữ liệu bằng Amazon Athena và trực quan hóa dữ liệu bằng Amazon QuickSight. | 22/05/2026 | 22/05/2026 | |
-| 3 | - Sử dụng AWS Glue để tự động lập chỉ mục các bộ dữ liệu. <br> - Biến đổi dữ liệu. <br> - Chạy các script ETL tương tác trong một cuốn sổ Jupyter trên AWS Glue Studio sử dụng AWS Glue (interactive sessions). <br> - Sử dụng Glue Studio để chạy và giám sát các ETL jobs trong AWS Glue. <br> - Sử dụng Glue DataBrew để chuẩn bị dữ liệu. <br> - Sử dụng EMR để chạy một job biến đổi Spark. <br> - Tải dữ liệu lên Amazon Redshift từ Glue. <br> - Giới thiệu về các quy thực hành thiết kế tốt cho Amazon Redshift. | 23/05/2026 | 23/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | - Tìm hiểu cơ chế hoạt động của Amazon SNS (Simple Notification Service) và Amazon SQS (Simple Queue Service). <br> - Triển khai mô hình Pub/Sub và cấu hình chính sách bộ lọc (Subscription Filter Policy) để lọc và định tuyến tin nhắn tự động. <br>&emsp; + Tạo hàng đợi SQS mới cho Đơn đặt hàng ở EU (EU orders). <br>&emsp; + Đăng ký subscribe hàng đợi SQS vào SNS Topic Đơn hàng. <br>&emsp; + Thiết lập chính sách lọc tin nhắn cho subscribe bằng cách chỉ định thuộc tính location với giá trị eu-west để chỉ nhận các thông điệp từ EU. | 24/05/2026 | 24/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | - Tìm hiểu Kiến trúc Serverless: khái niệm, các thành phần chính (Lambda, S3, DynamoDB) và use cases phổ biến. <br>&emsp; + Tạo và cấu hình Lambda function (runtime, memory, timeout). <br>&emsp; + Thiết lập S3 Event Trigger để tự động kích hoạt Lambda khi có file ảnh được tải lên S3 bucket. <br>&emsp; + Sử dụng Lambda Layers để chứa thư viện bên ngoài (ví dụ: Sharp/Jimp cho Node.js, Pillow cho Python) để thực hiện resize ảnh. <br>&emsp; + Tìm hiểu các Best Practices về bảo mật (IAM Roles tối giản) và tối ưu hiệu năng/chi phí. | 25/05/2026 | 25/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 6 | <br>&emsp; + Tạo bảng DynamoDB với partition key và sort key. <br>&emsp; + Cấu hình IAM roles và permissions cho phép Lambda tương tác với bảng DynamoDB. <br>&emsp; + Thao tác CRUD cơ bản với DynamoDB SDK thông qua Lambda function. <br>&emsp; + Đọc và phân tích log trong CloudWatch Logs. <br>&emsp; + Giám sát các chỉ số (Invocations, Duration, Errors, Throttles) trong CloudWatch Metrics. <br>&emsp; + Cấu hình AWS X-Ray để theo dõi chi tiết (trace) luồng xử lý của hệ thống. | 26/05/2026 | 26/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 2 | - Thiết kế tổng thể kiến trúc Data Lake Serverless. <br> - Xây dựng luồng thu thập và xử lý dữ liệu tập trung trên Amazon S3. <br> - Tích hợp Amazon Kinesis phục vụ tiếp nhận luồng dữ liệu thời gian thực (Data Streaming). <br> - Xử lý và phân tích trực tiếp dữ liệu truyền phát bằng Amazon Kinesis Data Analytics. <br> - Truy vấn dữ liệu tức thì bằng Amazon Athena và thiết lập báo cáo biểu đồ trực quan trên Amazon QuickSight. | 22/05/2026 | 22/05/2026 | |
+| 3 | - Tự động hóa quét sơ đồ dữ liệu (Data Catalog & Schema) bằng AWS Glue Crawler. <br> - Xây dựng kịch bản trích xuất và biến đổi dữ liệu ETL. <br> - Thực thi các phiên xử lý ETL tương tác (Interactive Sessions) qua Jupyter Notebook trên AWS Glue Studio. <br> - Vận hành và theo dõi trạng thái các Glue ETL Jobs từ bảng điều khiển Glue Studio. <br> - Chuẩn hóa và làm sạch dữ liệu trực quan bằng Glue DataBrew. <br> - Thực thi công việc xử lý dữ liệu phân tán Spark trên cụm máy chủ Amazon EMR. <br> - Tải luồng dữ liệu đã biến đổi từ AWS Glue vào kho dữ liệu Amazon Redshift. <br> - Tiếp cận các nguyên lý thiết kế tối ưu kiến trúc cho Amazon Redshift. | 23/05/2026 | 23/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | - Nghiên cứu chuyên sâu cơ chế truyền tin thông báo Amazon SNS và hàng chờ thông điệp Amazon SQS. <br> - Triển khai mô hình truyền tin Pub/Sub và thiết lập chính sách lọc thông điệp (Subscription Filter Policy) để tự động hóa phân luồng dữ liệu. <br>&emsp; + Khởi tạo hàng đợi SQS mới dành riêng cho các đơn hàng khu vực Châu Âu (EU orders). <br>&emsp; + Đăng ký hàng đợi SQS làm subscriber nhận tin từ SNS Topic Đơn hàng. <br>&emsp; + Thiết lập chính sách lọc thông điệp dựa trên thuộc tính `location = eu-west` để chỉ tiếp nhận thông điệp từ thị trường EU. | 24/05/2026 | 24/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | - Thấu hiểu bản chất Kiến trúc Serverless, các thành phần nòng cốt (Lambda, S3, DynamoDB) và mô hình bài toán áp dụng. <br>&emsp; + Khởi tạo và tối ưu thông số cho Lambda function (Runtime, Memory, Timeout). <br>&emsp; + Cấu hình S3 Event Trigger để tự động hóa kích hoạt xử lý ngay khi có tệp ảnh tải lên S3 bucket. <br>&emsp; + Khai thác Lambda Layers để đóng gói các thư viện mã nguồn phụ thuộc (Sharp/Jimp cho Node.js, Pillow cho Python) giúp xử lý co giãn kích thước ảnh. <br>&emsp; + Thực hành quy chuẩn an toàn thông tin (IAM Roles tối giản) và tối ưu hóa hiệu năng chi phí vận hành. | 25/05/2026 | 25/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 6 | <br>&emsp; + Thiết kế bảng DynamoDB tối ưu với cấu trúc Partition Key và Sort Key. <br>&emsp; + Thiết lập quyền hạn IAM Roles & Policies cho phép Lambda tương tác an toàn với DynamoDB. <br>&emsp; + Thực thi các thao tác CRUD cơ bản thông qua DynamoDB SDK tích hợp trong Lambda. <br>&emsp; + Phân tích nhật ký ghi vết sự kiện trên CloudWatch Logs. <br>&emsp; + Giám sát các chỉ số vận hành chính (Invocations, Duration, Errors, Throttles) qua CloudWatch Metrics. <br>&emsp; + Cấu hình AWS X-Ray để theo dõi truy vết (Tracing) chi tiết luồng xử lý của hệ thống. | 26/05/2026 | 26/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Kết quả đạt được tuần 6:
 
 * **Kiến trúc Data Lake Serverless & Truy vấn dữ liệu:**
-  * Thiết kế và xây dựng thành công đường ống xử lý dữ liệu sử dụng Amazon S3 để lưu trữ thô và lưu trữ đã xử lý.
-  * Tích hợp Amazon Kinesis và Kinesis Data Analytics để thu thập và phân tích luồng dữ liệu thời gian thực.
-  * Sử dụng Amazon Athena để truy vấn dữ liệu trực tiếp trên S3 và trực quan hóa kết quả bằng Amazon QuickSight.
+  * Thiết kế và xây dựng thành công đường ống xử lý dữ liệu lưu trữ tập trung trên Amazon S3 (Raw & Processed Data).
+  * Tích hợp Amazon Kinesis và Kinesis Data Analytics để thu thập, phân tích luồng dữ liệu thời gian thực.
+  * Phân tích dữ liệu trực tiếp trên S3 bằng Amazon Athena và xây dựng bảng biểu đồ trực quan hóa dữ liệu qua Amazon QuickSight.
 
 * **Tự động hóa ETL với AWS Glue & Redshift:**
-  * Sử dụng AWS Glue Crawler để tự động quét và lập sơ đồ dữ liệu (schema) trong S3.
-  * Thiết kế và chạy các công việc ETL (Extract, Transform, Load) bằng cả Glue Studio và script Spark tương tác trên EMR.
-  * Làm sạch, chuẩn bị dữ liệu bằng Glue DataBrew và tải dữ liệu đã chuyển đổi vào Amazon Redshift để tối ưu hóa truy vấn phân tích.
+  * Sử dụng AWS Glue Crawler để tự động quét cấu trúc và lập sơ đồ dữ liệu (Data Catalog) trên S3.
+  * Xây dựng và thực thi các công việc ETL (Extract, Transform, Load) tự động bằng Glue Studio và script Spark trên Amazon EMR.
+  * Làm sạch và chuẩn hóa dữ liệu với Glue DataBrew, đẩy dữ liệu đã biến đổi vào kho Amazon Redshift phục vụ báo cáo doanh nghiệp.
 
 * **Mô hình Messaging & Pub/Sub:**
-  * Nắm vững cơ chế hoạt động và sự khác biệt giữa Amazon SNS và SQS.
-  * Triển khai mô hình truyền tin Pub/Sub và cấu hình Subscription Filter Policies để định tuyến thông điệp chính xác dựa trên thuộc tính.
+  * Nắm vững cơ chế hoạt động và mô thức phối hợp giữa Amazon SNS (Push) và SQS (Pull).
+  * Triển khai mô hình Pub/Sub và cấu hình bộ lọc Subscription Filter Policy giúp phân luồng thông điệp chính xác theo tiêu chí kinh doanh.
 
 * **Kiến trúc Serverless với Lambda & DynamoDB:**
-  * Làm chủ việc phát triển ứng dụng Serverless bằng AWS Lambda, thiết lập S3 Event Trigger để tự động xử lý hình ảnh tải lên.
-  * Sử dụng Lambda Layers để đóng gói thư viện xử lý ảnh (ví dụ: Sharp, Pillow), giúp tối ưu dung lượng của hàm Lambda.
-  * Thiết kế bảng DynamoDB với Partition Key và Sort Key tối ưu cho việc truy vấn.
-  * Triển khai phân quyền bảo mật tối giản (IAM Roles & Policies) và viết mã nguồn thực hiện CRUD bằng AWS SDK.
-  * Giám sát và gỡ lỗi hệ thống Serverless thông qua CloudWatch Logs, Metrics và AWS X-Ray.
-
-
+  * Xây dựng giải pháp Serverless với AWS Lambda, tự động kích hoạt xử lý hình ảnh dựa trên sự kiện S3 Event Trigger.
+  * Sử dụng Lambda Layers để đóng gói thư viện phụ thuộc (Sharp, Pillow), giúp tối ưu hóa kích thước gói triển khai.
+  * Thiết kế sơ đồ cơ sở dữ liệu DynamoDB chuẩn mực với Partition Key và Sort Key.
+  * Thực thi nguyên tắc phân quyền tối giản (Least Privilege IAM Roles) và viết mã nguồn xử lý CRUD qua AWS SDK.
+  * Theo dõi chỉ số, giám sát sự cố và phân tích vết luồng xử lý hệ thống bằng CloudWatch Logs, Metrics và AWS X-Ray.

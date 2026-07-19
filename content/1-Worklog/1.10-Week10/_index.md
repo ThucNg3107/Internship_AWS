@@ -7,41 +7,39 @@ pre: " <b> 1.10. </b> "
 ---
 ### Week 10 Objectives:
 
-* Understand the importance of OS patching and design zero-downtime automated patching (blue/green, EC2 Image Builder, Systems Manager, CloudFormation).
-* Study the architecture and operations of AWS Elastic Disaster Recovery (AWS DRS) to implement replication, drills, Failover, and Failback.
-* Learn real-time clickstream data processing (Streaming ETL) using Amazon Managed Service for Apache Flink, AWS Glue, Amazon Kinesis, and MSK.
-* Practice database migration and data ingestion using AWS Database Migration Service (DMS).
+* Automate zero-downtime Operating System patching workflows utilizing EC2 Image Builder, Systems Manager, and CloudFormation policies.
+* Master AWS Elastic Disaster Recovery (AWS DRS) architecture to establish block-level replication, non-disruptive drills, Failover, and Failback operations.
+* Build real-time streaming ETL data pipelines analyzing clickstream events using Apache Flink, AWS Glue, Kinesis, and MSK.
+* Practice database migration and data ingestion pipelines using AWS Database Migration Service (DMS).
 
 ### Tasks to be carried out this week:
 #### Week 10 (From 19/06/2026 – 25/06/2026)
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| 2 | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations <br> + Understand the importance of OS patching for security and compliance <br> + Understand Blue/Green deployment methods for AMI creation and replacement <br> + Study automated patching using AWS services: <br>&emsp; * EC2 Image Builder (automated AMI creation) <br>&emsp; * Systems Manager Automation Document (orchestration and execution) <br>&emsp; * CloudFormation with AutoScalingReplacingUpdate policy (zero-downtime deployment) | 19/06/2026 | 19/06/2026 | |
-| 3 | + Study basic concepts of AWS Elastic Disaster Recovery (AWS DRS): minimizing downtime and data loss, RTO/RPO metrics, cost optimization, and point-in-time recovery. <br> + Research general AWS DRS architecture: source server disk replication, Replication Agent installation, replica servers in Staging Area VPC, and recovery target instances. <br> + Understand configuration of simulated on-premises environments: public/private subnets, DNS services, pre-installed applications. <br> + Prepare fundamental knowledge: SSH connection to Linux servers and RDP connection to Windows bastion host. | 20/06/2026 | 20/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | + Connect to Windows bastion host via RDP and Linux servers via SSH. <br> + Install AWS Replication Agent on simulated on-premises source servers for block-level data synchronization. <br> + Configure replication settings on the AWS DRS console and monitor initial data synchronization. <br> + Practice Disaster Recovery operations: running non-disruptive drills, Failover (disaster recovery transition), and Failback (restoring to source environment). | 21/06/2026 | 21/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | - Explore Data Engineering Immersion Day. <br> - Lab 1: Detect anomalous clickstream events using Amazon Managed Service for Apache Flink: <br>&emsp; + Environment preparation: Initialize resources (S3, Kinesis Stream, IAM Role). <br>&emsp; + Streaming ETL with Glue: Create Data Catalog, establish real-time ETL transformation jobs. <br>&emsp; + Real-time Streaming with Kinesis: Ingest simulated clickstream data into Kinesis. <br>&emsp; + Clickstream Analytics using MSK: Configure Amazon Managed Streaming for Apache Kafka to analyze events. | 22/06/2026 | 22/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 6 | - Lab 2: Data Ingestion with DMS: <br>&emsp; + Practice DMS Migration Lab: Launch Replication Instance, configure Source/Target Endpoints, and run Database Migration Tasks. <br>&emsp; + Optional: Use CloudFormation to run AutoComplete DMS Lab (automation) or Skip DMS Lab if time is limited. | 23/06/2026 | 23/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-
+| 2 | - Onboard with FCJ community members and review internship security regulations. <br> - Evaluate OS patching criticality for compliance and infrastructure security posture. <br> - Study Blue/Green deployment paradigms for automated AMI generation and replacement. <br> - Automate OS patching cycles utilizing dedicated AWS cloud services: <br>&emsp; * EC2 Image Builder: Automate image pipeline builds and AMI creation. <br>&emsp; * Systems Manager Automation Document: Orchestrate patch execution workflows. <br>&emsp; * AWS CloudFormation: Configure `AutoScalingReplacingUpdate` policies for zero-downtime rolling updates | 19/06/2026 | 19/06/2026 | |
+| 3 | - Master core concepts of AWS Elastic Disaster Recovery (AWS DRS): RTO/RPO optimization, point-in-time recovery, and cost efficiency. <br> - Analyze overall AWS DRS topology: source server block-level disk replication, Replication Agent installation, replica instances within Staging Area VPCs. <br> - Provision simulated on-premises environments: Public/Private subnets, DNS resolution, and pre-installed application stacks. <br> - Standardize administrative access: SSH access to Linux hosts and RDP access to Windows Bastion Hosts | 20/06/2026 | 20/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | - Establish secure management connections to Windows Bastion Hosts (RDP) and Linux nodes (SSH). <br> - Install AWS Replication Agent on simulated on-premises source hosts to initiate block-level continuous data replication. <br> - Configure replication parameters on the AWS DRS console and monitor initial data sync states. <br> - Practice hands-on Disaster Recovery execution: non-disruptive testing drills, Failover execution during simulated outages, and Failback restoration to source environments | 21/06/2026 | 21/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | - Execute Data Engineering Immersion Day practical lab modules. <br> - Lab 1: Detect anomalous clickstream event patterns using Amazon Managed Service for Apache Flink: <br>&emsp; + Infrastructure setup: Provision S3 buckets, Kinesis Data Streams, and IAM Role policies. <br>&emsp; + Streaming ETL with Glue: Build Data Catalogs and configure real-time Glue ETL transformation jobs. <br>&emsp; + Real-time Streaming via Kinesis: Ingest simulated clickstream telemetry into Kinesis Streams. <br>&emsp; + Clickstream Analytics using MSK: Configure Amazon Managed Streaming for Apache Kafka for real-time event analytics | 22/06/2026 | 22/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 6 | - Lab 2: Data Ingestion and Database Migration via AWS DMS: <br>&emsp; + Execute DMS Migration Lab: Launch Replication Instances, configure Source/Target Endpoints, and run Database Migration Tasks. <br>&emsp; + Automate lab deployment infrastructure utilizing AWS CloudFormation AutoComplete templates | 23/06/2026 | 23/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Week 10 Achievements:
 
 * **Automated OS Patching:**
-  * Understood the role of OS patching in security compliance.
-  * Mastered automated AMI creation with EC2 Image Builder and orchestrated the workflow using Systems Manager Automation Documents.
-  * Implemented blue/green updates using CloudFormation's AutoScalingReplacingUpdate policy for zero-downtime deployments.
+  * Understood OS patching governance for enterprise compliance standards.
+  * Automated AMI generation pipelines using EC2 Image Builder and orchestrated execution workflows via Systems Manager Automation.
+  * Implemented `AutoScalingReplacingUpdate` CloudFormation policies for zero-downtime Blue/Green AMI replacements.
 
 * **Disaster Recovery with AWS DRS:**
-  * Mastered DRS architecture: successfully installed AWS Replication Agent on source servers for block-level replication to Staging Area VPC on AWS.
-  * Practiced disaster recovery workflows: conducted non-disruptive drills, Failover (transition during disaster), and Failback (restoring to source environment).
+  * Mastered AWS DRS architecture: installed AWS Replication Agents on source servers for continuous block-level replication to Staging Area VPCs.
+  * Successfully executed Disaster Recovery lifecycle stages: non-disruptive Drills, Failover (disaster site transition), and Failback (source site restoration).
 
 * **Real-time Clickstream Data Analytics (Data Engineering Immersion Day - Lab 1):**
-  * Prepared data infrastructure environment including Amazon S3, Kinesis Stream, and appropriate IAM Roles permissions.
-  * Built Streaming ETL pipeline with AWS Glue by creating a Data Catalog and setting up a Glue ETL Job to process and transform data in real-time.
-  * Practiced real-time streaming by ingesting simulated clickstream data into Amazon Kinesis.
-  * Studied Clickstream Analytics solution using Amazon Managed Streaming for Apache Kafka (Amazon MSK) and Amazon Managed Service for Apache Flink to detect anomalous clickstream flows.
+  * Provisioned complete data infrastructure environments including Amazon S3, Kinesis Streams, and IAM Role policies.
+  * Built real-time Streaming ETL pipelines with AWS Glue Data Catalogs and streaming Glue ETL Jobs.
+  * Successfully ingested real-time clickstream streams into Amazon Kinesis.
+  * Analyzed anomalous user behavior by combining Amazon MSK (Kafka) and Amazon Managed Service for Apache Flink.
 
 * **Database Ingestion and Migration with AWS DMS (Lab 2):**
-  * Understood and practiced database migration process using AWS Database Migration Service (AWS DMS).
-  * Successfully initialized Replication Instance, and configured Source/Target Endpoints.
-  * Set up and ran Database Migration Tasks to migrate data securely and reliably (or automated using CloudFormation).
-
+  * Mastered database migration workflows using AWS Database Migration Service (AWS DMS).
+  * Provisioned Replication Instances and configured Source/Target Endpoints accurately.
+  * Executed Database Migration Tasks transferring database records securely, leveraging automated CloudFormation scripts.

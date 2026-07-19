@@ -7,40 +7,40 @@ pre: " <b> 1.3. </b> "
 ---
 ### Mục tiêu tuần 3:
 
-* Triển khai tự động hóa và CI/CD với AWS Lambda, EventBridge, CodePipeline và CodeDeploy.
-* Quản lý lưu trữ lai với AWS Storage Gateway, bảo mật ứng dụng với AWS WAF và quản lý tài nguyên bằng thẻ (Tags) và Resource Groups.
-* Cấu hình giám sát nâng cao với Grafana/CloudWatch, thiết lập quyền hạn qua IAM Permission Boundary và quản lý bản vá với Systems Manager.
-* Thực hành bảo mật dữ liệu với AWS KMS, CloudTrail, thiết lập Data Lake và sử dụng AWS Glue, Athena để truy vấn dữ liệu.
+* Thiết lập quy trình tự động hóa và đường ống CI/CD bằng AWS Lambda, EventBridge, CodePipeline và CodeDeploy.
+* Vận hành lưu trữ lai (hybrid) với AWS Storage Gateway, tăng cường phòng thủ lớp ứng dụng qua AWS WAF và quản lý tài nguyên khoa học bằng Tags cùng Resource Groups.
+* Xây dựng hệ thống theo dõi chuyên sâu kết hợp Grafana và CloudWatch, áp dụng cơ chế phân quyền kiểm soát với IAM Permission Boundary và tự động hóa cập nhật bản vá bằng Systems Manager.
+* Thực thi bảo mật dữ liệu toàn diện với AWS KMS và CloudTrail, khởi tạo hạ tầng Data Lake và ứng dụng bộ đôi AWS Glue - Athena để truy vấn dữ liệu hiệu năng cao.
 
 ### Các công việc cần triển khai trong tuần này:
 #### Tuần 3 (Từ 01/05/2026 – 07/05/2026)
 | Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | --- | --- | --- | --- |
-| 2 | - Học và cấu hình hàm Lambda để nâng cao hiệu quả chi phí, tìm hiểu về EventBridge trong dịch vụ CloudWatch <br> - Nghiên cứu cách triển khai ứng dụng lên EC2 bằng AWS CodePipeline, bao gồm cấu hình Git credential, Git connection, CodeDeploy agent và CodePipeline | 01/05/2026 | 01/05/2026 | |
-| 3 | - Học cách thiết lập AWS Storage Gateway, tạo file share và kết nối ổ đĩa với máy cá nhân để đồng bộ dữ liệu <br> - Thực hành thiết lập AWS Web Application Firewall, triển khai bảo mật ứng dụng sử dụng các quy tắc AWS WAF <br> - Tạo thẻ (tag) để tổ chức tài nguyên và sử dụng AWS Resource Groups để quản lý và tự động hóa các tác vụ | 02/05/2026 | 02/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | - Nghiên cứu và cài đặt Grafana để giám sát tài nguyên trên AWS, kết nối với CloudWatch <br> - Tạo IAM Permission Boundary và Organization Policy để quản lý tối ưu chi phí và bảo mật <br> - Quản lý bản vá bằng lệnh Run Command trên nhiều máy chủ | 03/05/2026 | 03/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | - Học và thực hành cách mã hóa dữ liệu với AWS KMS, AWS CloudTrail và truy xuất dữ liệu bằng Athena, chia sẻ dữ liệu đã mã hóa trên S3 <br> - Tìm hiểu cách tính toán, xem chi tiết và sử dụng tính năng quản lý chi phí theo từng dịch vụ | 04/05/2026 | 04/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 6 | - Làm quen với cách lưu trữ, phân tích và chuyển đổi dữ liệu với Data Lake. <br> - Học cách thiết lập và triển khai kiến trúc cơ bản sử dụng AWS CDK. <br> - Tìm hiểu cách sử dụng AWS Glue kết hợp với Athena để truy xuất dữ liệu, phân tích chi phí và hiệu suất. | 05/05/2026 | 05/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 2 | - Nghiên cứu và tối ưu chi phí vận hành với hàm Serverless Lambda, tích hợp luồng sự kiện EventBridge trong CloudWatch <br> - Xây dựng quy trình tự động hóa triển khai ứng dụng lên EC2 thông qua AWS CodePipeline, cấu hình Git Connection, Git Credential và CodeDeploy Agent | 01/05/2026 | 01/05/2026 | |
+| 3 | - Cấu hình giải pháp AWS Storage Gateway, thiết lập các vùng chia sẻ tệp (File Share) và kết nối ổ đĩa mạng để đồng bộ dữ liệu lai <br> - Triển khai tường lửa ứng dụng web AWS WAF, thiết lập bộ quy tắc bảo mật ngăn chặn các nguy cơ an ninh mạng <br> - Chuẩn hóa việc gán thẻ (Tags) cho tài nguyên và khai thác AWS Resource Groups để tự động hóa công tác quản trị | 02/05/2026 | 02/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | - Cài đặt và tích hợp Grafana với CloudWatch phục vụ mục đích trực quan hóa các chỉ số giám sát hạ tầng AWS <br> - Thiết lập chính sách giới hạn quyền IAM Permission Boundary và chính sách quản trị tổ chức Organization Policy để tối ưu chi phí lẫn an toàn hệ thống <br> - Tự động hóa quy trình cập nhật bản vá trên quy mô nhiều máy chủ bằng công cụ Systems Manager Run Command | 03/05/2026 | 03/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | - Thực hành cơ chế mã hóa dữ liệu an toàn với AWS KMS, ghi vết nhật ký hệ thống qua CloudTrail và phân tích dữ liệu bằng Athena, thiết lập chia sẻ dữ liệu mã hóa trên S3 <br> - Phân tích, theo dõi chỉ số chi phí chi tiết và tối ưu hóa ngân sách theo từng dịch vụ AWS sử dụng | 04/05/2026 | 04/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 6 | - Tiếp cận kiến trúc lưu trữ, biến đổi và phân tích dữ liệu tập trung với mô hình Data Lake <br> - Tìm hiểu và triển khai kịch bản khởi tạo hạ tầng cơ bản bằng mã nguồn với AWS CDK <br> - Kết hợp AWS Glue Crawler/Catalog với Athena để truy vấn dữ liệu, đánh giá chi phí và hiệu năng xử lý hệ thống | 05/05/2026 | 05/05/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Kết quả đạt được tuần 3:
 
 * **Điện toán Máy chủ ảo (Serverless) & Tự động hóa Triển khai**
-  * Cấu hình các hàm Lambda và EventBridge.
-  * Triển khai ứng dụng lên EC2 bằng AWS CodePipeline và CodeDeploy.
+  * Làm chủ cấu hình các xử lý bất đồng bộ qua Lambda và kịch bản EventBridge.
+  * Hoàn thiện đường ống tự động hóa đóng gói và triển khai ứng dụng lên EC2 với AWS CodePipeline & CodeDeploy.
 
 * **Bảo mật, Lưu trữ & Quản lý Tài nguyên**
-  * Cấu hình AWS Storage Gateway để đồng bộ dữ liệu lai (hybrid).
-  * Triển khai các quy tắc AWS WAF để bảo vệ ứng dụng web.
-  * Tổ chức tài nguyên hiệu quả bằng tag (thẻ) và AWS Resource Groups.
-  * Thiết lập IAM Permission Boundaries và Organization Policies.
-  * Thực hành mã hóa dữ liệu (encrypt at rest) với AWS KMS và giám sát hoạt động bằng CloudTrail.
+  * Triển khai giải pháp đồng bộ dữ liệu lai hai chiều sử dụng AWS Storage Gateway.
+  * Thiết lập lớp bảo vệ an toàn cho ứng dụng web thông qua bộ quy tắc AWS WAF.
+  * Phân loại và quản trị tài nguyên chuyên nghiệp nhờ chính sách gán thẻ (Tags) và AWS Resource Groups.
+  * Kiểm soát ranh giới phân quyền nghiêm ngặt với IAM Permission Boundaries và Organization Policies.
+  * Đảm bảo an toàn dữ liệu lưu trữ (Encryption at rest) bằng AWS KMS và kiểm vết truy cập qua CloudTrail.
 
 * **Giám sát & Vận hành Hệ thống**
-  * Tích hợp Grafana với CloudWatch để giám sát tài nguyên mạnh mẽ hơn.
-  * Quản lý bản vá lỗi trên nhiều máy chủ bằng AWS Systems Manager (Run Command).
-  * Tính toán và phân tích chi tiết chi phí sử dụng dịch vụ AWS.
+  * Xây dựng bảng điều khiển trực quan hóa hạ tầng linh hoạt bằng cách tích hợp Grafana với CloudWatch.
+  * Tự động hóa công tác quản lý và cập nhật bản vá lỗi cho máy chủ với AWS Systems Manager (Run Command).
+  * Kiểm soát chính xác cấu trúc chi phí và phân tích báo cáo sử dụng tài nguyên AWS.
 
 * **Data Engineering & Infrastructure as Code (IaC)**
-  * Xây dựng kiến trúc Data Lake cơ bản bằng AWS CDK.
-  * Sử dụng AWS Glue và Athena để truy xuất, chuyển đổi dữ liệu và phân tích hiệu suất.
-  * Chia sẻ dữ liệu đã mã hóa an toàn qua Amazon S3.
+  * Thiết lập mô hình Data Lake cơ bản thông qua hạ tầng dưới dạng mã với AWS CDK.
+  * Khai thác AWS Glue và Athena để tự động hóa trích xuất, biến đổi và truy vấn phân tích dữ liệu.
+  * Đảm bảo an toàn khi chia sẻ dữ liệu đã mã hóa trên môi trường Amazon S3.

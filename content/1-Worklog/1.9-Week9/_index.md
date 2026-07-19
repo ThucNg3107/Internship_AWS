@@ -7,48 +7,48 @@ pre: " <b> 1.9. </b> "
 ---
 ### Week 9 Objectives:
 
-* Research and deploy AWS Managed Microsoft AD to migrate corporate Active Directory to AWS.
-* Practice AWS Directory Service administration and domain joining Windows Server EC2 instances.
-* Research and deploy AWS Secrets Manager credential management service.
-* Integrate Secrets Manager with Amazon RDS and set up automated database credential rotation.
-* Deploy applications on AWS Fargate Containers securely accessing RDS via Secrets Manager VPC Endpoints.
-* Understand and apply secure remote access principles on AWS using Security Groups and AWS Network Firewall based on CISO recommendations.
-* Research centralized security policy management using AWS Firewall Manager, AWS Config, AWS Organizations, and AWS Resource Access Manager (RAM).
-* Study threat detection and auto-remediation using Amazon GuardDuty, EventBridge Event Rules, and AWS Lambda.
+* Deploy AWS Managed Microsoft AD directory services to migrate corporate Active Directory workloads to AWS Cloud.
+* Master AWS Directory Service management and perform domain joining operations for Windows Server EC2 instances.
+* Architect centralized secrets management solutions using AWS Secrets Manager.
+* Integrate Secrets Manager with Amazon RDS and automate database credential rotation processes.
+* Deploy containerized workloads on AWS Fargate securely connecting to RDS via Secrets Manager Interface VPC Endpoints.
+* Enforce secure remote access standards on AWS using Security Groups and AWS Network Firewall per CISO guidance.
+* Centralize security policy governance across multi-account environments using AWS Firewall Manager, Config, Organizations, and RAM.
+* Implement automated threat detection and incident remediation pipelines combining Amazon GuardDuty, EventBridge, and Lambda.
 
 ### Tasks to be carried out this week:
 #### Week 9 (From 12/06/2026 – 18/06/2026)
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| 2 | - Research directory service solutions with AWS Directory Service. <br> - Study architecture, core features (Multi-region replication, trust relationship) and differences between Standard and Enterprise editions. <br>&emsp; + Set up VPC network infrastructure and subnets matching Directory Service requirements. <br>&emsp; + Deploy AWS Managed Microsoft AD. <br>&emsp; + Launch a Windows Server EC2 instance and perform domain join. <br>&emsp; + Install AD Administration Tools on Windows Server to manage domains (create OUs, Users, Groups). | 12/06/2026 | 12/06/2026 | |
-| 3 | - Research database credential security using AWS Secrets Manager integrated with Amazon RDS. <br> - Study secure network connection architecture (VPC, private subnets, security groups) between Bastion Host and Amazon RDS MySQL (Private). <br>&emsp; + Set up VPC with required Subnets and Route Tables. <br>&emsp; + Launch Amazon RDS MySQL in private subnet. <br>&emsp; + Configure AWS Secrets Manager to store and manage RDS credentials. <br>&emsp; + Launch Amazon EC2 Bastion Host and connect to RDS using credentials retrieved from Secrets Manager. | 13/06/2026 | 13/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 4 | - Research automated password rotation process to enhance security based on CSF and CAF standards. <br> - Study ECS integration to securely connect to RDS database using Secrets Manager via Interface VPC Endpoint. <br>&emsp; + Set up and activate automated Secret Rotation for RDS database and verify using Shell Scripts. <br>&emsp; + Package sample application into Docker Container and push to Amazon ECR. <br>&emsp; + Deploy AWS Fargate Container in VPC. <br>&emsp; + Configure Fargate Task Role and Secrets Manager Interface VPC Endpoint to allow Container to securely retrieve secrets and connect to RDS MySQL. | 14/06/2026 | 14/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 5 | - Study security processes on AWS Cloud through the top 10 security tips from AWS CISO Stephan Schmidt, focusing on secure remote access. <br> - Research network access control and firewalls using Security Groups and AWS Network Firewall. <br> - Practice analyzing remote connection scenarios using RDP and SSH protocols. | 15/06/2026 | 15/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
-| 6 | - Learn and practice threat detection and auto-remediation with Amazon GuardDuty. <br> - Recreate attack scenarios and automate remediation using EventBridge Event Rules and AWS Lambda. <br>&emsp; + Deploy CloudFormation Template to set up practice environment in us-west-2 (Oregon). <br>&emsp; + Detect and remediate compromised EC2 instance via GuardDuty, EventBridge, and Lambda. <br>&emsp; + Identify unauthorized API calls from exposed IAM Credentials and perform manual remediation. <br>&emsp; + Detect and prevent exfiltration of IAM role credentials via AWS Lambda. | 16/06/2026 | 16/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 2 | - Research directory service architectures with AWS Directory Service. <br> - Analyze core capabilities (Multi-region replication, Trust relationships) and differences between Standard and Enterprise editions. <br>&emsp; + Provision VPC subnets meeting Directory Service networking prerequisites. <br>&emsp; + Deploy AWS Managed Microsoft AD directories. <br>&emsp; + Launch Windows Server EC2 instances and execute domain join procedures. <br>&emsp; + Install AD Administration Tools on Windows Server to manage Active Directory objects (OUs, Users, Groups) | 12/06/2026 | 12/06/2026 | |
+| 3 | - Implement database credential encryption and management using AWS Secrets Manager integrated with Amazon RDS MySQL. <br> - Design secure network topologies (Private Subnets, Security Groups) connecting EC2 Bastion Hosts to private RDS MySQL databases. <br>&emsp; + Configure VPC subnets and route tables for isolated database tiers. <br>&emsp; + Provision Amazon RDS MySQL database clusters within private subnets. <br>&emsp; + Configure AWS Secrets Manager to store and manage RDS database credentials. <br>&emsp; + Launch EC2 Bastion Hosts and query RDS databases using credentials retrieved from Secrets Manager | 13/06/2026 | 13/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 4 | - Automate secret rotation workflows to align with NIST CSF and AWS CAF security compliance frameworks. <br> - Integrate Amazon ECS/Fargate container workloads with RDS databases via Secrets Manager Interface VPC Endpoints. <br>&emsp; + Configure automated periodic Secret Rotation for RDS MySQL and validate via Shell Scripts. <br>&emsp; + Package container applications into Docker Images and push to Amazon ECR. <br>&emsp; + Deploy AWS Fargate containers within VPC boundaries. <br>&emsp; + Configure Fargate Task Roles and Secrets Manager Interface VPC Endpoints for secure secret retrieval and RDS database connectivity | 14/06/2026 | 14/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 5 | - Review top 10 cloud security practices recommended by AWS CISO Stephan Schmidt, focusing on remote access protection. <br> - Implement network access control and perimeter firewalling using Security Groups and AWS Network Firewall. <br> - Analyze secure remote connection topology scenarios for RDP (Port 3389) and SSH (Port 22) protocols | 15/06/2026 | 15/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| 6 | - Implement automated threat detection and security incident auto-remediation workflows with Amazon GuardDuty. <br> - Simulate attack vectors and execute automated remediation via EventBridge Event Rules and AWS Lambda. <br>&emsp; + Provision practice environments via CloudFormation templates in `us-west-2` (Oregon). <br>&emsp; + Detect and automatically isolate compromised EC2 instances using GuardDuty, EventBridge, and Lambda. <br>&emsp; + Identify unauthorized API calls originating from leaked IAM credentials and perform manual remediation. <br>&emsp; + Detect and prevent IAM role credential exfiltration using AWS Lambda functions | 16/06/2026 | 16/06/2026 | <https://cloudjourney.awsstudygroup.com/> |
 
 ### Week 9 Achievements:
 
 * **AWS Managed Microsoft AD Deployment & Active Directory Administration:**
-  * Understood the concept and architecture of AWS Directory Service, specifically AWS Managed Microsoft AD.
-  * Successfully deployed AWS Managed Microsoft AD running in multiple Availability Zones (AZs) for high availability.
-  * Practiced domain joining Windows Server EC2 instances.
-  * Installed and utilized AD Administration Tools on Windows Server to manage domains, create Users, Groups, and OUs.
+  * Understood AWS Directory Service architecture and operational mechanics for AWS Managed Microsoft AD.
+  * Deployed AWS Managed Microsoft AD across multiple Availability Zones (Multi-AZ) ensuring high availability.
+  * Executed domain join procedures successfully for Windows Server EC2 instances.
+  * Mastered AD Administration Tools to manage Active Directory objects, including Users, Groups, and Organizational Units (OUs).
 
 * **AWS Secrets Manager, RDS, and AWS Fargate Integration:**
-  * Understood the role of Secrets Manager in database security under the CSF (Prevention) and CAF (Preventative) frameworks.
-  * Successfully deployed VPC Endpoint for private connection to Secrets Manager.
-  * Integrated and configured automated Secret Rotation for RDS MySQL.
-  * Packaged Docker application, uploaded to Amazon ECR, and ran on AWS Fargate.
-  * Secured connection from Fargate container and EC2 Bastion Host to RDS by dynamically retrieving credentials from Secrets Manager.
+  * Applied Secrets Manager security controls aligned with NIST CSF and AWS CAF framework standards.
+  * Provisioned Interface VPC Endpoints for private connectivity to Secrets Manager.
+  * Automated periodic database credential rotation (Secret Rotation) for RDS MySQL.
+  * Containerized applications, uploaded artifacts to Amazon ECR, and executed workloads on AWS Fargate.
+  * Secured database connectivity from Fargate Containers and EC2 Bastion Hosts to RDS MySQL using dynamic credential retrieval.
 
 * **Secure Remote Access & AWS Network Firewall Integration:**
-  * Studied 10 key security recommendations from AWS CISO Stephan Schmidt for securing remote access.
-  * Configured Amazon EC2 Security Groups and AWS Network Firewall to restrict remote access by IP, Port, and Protocol.
-  * Practiced remote connection scenarios via SSH (Port 22) and RDP (Port 3389).
-  * Learned central security policy management for multiple accounts using AWS Firewall Manager, Organizations, Config, and RAM.
+  * Applied top 10 security guidelines from AWS CISO Stephan Schmidt to harden remote access vectors.
+  * Configured EC2 Security Groups and AWS Network Firewall to restrict remote traffic by IP, Port, and Protocol.
+  * Established secure SSH (Port 22) and RDP (Port 3389) remote connectivity scenarios.
+  * Standardized multi-account security policy management utilizing AWS Firewall Manager, Organizations, Config, and RAM.
 
 * **Threat Detection & Auto-Remediation with Amazon GuardDuty:**
-  * Configured Amazon GuardDuty to detect threats and generate security findings.
-  * Recreated attack scenarios and set up auto-remediation using CloudFormation, EventBridge, and Lambda.
-  * Resolved findings related to compromised EC2 instances, exposed credentials, and credential exfiltration.
-  * Applied NIST CSF and AWS CAF principles for prevention, detection, and response.
+  * Configured Amazon GuardDuty to continuously scan and generate security findings for threat activities.
+  * Automated incident response workflows leveraging CloudFormation, EventBridge Event Rules, and AWS Lambda.
+  * Remediated compromised EC2 instances, exposed IAM credentials, and IAM role exfiltration events.
+  * Applied NIST CSF and AWS CAF security lifecycle controls (Prevent, Detect, Respond).
