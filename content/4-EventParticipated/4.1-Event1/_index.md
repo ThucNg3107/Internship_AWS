@@ -12,71 +12,68 @@ pre: " <b> 4.1. </b> "
 
 ### Event Purpose
 
-- **Knowledge Sharing & Direction**: A platform for community members (AWS Study Group/FCAJ) to share both soft skills (how to create motivation for learning) and professional skills (AWS technology, AI applications, career paths).
-- **Community Networking**: Create opportunities for networking and connection between members with the same self-development goals.
-- **Practice Environment**: The organizers aim to create a playground where young people can confidently step on stage as speakers, sharing knowledge (instead of just reading online drama), thereby practicing presentation skills and public speaking confidence.
+- **Knowledge Sharing & Direction**: Shape an effective learning mindset, accumulate practical AWS cloud computing knowledge, and explore AI application trends in IT career orientation.
+- **Community Networking**: Expand the connection network among young individuals sharing personal development goals and a passion for Cloud/AI technologies within the FCAJ community.
+- **Practicing Environment**: Build an open sharing space encouraging members to confidently step onto the stage as speakers, refining communication skills and public speaking confidence.
 
 ### Speaker List
 
 - **Huynh Hoang Long** - Speaker on “Addicted to learning like you’re addicted to social media”.
 - **Nguyen Tuan Thinh** - Speaker on “Automated prompt engineering: enhancing LLM Output Quality”.
-- **Anh Khang** - Speaker on “AI-Ready Freshers - skills and Mindset in AI era”.
-- **Anh Thao (Chi Thao)** - Speaker on the BMX method (BMAD Method) in software development using AI.
+- **Anh Khang** - Speaker on “AI-Ready Freshers - skill and Mindset in AI era”.
+- **Anh Thao (Ms. Thao)** - Speaker on the BMX method (BMAD Method) for AI-driven software development.
 
 ### Key Highlights
 
+#### 1. Hacking the brain to be "addicted" to learning (Dopamine)
 
-#### 1. Hacking the brain to be “addicted” to learning (Dopamine)
+- **Problem**: Social media and gaming are addictive due to instant gratification, whereas acquiring professional knowledge requires long-term focus and delivers delayed results.
+- **Solution**: Leverage Dopamine release triggered by reward anticipation. Establish small, randomized reward milestones after focused study intervals to stimulate curiosity and build sustainable learning momentum.
+- **Practical Tips**: Apply the "streak retention" mindset through daily progress tracking, break down complex AWS services into manageable steps to prevent overwhelm, and use gamification mechanisms to maintain motivation.
 
-- **The Problem**: Social media and games are addictive because of "instant gratification" and "curiosity", while learning requires long-term focus and slow results.
-- **The Solution**: Dopamine is released not when receiving the reward, but when expecting the reward to arrive. To study effectively, create small random rewards (e.g., a lucky draw after 10 minutes of study) to stimulate curiosity.
-- **Practical Tips**: Use loss aversion by creating a daily study streak (like daily game check-ins), divide huge chunks of knowledge into small milestones (like learning one AWS service at a time) to prevent overwhelm, and create a feedback loop (earning XP, ranking up) to trick the brain.
+#### 2. AI Prompt Engineering Skills & AWS Architecture
 
-#### 2. AI Prompt Engineering & AWS Architecture
-
-- **Prompt Engineering**: To get high-quality AI responses, prompts should contain 7 key components: Role, Instruction, Context, Input/Output formatting, Examples, and Constraints.
-- **Prevent Hallucination**: Avoid hallucination by keeping unrelated questions out of the same chat thread and chunking input data. Advanced techniques include: Chain of Thought (step-by-step reasoning) and Tree of Thought.
-- **AWS Architecture Demo**: The speaker demonstrated an AWS application architecture utilizing CloudFront, S3 (static hosting), Cognito (user management), API Gateway, Lambda (serverless backend), Bedrock (AI model provider), and DynamoDB.
+- **Prompt Engineering**: Standardize prompts interacting with LLMs using 7 core elements: Role, Instruction, Context, Input/Output Format, Example, and Constraint.
+- **Preventing Hallucination**: Mitigate AI hallucination risks by isolating conversation contexts, avoiding unrelated topics in a single session, and adopting step-by-step reasoning techniques (Chain of Thought / Tree of Thought).
+- **AWS Architecture Demo**: Visualize an AI-integrated cloud-native application architecture demonstrating data flow across CloudFront, S3, Cognito, API Gateway, Lambda, Amazon Bedrock, and DynamoDB.
 
 #### 3. Career Mindset in the AI Era
 
-- **AI Won't Replace You**: AI acts as an amplifier. If you are good, AI doubles your productivity; but if you lack foundational knowledge, AI will only make you worse because you won't understand how to handle it when the problem shifts.
-- **Focus on Foundations**: Technology changes fast, but foundations do not. Employers don't need you to know every framework, but they value proper problem-solving mindsets.
-- **Always Ask "Why"**: When doing homework or projects, don't just focus on the "What" (getting it done), but understand "Why" you chose that solution. Integrity - handling edge cases even when no one asks - is the key to long-term career growth.
-- **5 Benefits of a Job**: When evaluating opportunities, look beyond Salary to Experience, Network, Knowledge, and Profile.
+- **AI Will Not Replace You**: AI serves as a productivity leverage tool. Mastering foundational knowledge allows you to double output; lacking core fundamentals makes you dependent and unprepared when real-world requirements change.
+- **Focus on Foundations**: Frameworks and tools evolve rapidly, but IT core principles remain constant. Enterprises value analytical capability and problem-solving skills over chasing short-lived trends.
+- **Always Ask "Why?"**: Rather than completing tasks at a surface level (What), delve into the rationale behind architectural decisions (Why) and uphold professional integrity in all technical scenarios.
+- **5 Dimensions of Career Value**: Evaluate career opportunities across 5 key dimensions: Compensation (Salary), Hands-on Experience, Network, Acquired Knowledge, and Personal Reputation (Profile).
 
-#### 4. BMX Method in Software Development with AI
+#### 4. The BMX Method in AI-Powered Software Development
 
-- **The Problem**: Directly asking AI to write code from the start results in messy, patched code, and makes AI lose context as the project grows.
-- **The Solution (BMX Method)**: Divide the project according to Software Development standards. Assign roles to AI as PM, Architect, Scrum Master, and Dev.
-- **Process**: Ask AI to Brainstorm -> Write Requirement Documents (BRD) -> Design System Architecture -> Break down into features (Epic/Story) -> Finally, let AI Dev write code based on these detailed sub-documents. The philosophy is: "Write excellent documents, and AI will code well."
-
-
+- **Problem**: Requesting AI to generate code immediately without detailed specifications produces patchy code, accumulates tech debt, and overflows context limits as projects scale.
+- **Solution (BMX Method)**: Standardize AI workflows aligned with SDLC roles (PM, System Architect, Scrum Master, Developer).
+- **Process**: Conceptualize (Brainstorm) -> Draft Requirements Document (BRD) -> Design Architecture -> Deconstruct into Feature Stories -> Generate Code via AI Developer. Core principle: "Standardized documentation is the key to high-quality AI code."
 
 ### Lessons Learned
 
 #### Design Mindset
 
-- **Consistency beats intensity**: Winners build environments and habits to automate learning every day, rather than relying on forced willpower.
-- **Ask questions and dare to fail**: Mistakes are essential for freshers. Without mistakes, there is no experience. Make assumptions and find the answers yourself.
-- **Do not rely entirely on AI**: Treat AI as a peer to brainstorm with, but never outsource your intelligence. If you don't understand the problem, you cannot verify the AI's output.
-- **Teamwork is highly valued**: Work on projects with others to demonstrate communication and leadership skills in addition to technical abilities.
-- **Control AI instead of delegating**: In software development, isolate context windows and partition tasks clearly to prevent hallucination and maintain control over the system.
+- **Consistency Beats Intensity**: Building automated daily learning habits yields more sustainable results than relying on sporadic bursts of forced effort.
+- **Ask Questions & Embrace Mistakes**: Formulating hypotheses, learning from mistakes, and deriving insights is the fastest path for young professionals to build real-world experience.
+- **Control AI Instead of Offloading**: Use AI as an interactive brainstorming partner while maintaining full ownership and final accountability for output quality.
+- **Value Teamwork**: Collaborative project execution demonstrates not only technical proficiency but also communication, active listening, and team alignment skills.
+- **System Context Management**: Explicit task decomposition and context scope limitation ensure full source code control and prevent AI-generated errors.
 
 ### Applying to Work
 
-- **Apply the Dopamine technique** to maintain daily self-study habits (learning AWS in small chunks).
-- **Write structured prompts** matching the 7 components to improve AI output quality.
-- **Use the BMX process** to manage software projects when developing with AI (designing docs before requesting code generation).
-- **Strengthen foundations** (networking, OS, cloud core) instead of chasing passing frameworks.
+- **Apply incremental reward mechanisms (Dopamine)** to maintain daily self-study discipline across targeted AWS service modules.
+- **Adopt the 7-component prompt structure** to optimize AI response quality and code output.
+- **Implement the BMX workflow** in software projects, prioritizing specification and architecture documentation before code generation.
+- **Proactively reinforce core fundamentals** (networking, operating systems, core cloud services) as a foundation for long-term career growth.
 
 ### Event Experience
 
-Attending the event helped me gather many useful lessons:
+Participating in this event provided deep practical values:
 
-- **Inspiring**: Stories from student speakers showed that confidence and community-sharing efforts are extremely valuable.
-- **Hands-on visual**: Live serverless demos with Cognito and Bedrock made cloud-native architecture easy to understand.
-- **Networking**: Received valuable career guidance from experienced industry mentors.
+- **Inspiration**: Felt the enthusiasm and genuine sharing spirit of young community speakers.
+- **Visual Realism**: Observing a live Serverless and Bedrock architecture demo clarified data flows in production cloud-native applications.
+- **Community Networking**: Received valuable career advice and guidance from experienced cloud mentors in the industry.
 
 <div style="display: flex; justify-content: center; margin-top: 20px;">
   <img src="/images/4-EventParticipated/sk1_1.jpg" alt="sk1_1" style="width: 30%; min-width: 200px; height: auto;" />
