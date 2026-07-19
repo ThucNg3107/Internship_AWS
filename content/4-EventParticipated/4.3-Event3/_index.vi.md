@@ -10,15 +10,14 @@ pre: " <b> 4.3. </b> "
 
 # Bài thu hoạch “First Cloud Journey Meetup - June 2026”
 
-
 ### Mục Đích Của Sự Kiện
 
-- Chia sẻ kiến thức về công nghệ Container và Docker cho người mới bắt đầu.
-- Giới thiệu các giải pháp nâng cao như GraphRAG trên AWS Bedrock và Neptune.
-- Hướng dẫn xây dựng hệ thống phát hiện xâm nhập mạng (NIDS) sử dụng Machine Learning.
-- Chia sẻ kinh nghiệm thực tế về lộ trình phát triển sự nghiệp từ IT Helpdesk lên Senior Sysadmin/Cloud Engineer.
-- Khám phá kiến trúc kết nối game Multiplayer sử dụng AWS WebSockets và Godot.
-- Đề cao các quy tắc vàng và công cụ để làm việc nhóm hiệu quả.
+- Chuẩn hóa nền tảng kỹ thuật về công nghệ Containerization và ứng dụng Docker cho lập trình viên mới.
+- Khám phá các giải pháp AI nâng cao như mô hình GraphRAG kết hợp Amazon Bedrock và cơ sở dữ liệu đồ thị Amazon Neptune.
+- Phương pháp xây dựng hệ thống phát hiện xâm nhập mạng (NIDS) ứng dụng thuật toán Machine Learning.
+- Chia sẻ câu chuyện phát triển sự nghiệp thực tế từ vai trò IT Helpdesk đến vị trí Senior System Administrator / Cloud Engineer.
+- Phân tích kiến trúc mạng thời gian thực cho game Multiplayer sử dụng AWS WebSockets và game engine Godot.
+- Đề cao bộ quy tắc vàng và công cụ quản trị để tối ưu hóa hiệu quả làm việc nhóm.
 
 ### Danh Sách Diễn Giả
 
@@ -33,69 +32,73 @@ pre: " <b> 4.3. </b> "
 
 #### Docker - Công nghệ Container hóa
 
-- Khái niệm: Đóng gói ứng dụng và các thành phần phụ thuộc vào một gói duy nhất để hoạt động ổn định ở mọi nơi.
-- Lợi ích: Tính di động cao, nhất quán, hiệu quả tài nguyên và triển khai nhanh chóng.
-- Thành phần chính: Docker Images (mẫu chỉ đọc), Dockerfile (tệp chỉ dẫn xây dựng) và Docker Containers (thực thể ứng dụng đang chạy).
+- Khái niệm: Đóng gói toàn bộ ứng dụng cùng mã nguồn và môi trường phụ thuộc vào một đơn vị đóng gói duy nhất, bảo đảm khả năng thực thi đồng nhất trên mọi nền tảng.
+- Lợi ích: Tối ưu tính linh hoạt, đóng đóng gói đồng bộ, nâng cao hiệu suất sử dụng tài nguyên và tăng tốc độ triển khai ứng dụng.
+- Thành phần chính: Docker Images (bản mẫu đóng gói chỉ đọc), Dockerfile (tệp cấu hình kịch bản build) và Docker Containers (thực thể môi trường đang vận hành).
 
 #### GraphRAG với Amazon Bedrock & Neptune
 
-- Vấn đề: RAG truyền thống có giới hạn trong việc trả lời các câu hỏi yêu cầu suy luận đa bước (multi-hop reasoning).
-- Giải pháp: Sử dụng đồ thị (Graph) để lưu trữ các mối quan hệ rõ ràng giữa các thực thể, giúp LLM hiểu ngữ cảnh sâu hơn.
-- Công cụ: Amazon Bedrock (xử lý thực thể/embedding) và Amazon Neptune (lưu trữ và truy vấn đồ thị).
+- Vấn đề: Kỹ thuật RAG truyền thống thường gặp giới hạn khi truy vấn các bài toán phức tạp đòi hỏi khả năng suy luận liên kết (multi-hop reasoning).
+- Giải pháp: Tận dụng cấu trúc Đồ thị (Graph Database) để biểu diễn các mối quan hệ ngữ nghĩa giữa các thực thể, giúp mô hình ngôn ngữ lớn (LLM) nắm bắt ngữ cảnh sâu sắc hơn.
+- Công cụ: Amazon Bedrock (trích xuất thực thể & tạo vector embeddings) kết hợp Amazon Neptune (lưu trữ và truy vấn tri thức đồ thị).
 
 #### Lộ trình nghề nghiệp IT Infrastructure
 
-- Kỹ năng cốt lõi: Bắt đầu từ kỹ năng giải quyết vấn đề (troubleshooting), giao tiếp và tư duy học hỏi tại Helpdesk.
-- Bước chuyển mình: Học Linux, mạng (Networking) và xây dựng các phòng lab thực hành để hiểu cách hệ thống được xây dựng.
-- Tư duy Cloud/DevOps: Chuyển từ quản lý server vật lý sang hạ tầng dưới dạng mã (IaC - Terraform) và văn hóa tự động hóa (CI/CD, Docker).
+- Kỹ năng cốt lõi: Khởi đầu từ năng lực phân tích nguyên nhân sự cố (troubleshooting), kỹ năng giao tiếp và tinh thần chủ động học hỏi ở vị trí Helpdesk.
+- Bước chuyển mình: Làm chủ hệ điều hành Linux, kiến thức mạng (Networking) và tự xây dựng các phòng lab thực hành để hiểu sâu bản chất vận hành hệ thống.
+- Tư duy Cloud/DevOps: Dịch chuyển từ quản trị hạ tầng vật lý sang mô hình hạ tầng dưới dạng mã (IaC - Terraform) kết hợp văn hóa tự động hóa (CI/CD, Container).
 
 #### Kết nối Game với AWS WebSockets
 
-- Kiến trúc: Sử dụng API Gateway WebSocket để duy trì kết nối hai chiều toàn song công (full-duplex).
-- Quản lý trạng thái: Kết hợp Lambda (xử lý logic) và DynamoDB (lưu trữ ID kết nối và trạng thái trận đấu).
-- Tích hợp Godot: Sử dụng lớp WebSocketPeer để xử lý các sự kiện mạng trong vòng lặp game.
-
-
+- Kiến trúc: Khai thác Amazon API Gateway WebSocket nhằm duy trì kênh giao tiếp hai chiều liên tục (full-duplex) với độ trễ thấp.
+- Quản lý trạng thái: Phối hợp AWS Lambda (xử lý logic sự kiện) và DynamoDB (lưu trữ session ID cùng trạng thái phòng game).
+- Tích hợp Godot: Sử dụng thư viện WebSocketPeer để lắng nghe và xử lý các sự kiện mạng trực tiếp trong vòng lặp xử lý của game (game loop).
 
 ### Những Gì Học Được
 
-#### Tư Duy Thiết Kế 
+#### Tư Duy Thiết Kế
 
-- **Cloud-Native Mindset**: Hiểu về khả năng mở rộng đàn hồi (elastic scaling) và mô hình trả tiền theo mức sử dụng (pay-for-value).
-- **Security-First**: Bảo mật không chỉ là dùng quy tắc cứng nhắc mà cần sự linh hoạt của AI/ML để thích ứng với các mối đe dọa mới.
-- **Teamwork Core**: Hiểu rằng mục tiêu chung rõ ràng và sự chịu trách nhiệm cá nhân là chìa khóa của hiệu quả công việc.
+- **Cloud-Native Mindset**: Thấu hiểu bản chất của khả năng mở rộng linh hoạt (elastic scaling) và mô hình chi phí tối ưu theo giá trị thực dùng (pay-for-value).
+- **Security-First**: Bảo mật không dừng ở các quy tắc cố định mà cần kết hợp linh hoạt thuật toán AI/ML để ứng phó với các hình thức tấn công mới.
+- **Teamwork Core**: Nhận thức rõ ràng rằng mục tiêu chung minh bạch và tinh thần làm chủ cá nhân là yếu tố quyết định năng suất tập thể.
 
 #### Kiến Trúc Kỹ Thuật
 
-- **Containerization vs. Virtualization**: Hiểu rõ tại sao Container lại nhẹ hơn và tối ưu hơn VM truyền thống nhờ dùng chung OS.
-- **Real-time Communication**: Phân biệt khi nào nên dùng WebSocket (cho game turn-based, chat) và khi nào dùng GameLift cho các game yêu cầu tần suất cập nhật cao.
-- **Data Engineering cho AI**: Tầm quan trọng của việc làm sạch dữ liệu và xử lý mất cân bằng lớp (class imbalance) trong huấn luyện mô hình ML.
+- **Containerization vs. Virtualization**: Phân biệt ưu thế của Container so với máy ảo VM truyền thống nhờ cơ chế chia sẻ chung nhân hệ điều hành (OS kernel).
+- **Real-time Communication**: Xác định đúng kịch bản áp dụng WebSocket (game turn-based, tính năng chat) so với dịch vụ AWS GameLift đối với các game yêu cầu đồng bộ tần suất cao.
+- **Data Engineering cho AI**: Tầm quan trọng của công đoạn làm sạch dữ liệu và cân bằng lớp (class imbalance) trong bài toán huấn luyện mô hình Machine Learning.
 
 ### Chiến Lược Phát Triển
 
-- **Hands-on Experience**: Thực hành qua các project thực tế và xây dựng portfolio quan trọng hơn chỉ có chứng chỉ.
-- **Automation**: Tự động hóa các tác vụ lặp lại để dành thời gian cho việc thiết kế và cải tiến hệ thống.
+- **Hands-on Experience**: Xây dựng sản phẩm thực tế qua các dự án cá nhân có giá trị vượt trội hơn việc tích lũy chứng chỉ đơn thuần.
+- **Automation**: Tự động hóa các tác vụ lặp lại để giải phóng nguồn lực cho các hoạt động thiết kế và tối ưu hệ thống.
 
 ### Ứng dụng vào công việc
-- Triển khai Docker: Đóng gói các ứng dụng hiện tại để tối ưu hóa quá trình CI/CD và giảm chi phí hạ tầng.
-- Nâng cấp bảo mật: Nghiên cứu tích hợp ML NIDS vào hệ thống AWS hiện có để tăng cường khả năng phát hiện tấn công.
-- Cải thiện làm việc nhóm: Sử dụng các công cụ như Trello, Slack hoặc Discord để quản lý dự án và giao tiếp hiệu quả theo các quy tắc vàng.
-- Phát triển ứng dụng WebSocket: Thử nghiệm xây dựng các tính năng tương tác thời gian thực sử dụng AWS Lambda và DynamoDB.
+
+- Triển khai Docker: Đóng gói các ứng dụng hiện tại để chuẩn hóa quy trình CI/CD và tiết kiệm chi phí vận hành hạ tầng.
+- Nâng cấp bảo mật: Nghiên cứu phương án tích hợp mô hình NIDS dựa trên ML vào kiến trúc AWS sẵn có để nâng cao năng lực phòng thủ.
+- Cải thiện làm việc nhóm: Ứng dụng các công cụ quản trị (Trello, Slack, Discord) để tăng cường tính minh bạch và hiệu quả phối hợp công việc.
+- Phát triển ứng dụng WebSocket: Thử nghiệm xây dựng các tính năng tương tác thời gian thực dựa trên AWS Lambda và DynamoDB.
+
 ### Trải nghiệm trong event
-Tham gia buổi Meetup ngày Jun 06, 2026 là một hành trình học tập đa chiều từ hạ tầng, bảo mật đến lập trình ứng dụng. Một số ấn tượng nổi bật:
+
+Tham gia sự kiện Meetup ngày Jun 06, 2026 là một hành trình học tập toàn diện từ hạ tầng, an toàn thông tin đến lập trình ứng dụng thực tế. Một số ấn tượng nổi bật:
 
 #### Học hỏi từ thực tế
-- Những câu chuyện về sai lầm trong quá trình làm Sysadmin và bài học “đừng bao giờ test trên môi trường production” mang lại giá trị thực tiễn cao.
-- Các phiên demo trực tiếp kết nối game Godot và theo dõi dữ liệu DynamoDB thời gian thực giúp làm rõ các khái niệm trừu tượng.
+- Những trải nghiệm xương máu về các sự cố khi quản trị hệ thống và bài học “không bao giờ kiểm thử trực tiếp trên môi trường production” đem lại giá trị thực tiễn lớn.
+- Phần trình diễn demo kết nối game Godot và cập nhật dữ liệu DynamoDB theo thời gian thực giúp cụ thể hóa các khái niệm lý thuyết.
+
 #### Cập nhật công nghệ tiên phong
-- Được tiếp cận với GraphRAG - một xu hướng mới giúp giải quyết các bài toán phức tạp mà RAG truyền thống chưa làm được.
-- Hiểu được cách kết hợp sức mạnh của Cloud-native với Machine Learning để bảo vệ hệ thống trước các cuộc tấn công hiện đại.
+- Tiếp cận giải pháp GraphRAG - xu hướng công nghệ mới hỗ trợ giải quyết các bài toán tri thức phức tạp mà RAG truyền thống chưa tối ưu.
+- Nắm bắt phương pháp kết hợp hạ tầng Cloud-native với Machine Learning để bảo vệ hệ thống trước các nguy cơ an ninh mạng hiện đại.
+
 #### Kết nối cộng đồng
-- Sự kiện tạo không gian để các bạn sinh viên, người mới đi làm và các chuyên gia trao đổi về lộ trình phát triển “từ con số 0”.
-- Hiểu thêm về tầm quan trọng của các công cụ số trong việc thúc đẩy sự phối hợp nhịp nhàng giữa các thành viên trong team.
+- Sự kiện tạo môi trường giao lưu cởi mở giữa sinh viên, nhân sự trẻ và các chuyên gia để thảo luận về định hướng phát triển nghề nghiệp.
+- Nhận thức rõ vai trò của các công cụ chuyển đổi số trong việc thúc đẩy sự phối hợp ăn ý giữa các thành viên trong đội ngũ.
+
 #### Bài học rút ra
-- Công nghệ chỉ là công cụ, tư duy thiết kế đúng đắn và sự kiên trì trong việc thực hành mới là yếu tố quyết định thành công.
-- Việc hiện đại hóa ứng dụng thông qua Docker và Serverless giúp doanh nghiệp tăng tốc độ ra mắt sản phẩm và giảm thiểu rủi ro vận hành.
+- Công nghệ là phương tiện, tư duy thiết kế đúng đắn cùng sự kiên trì thực hành mới là yếu tố quyết định thành công bền vững.
+- Hiện đại hóa ứng dụng thông qua Docker và Serverless giúp doanh nghiệp tăng tốc độ ra mắt sản phẩm và giảm thiểu rủi ro vận hành.
 
 <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
   <img src="/images/4-EventParticipated/sk3_1.jpg" alt="sk3_1" style="width: 30%; min-width: 250px; height: auto;" />

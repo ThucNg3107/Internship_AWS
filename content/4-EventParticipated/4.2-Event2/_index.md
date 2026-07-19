@@ -11,82 +11,80 @@ pre: " <b> 4.2. </b> "
 
 ### Event Purpose
 
-- Share practical experience on the AWS learning path for beginners.
-- Discuss psychological barriers such as procrastination and fear in career development.
-- Introduce free tools to support and practice AWS without costs.
-- Analyze the DevOps model and the importance of systems thinking.
-- Share experience in participating in Hackathons to build real-world products.
+- Provide a structured, cost-optimized AWS learning strategy for beginners.
+- Identify and overcome psychological barriers such as procrastination and fear of failure in career progression.
+- Explore free AWS practice toolsets to optimize learning expenses.
+- Grasp systems thinking and DevOps culture principles within enterprise environments.
+- Extract practical lessons from Hackathon competitions in developing technology products.
 
 ### Speaker List
 
-- **Tran Minh Quan** - Speaker on DevOps and systems thinking.
-- **Huynh Thai Linh** - Speaker on Cloud Quest and Floci path.
-- **Nguyen Thi Quynh Nhu** - Speaker on the power of confidence.
-- **Khac Uy Pham** - Speaker on the psychology of procrastination.
-- **The Ballers Group** (Huynh An Khuong, Mai Quoc Anh, Nguyen Tran Minh Quan) - Shared Hackathon experiences.
+- **Tran Minh Quan** - Speaker on DevOps and systems management thinking.
+- **Huynh Thai Linh** - Speaker on AWS Cloud Quest learning path and Floci tool.
+- **Nguyen Thi Quynh Nhu** - Speaker on the power of self-confidence in personal growth.
+- **Khac Uy Pham** - Speaker analyzing the psychological aspects behind procrastination.
+- **The Ballers Group** (Huynh An Khuong, Mai Quoc Anh, Nguyen Tran Minh Quan) - Speakers sharing hands-on Hackathon experiences.
 
 ### Key Highlights
 
 #### The Iceberg Model in Project Management & DevOps
 
-- **Surface Symptoms**: Missed deadlines, product bugs, burnout.
-- **Root Causes**: Lack of communication, manual processes, lack of accountability.
-- **DevOps Mindset**: Not just tools (Docker, K8s) but the combination of People, Process, and Technology.
-- **Core Pillars**: Shared responsibility, automation (IaC, CI/CD), fast feedback, and continuous improvement.
+- **Surface Symptoms**: Schedule delays, product defects, and engineer burnout.
+- **Root Causes**: Lack of communication alignment, manual operation workflows, and shifting accountability.
+- **DevOps Mindset**: DevOps is not merely adopting tools (Docker, Kubernetes) but harmonizing People, Process, and Technology.
+- **Core Pillars**: Cultivating ownership, automating workflows (IaC, CI/CD), accelerating feedback loops, and driving continuous improvement.
 
 #### Hands-on AWS learning path for beginners
 
-- **Challenges**: Fear of AWS bills, forgetting to delete resources.
+- **Challenges**: Concerns over unexpected cloud billing and the risk of forgetting to clean up resources.
 - **Solutions**:
-    - **AWS Cloud Quest**: Learning through game mechanics, with detailed step-by-step guides.
-    - **Open Source Floci**: An AWS service emulator on local machines, faster and more memory-efficient than LocalStack.
-- **3-Phase Roadmap**: Mindset/Architecture (Cloud Quest) -> Fast Coding/Testing (Floci) -> Real-world Deployment (Real AWS).
+    - **AWS Cloud Quest**: A gamified interactive learning approach featuring step-by-step guided scenarios.
+    - **Open Source Floci**: An AWS service emulator running locally, offering superior speed and lower memory usage compared to LocalStack.
+- **3-Phase Roadmap**: Mindset & Architecture (Cloud Quest) → Fast Testing & Coding (Floci) → Real Production Deployment (Real AWS).
 
 #### Psychology in Learning and Work
 
-- **The Iceberg of Procrastination**: 70-80% of causes come from fear (fear of not being good enough, fear of judgment, fear of failure) rather than laziness.
-- **Imposter Syndrome**: The feeling of not deserving the achievements made.
-- **Overcoming Techniques**: The 5-second rule (5-4-3-2-1 to act), naming the fear, and the principle of "Action breeds confidence".
+- **The Iceberg of Procrastination**: 70-80% of procrastination stems from emotional barriers (fear of inadequacy, judgment, failure) rather than simple laziness.
+- **Imposter Syndrome**: The persistent feeling of self-doubt and discounting one's own achievements.
+- **Overcoming Techniques**: Apply the 5-second rule (count down 5-4-3-2-1 to initiate action), label fears accurately, and internalize the principle "Action creates confidence".
 
 #### Real-world Hackathon Experience
 
-- **36-Hour Process**: From brainstorming, building an MVP to pitching under intense pressure.
+- **36-Hour Process**: Time-pressured workflow from concept ideation, building Minimum Viable Products (MVP), to pitching before judges.
 - **Key Projects**:
-    - **SynthHunter**: AI voice authentication system.
-    - **Vortex**: Connects the recruitment journey from CV screening to interview.
-- **Lessons**: Great ideas come from solving real-world pain points; trust among team members is more important than individual skills.
-
-
+    - **SynthHunter**: AI-powered voice authentication solution.
+    - **Vortex**: End-to-end recruitment automation platform from resume screening to interviewing.
+- **Lessons**: Break-through ideas stem from solving real user pain points; mutual trust among team members is the key differentiator.
 
 ### Lessons Learned
 
 #### Design & Management Mindset
 
-- **Systems Thinking**: Focus on finding the root cause instead of just treating symptoms.
-- **AWS Builder Philosophy**: “Go Build” - Fail fast, learn faster, continuously launch products to market.
-- **Confidence as a Bridge**: Technical skills are the foundation, but confidence helps convey that value to everyone.
+- **Systems Thinking**: Focus on digging into root causes rather than patching superficial symptoms.
+- **AWS Builder Philosophy**: The “Go Build” mindset - Embrace early failures to learn faster and continuously deliver solutions to market.
+- **Confidence as a Bridge**: Technical competence is necessary, but confidence is the bridge to effectively convey value to the community.
 
 #### Technical & Tools
 
-- **How to use Floci** to test AWS architecture without incurring costs.
-- **Importance of Automation** and Infrastructure as Code in minimizing human errors.
-- **Applying AI (Claude, Bedrock)** as a team member to speed up development.
+- **Hands-on skills with Floci** to simulate and test AWS architectures locally free of charge.
+- **Importance of Automation** and Infrastructure as Code in eliminating human manual errors.
+- **Leveraging AI (Claude, Bedrock)** as a capable co-pilot to optimize software development throughput.
 
 ### Applying to Work
 
-- **Apply the 5-minute rule** to start difficult tasks instead of procrastinating.
-- **Use Cloud Quest** to improve AWS skills systematically.
-- **Build a shared responsibility culture** and improve team communication to break down "silos".
-- **Test small projects (MVPs)** with a Hackathon spirit to optimize development time.
+- **Apply the 5-minute rule** to bypass procrastination hurdles when tackling complex tasks.
+- **Train with Cloud Quest** to standardize AWS knowledge and skills in a systematic manner.
+- **Build a shared responsibility culture** and enhance cross-team communication to eliminate silos.
+- **Deploy small MVP projects** adopting a Hackathon spirit to shorten product development cycles.
 
 ### Event Experience
 
-Participating in this meetup brought a lot of emotions and practical knowledge:
+Participating in this event provided valuable practical insights and positive inspiration:
 
-- Understood that everyone has fears and self-doubt; the key is to act in spite of those fears.
-- Connected with senior mentors, gaining a better understanding of the real working environment at AWS and tech enterprises.
-- Inspired by the stories of overcoming difficulties and the relentless efforts of student speakers.
-- The event completely changed my preconceptions about "laziness" and gave me a more realistic view of the journey to becoming a professional Cloud Engineer/DevOps.
+- Realized that self-doubt affects everyone; the key is taking persistent action in spite of fear.
+- Expanded network connections with senior mentors, gaining a clearer picture of real working environments in tech enterprises.
+- Gained strong motivation from the relentless effort and learning spirit of young student speakers.
+- The event reshaped my perspective on procrastination and outlined a clear roadmap toward becoming a professional Cloud/DevOps Engineer.
 
 <div style="display: flex; justify-content: center; margin-top: 20px;">
   <img src="/images/4-EventParticipated/sk2.jpg" alt="sk2" style="width: 50%; min-width: 250px; height: auto;" />
