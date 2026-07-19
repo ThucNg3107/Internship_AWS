@@ -1,82 +1,237 @@
 ---
-title : "Kiểm tra Gateway Endpoint"
+title : "Deploy production stack"
 date : 2024-01-01 
 weight : 2
 chapter : false
-pre : " <b> 5.3.2 </b> "
+pre : " <b> 5.3.2. </b> "
 ---
 
-#### Tạo S3 bucket
+{{% notice warning %}}
+Lệnh bootstrap và deploy sẽ tạo hoặc cập nhật tài nguyên AWS. Chỉ chạy khi đã được phê duyệt, có budget active và có rollback plan.
+{{% /notice %}}
 
-1. Đi đến S3 management console
-2. Trong Bucket console, chọn **Create bucket**
+#### Bước 1: Kiểm tra identity và stack hiện tại
 
-![Create bucket](/images/5-Workshop/5.3-S3-vpc/create-bucket.png)
+```bash
+AWS_PROFILE=cloudbrief-workshop aws sts get-caller-identity
+AWS_PROFILE=cloudbrief-workshop aws cloudformation describe-stacks \
+  --region us-east-1 --stack-name cloudbrief-dev
+```
 
-3. Trong Create bucket console
-+ Đặt tên bucket: chọn 1 tên mà không bị trùng trong phạm vi toàn cầu (gợi ý: lab\<số-lab\>\<tên-bạn\>)
+Che account ID và resource identifier trước khi public output.
 
-![Bucket name](/images/5-Workshop/5.3-S3-vpc/bucket-name.png)
+#### Bước 2: Bootstrap CDK
 
+```bash
+AWS_PROFILE=cloudbrief-workshop AWS_REGION=us-east-1 \
+  bun run cdk bootstrap
+```
 
-+ Giữ nguyên giá trị của các fields khác (default)
-+ Kéo chuột xuống và chọn **Create bucket**
+#### Bước 3: Deploy CloudBrief
 
-![Create](/images/5-Workshop/5.3-S3-vpc/create-button.png)    
+```bash
+AWS_PROFILE=cloudbrief-workshop AWS_REGION=us-east-1 \
+  DEMO_API_KEY='<đọc từ protected local storage>' \
+  bunx cdk deploy --require-approval never \
+  -c originSecretHeaderValue='<giá trị random mới>'
+```
 
-+ Tạo thành công S3 bucket
+![CDK Deploy OK](/images/5-Workshop/5.3-S3-vpc/cdk-deploy-ok.png)
+Deployment tạo CloudFront, WAF, private S3 origin, ALB, VPC, private Auto Scaling compute, NAT, VPC endpoint, SQS queue và DLQ, DynamoDB table, EventBridge schedule, observability, SNS, Backup, Budgets, IAM và Systems Manager configuration.
 
-![Success](/images/5-Workshop/5.3-S3-vpc/bucket-success.png)
+#### Bước 4: Publish frontend
 
-#### Kết nối với EC2 bằng session manager
+```bash
+bun run --cwd frontend build
+AWS_PROFILE=cloudbrief-workshop aws s3 sync \
+  frontend/out s3://<frontend-bucket> --delete
+AWS_PROFILE=cloudbrief-workshop aws cloudfront create-invalidation \
+  --distribution-id <distribution-id> --paths '/*'
+```
 
-+ Trong workshop này, bạn sẽ dùng AWS Session Manager để kết nối đến các EC2 instances. Session Manager là 1 tính năng trong dịch vụ Systems Manager được quản lý hoàn toàn bởi AWS. System manager cho phép bạn quản lý Amazon EC2 instances và các máy ảo on-premises (VMs)thông qua 1 browser-based shell. Session Manager cung cấp khả năng quản lý phiên bản an toàn và có thể kiểm tra mà không cần mở cổng vào, duy trì máy chủ bastion host hoặc quản lý khóa SSH.
+#### Bước 5: Verify production resources (step by step)
 
-+ First cloud journey [Lab](https://000058.awsstudygroup.com/1-introduce/) để hiểu sâu hơn về Session manager.
+Sau deploy, kiểm tra từng resource bằng AWS CLI read-only. Các ảnh bên dưới được chụp lại ngày **18/07/2026** từ account workshop; account ID, IP private và identifier nhạy cảm đã redacted.
 
-1. Trong AWS Management Console, gõ Systems Manager trong ô tìm kiếm và nhấn Enter:
+Đặt profile trước khi chạy các lệnh:
 
-![system manager](/images/5-Workshop/5.3-S3-vpc/sm.png)
+```bash
+export AWS_PROFILE=cloudbrief-workshop
+export AWS_REGION=us-east-1
+```
 
-2. Từ **Systems Manager** menu, tìm **Node Management** ở thanh bên trái và chọn **Session Manager**:
+##### 5.1 CloudFormation stack
 
-![system manager](/images/5-Workshop/5.3-S3-vpc/sm1.png)
+Xác nhận stack `cloudbrief-dev` ở trạng thái ổn định.
 
-3. Click Start Session, và chọn EC2 instance tên **Test-Gateway-Endpoint**. 
-{{% notice info %}}
-Phiên bản EC2 này đã chạy trong "VPC cloud" và sẽ được dùng để kiểm tra khả năng kết nối với Amazon S3 thông qua điểm cuối Cổng mà bạn vừa tạo (s3-gwe). {{% /notice %}}
+```bash
+aws cloudformation describe-stacks \
+  --region us-east-1 \
+  --stack-name cloudbrief-dev \
+  --query 'Stacks[].{Name:StackName,Status:StackStatus}' \
+  --output table
+```
 
-![Start session](/images/5-Workshop/5.3-S3-vpc/start-session.png)
+Kỳ vọng: `UPDATE_COMPLETE` (hoặc `CREATE_COMPLETE` nếu lần deploy đầu).
+![cli-cloudformation](/images/5-Workshop/5.3-S3-vpc/cli-cloudformation.png)
 
-Session Manager sẽ mở browser tab mới với shell prompt: sh-4.2 $
+##### 5.2 EC2 workers
 
-![Success](/images/5-Workshop/5.3-S3-vpc/start-session-success.png)
+Hai worker trong private subnet, không có public IP.
 
-Bạn đã bắt đầu phiên kết nối đến EC2 trong VPC Cloud thành công. Trong bước tiếp theo, chúng ta sẽ tạo một  S3 bucket và một tệp trong đó.
-#### Tạo file và tải lên S3 bucket
+```bash
+aws ec2 describe-instances \
+  --filters Name=instance-state-name,Values=running \
+  --query 'Reservations[].Instances[].[Name:Tags[?Key==`Name`]|[0].Value,State:State.Name,Type:InstanceType,PublicIp:PublicIpAddress]' \
+  --output table
+```
 
-1. Đổi về ssm-user's thư mục bằng lệnh "cd ~" 
+Kỳ vọng: 2 instance `cloudbrief-dev-api-worker`, state `running`, `PublicIp = None`.
 
-![Change user's dir](/images/5-Workshop/5.3-S3-vpc/cli1.png)
+![cli-ec2](/images/5-Workshop/5.3-S3-vpc/cli-ec2.png)
 
-2. Tạo 1 file để kiểm tra bằng lệnh "fallocate -l 1G testfile.xyz", 1 file tên "testfile.xyz" có kích thước 1GB sẽ được tạo.
+##### 5.3 Auto Scaling group
 
-![Create file](/images/5-Workshop/5.3-S3-vpc/cli-file.png)
+```bash
+aws autoscaling describe-auto-scaling-groups \
+  --query 'AutoScalingGroups[].[Name:AutoScalingGroupName,Desired:DesiredCapacity,Min:MinSize,Max:MaxSize,Instances:length(Instances)]' \
+  --output table
+```
 
-3. Tải file mình vừa tạo lên S3 với lệnh "aws s3 cp testfile.xyz s3://your-bucket-name". Thay your-bucket-name bằng tên S3 bạn đã tạo.
+Kỳ vọng: Desired / Min / Max / Instances = `2`.
 
-![Uploaded](/images/5-Workshop/5.3-S3-vpc/uploaded.png)
+![cli-asg](/images/5-Workshop/5.3-S3-vpc/cli-asg.png)
 
-Bạn đã tải thành công tệp lên bộ chứa S3 của mình. Bây giờ bạn có thể kết thúc session.
+##### 5.4 Application Load Balancer
 
-#### Kiểm tra object trong S3 bucket
+```bash
+aws elbv2 describe-load-balancers \
+  --query 'LoadBalancers[].[Name:LoadBalancerName,Type:Type,Scheme:Scheme,State:State.Code]' \
+  --output table
+```
 
-1. Đi đến S3 console.  
-2. Click tên s3 bucket của bạn
-3. Trong Bucket console, bạn sẽ thấy tệp bạn đã tải lên S3 bucket của mình
+Kỳ vọng: type `application`, scheme `internet-facing`, state `active`.
 
-![Check S3](/images/5-Workshop/5.3-S3-vpc/check-s3-bucket.png)
+![cli-alb](/images/5-Workshop/5.3-S3-vpc/cli-alb.png)
 
-#### Tóm tắt
+##### 5.5 NAT Gateway
 
-Chúc mừng bạn đã hoàn thành truy cập S3 từ VPC. Trong phần này, bạn đã tạo gateway endpoint cho Amazon S3 và sử dụng AWS CLI để tải file lên. Quá trình tải lên hoạt động vì gateway endpoint cho phép giao tiếp với S3 mà không cần Internet gateway gắn vào "VPC Cloud". Điều này thể hiện chức năng của gateway endpoint như một đường dẫn an toàn đến S3 mà không cần đi qua pub    lic Internet.
+Worker egress ra internet (RSS, Hacker News, fetch bài) qua NAT.
+
+```bash
+aws ec2 describe-nat-gateways \
+  --filter Name=state,Values=available \
+  --query 'NatGateways[].[Id:NatGatewayId,State:State,Connectivity:ConnectivityType]' \
+  --output table
+```
+
+Kỳ vọng: 1 NAT `available`, connectivity `public`.
+
+![cli-nat-gateway](/images/5-Workshop/5.3-S3-vpc/cli-nat-gateway.png)
+
+##### 5.6 VPC endpoints (Interface + gateway)
+
+Traffic nội bộ AWS không đi public internet: SQS, Bedrock (Interface), S3, DynamoDB (Gateway).
+
+```bash
+aws ec2 describe-vpc-endpoints \
+  --query 'VpcEndpoints[].[Service:ServiceName,Type:VpcEndpointType,State:State]' \
+  --output table
+```
+
+Kỳ vọng: 4 endpoint, tất cả `available`:
+
+| Service | Type |
+| --- | --- |
+| `sqs` | Interface |
+| `bedrock-runtime` | Interface |
+| `dynamodb` | Gateway |
+| `s3` | Gateway |
+
+![cli-vpc-endpoints](/images/5-Workshop/5.3-S3-vpc/cli-vpc-endpoints.png)
+
+##### 5.7 CloudFront
+
+```bash
+aws cloudfront list-distributions \
+  --query 'DistributionList.Items[].{Id:Id,Status:Status,Enabled:Enabled,Origins:length(Origins.Items)}' \
+  --output table
+```
+
+Kỳ vọng: status `Deployed`, enabled `True`, có origin (S3 frontend + ALB + image bucket).
+
+![cli-cloudfront](/images/5-Workshop/5.3-S3-vpc/cli-cloudfront.png)
+
+##### 5.8 AWS WAF
+
+```bash
+aws wafv2 list-web-acls \
+  --scope CLOUDFRONT \
+  --query 'WebACLs[].{Name:Name}' \
+  --output table
+```
+
+Kỳ vọng: có Web ACL gắn entry path (tên có prefix `ApiEntryWebAcl...`).
+
+![cli-waf](/images/5-Workshop/5.3-S3-vpc/cli-waf.png)
+
+##### 5.9 S3 buckets
+
+```bash
+aws s3api list-buckets \
+  --query "Buckets[?contains(Name, 'cloudbrief')].Name" \
+  --output table
+```
+
+Kỳ vọng: frontend bucket, cleaned-content bucket, image bucket.
+
+![cli-s3-bucket](/images/5-Workshop/5.3-S3-vpc/cli-s3-bucket.png)
+
+##### 5.10 DynamoDB tables
+
+```bash
+aws dynamodb list-tables --output table
+```
+
+Kỳ vọng: 6 bảng CloudBrief (articles, search tokens, daily counters, dedupe, social, source runs).
+
+![cli-dynamodb](/images/5-Workshop/5.3-S3-vpc/cli-dynamodb.png)
+
+##### 5.11 SQS queues và DLQs
+
+```bash
+aws sqs list-queues --query 'QueueUrls' --output table
+```
+
+Kỳ vọng: 4 queue chính + 4 DLQ (collection, extraction, image process, summary).
+
+![cli-sqs](/images/5-Workshop/5.3-S3-vpc/cli-sqs.png)
+
+##### 5.12 Bedrock Nova Micro
+
+```bash
+aws bedrock list-foundation-models \
+  --query "modelSummaries[?modelId=='amazon.nova-micro-v1:0'].{Id:modelId,Name:modelName}" \
+  --output table
+```
+
+Kỳ vọng: model `amazon.nova-micro-v1:0` xuất hiện (account đã được phép dùng model).
+
+![cli-bedrock](/images/5-Workshop/5.3-S3-vpc/cli-bedrock.png)
+
+#### Checklist sau Bước 5
+
+| # | Resource | Pass khi |
+| --- | --- | --- |
+| 5.1 | CloudFormation | `UPDATE_COMPLETE` |
+| 5.2 | EC2 | 2 running, no public IP |
+| 5.3 | ASG | capacity = 2 |
+| 5.4 | ALB | active, internet-facing |
+| 5.5 | NAT | available |
+| 5.6 | VPC endpoints | 4 available |
+| 5.7 | CloudFront | Deployed |
+| 5.8 | WAF | Web ACL tồn tại |
+| 5.9 | S3 | 3 cloudbrief buckets |
+| 5.10 | DynamoDB | 6 tables |
+| 5.11 | SQS | 8 queues (4 + 4 DLQ) |
+| 5.12 | Bedrock | Nova Micro listed |

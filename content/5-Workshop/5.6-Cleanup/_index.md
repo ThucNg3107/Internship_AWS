@@ -1,35 +1,46 @@
 ---
-title : "Clean up"
+title : "Cleanup and recovery plan"
 date : 2024-01-01
 weight : 6
 chapter : false
 pre : " <b> 5.6. </b> "
 ---
 
-#### Clean up resources
+{{% notice warning %}}
+Production demo is still live. The commands below are reviewed cleanup procedures and have not been executed while writing the workshop.
+{{% /notice %}}
 
-Congratulations on completing this workshop! 
-In this workshop, you learned architecture patterns for accessing Amazon S3 without using the Public Internet. 
-+ By creating a gateway endpoint, you enabled direct communication between EC2 resources and Amazon S3, without traversing an Internet Gateway. 
-+ By creating an interface endpoint you extended S3 connectivity to resources running in your on-premises data center via AWS Site-to-Site VPN or Direct Connect. 
+#### 1. Save evidence
 
-#### clean up
-1. Navigate to Hosted Zones on the left side of Route 53 console. Click the name of *s3.us-east-1.amazonaws.com* zone. Click Delete and confirm deletion by typing delete. 
+Before cleanup, export sanitized evidence for CloudFormation, CloudFront/WAF, ALB target health, ASG instances, VPC endpoints, queues/DLQs, DynamoDB, S3, CloudWatch, SNS, Backup, Budgets, API responses, and browser tests.
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+#### 2. Handle outstanding operations
 
-2. Disassociate the Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+The July 16 audit identified three visible messages in the image-processing DLQ. Inspect and triage these messages before destroying the stack so the report documents failure causes and remediation decisions. Do not publish article content from failed messages.
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+#### 3. Destroy CDK stack
 
-4. Open the CloudFormation console  and delete the two CloudFormation Stacks that you created for this lab:
-+ PLOnpremSetup
-+ PLCloudSetup
+```bash
+cd ~/Code/Technology-News-Collection-and-Summarization-System
+AWS_PROFILE=cloudbrief-workshop AWS_REGION=us-east-1 \
+  bun run cdk destroy
+```
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+This is a destructive operation and requires explicit approval at execution time.
 
-5. Delete S3 buckets
-+ Open S3 console
-+ Choose the bucket we created for the lab, click and confirm empty. Click delete and confirm delete.
+#### 4. Handle retained data
 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+If CDK intentionally retains versioned S3 objects, backup recovery points, or other durable data, decide whether each item will be kept as evidence or deleted. Emptying a versioned bucket requires deleting both object versions and delete markers.
+
+#### 5. Verify cleanup read-only
+
+Confirm expected resources no longer exist:
+
+- CloudFormation stack, CloudFront distribution, and WAF Web ACL.
+- ALB, target group, ASG, EC2 instance, EBS volume, and NAT Gateway.
+- VPC endpoint, SQS queue/DLQ, DynamoDB table, and S3 bucket.
+- CloudWatch alarm/log group, SNS topic, Backup resource, and project budget.
+
+#### Current status
+
+Cleanup is **pending** because CloudBrief is still an active production demo. Reports must not claim successful cleanup until destroy is approved, executed, and verified.

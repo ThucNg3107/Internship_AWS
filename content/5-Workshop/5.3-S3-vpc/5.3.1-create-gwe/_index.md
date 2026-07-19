@@ -1,40 +1,52 @@
 ---
-title : "Create a gateway endpoint"
+title : "Build and synth local"
 date : 2024-01-01 
 weight : 1
 chapter : false
-pre : " <b> 5.3.1 </b> "
+pre : " <b> 5.3.1. </b> "
 ---
 
-1. Open the [Amazon VPC console](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1#Home:)
-2. In the navigation pane, choose **Endpoints**, then click **Create Endpoint**:
+#### Step 1: Install dependencies
 
-{{% notice note %}}
-You will see **6 existing VPC endpoints** that support **AWS Systems Manager (SSM)**. These endpoints were deployed automatically by the **CloudFormation Templates** for this workshop.
-{{% /notice %}}
+```bash
+cd ~/Code/Technology-News-Collection-and-Summarization-System
+bun install
+```
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/endpoints.png)
+#### Step 2: Run production build
 
-3. In the Create endpoint console:
-+ Specify name of the endpoint: ```s3-gwe```
-+ In service category, choose **AWS services**
+```bash
+bun run build
+```
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/create-s3-gwe1.png)
+![Build OK](/images/5-Workshop/5.3-S3-vpc/build-ok.png)
 
-+ In **Services**, type ```s3``` in the search box and choose the service with type **gateway**
+#### Step 3: Run regression tests
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/services.png)
+```bash
+bun run test
+```
 
-+ For VPC, select **VPC Cloud** from the drop-down.
-+ For **Configure route tables**, select the route table that is already associated with **two subnets** (note: this is not the main route table for the VPC, but a second route table created by CloudFormation).
+![Tests OK](/images/5-Workshop/5.3-S3-vpc/tests-ok.png)
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/vpc.png)
+The test suite covers route validation, API-key protection, SSRF-safe fetching, collection, extraction, image processing, social actions, and infrastructure assertions.
 
-+ **For Policy**, leave the default option, **Full Access**, to allow full access to the service. You will deploy **a VPC endpoint policy** in a later lab module to demonstrate restricting access to **S3 buckets** based on policies.
+#### Step 4: Synth CloudFormation
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/policy.png)
+```bash
+bun run cdk synth
+```
 
-+ Do not add a tag to the VPC endpoint at this time.
-+ Click **Create endpoint**, then click x after receiving a successful creation message.
+![CDK Synth OK](/images/5-Workshop/5.3-S3-vpc/cdk-synth-ok.png)
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/complete.png)
+Synth is the final local gate before deployment. This step verifies that the CDK app generates the CloudFormation template without altering AWS resources.
+
+#### Step 5: Verify sensitive values
+
+Before deploying, confirm that the following values come from local configuration, Keychain, or approved AWS store and are excluded from Git:
+
+- Admin API key and hash.
+- CloudFront origin header secret.
+- Google OAuth client configuration.
+- Notification email.
+- AWS access key.

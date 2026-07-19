@@ -1,40 +1,52 @@
 ---
-title : "Tạo một Gateway Endpoint"
+title : "Build và synth local"
 date : 2024-01-01 
 weight : 1
 chapter : false
-pre : " <b> 5.3.1 </b> "
+pre : " <b> 5.3.1. </b> "
 ---
 
-1. Mở [Amazon VPC console](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1#Home:)
-2. Trong thanh điều hướng, chọn **Endpoints**, click **Create Endpoint**:
+#### Bước 1: Cài dependencies
 
-{{% notice note %}}
-Bạn sẽ thấy 6 điểm cuối VPC hiện có hỗ trợ AWS Systems Manager (SSM). Các điểm cuối này được Mẫu CloudFormation triển khai tự động cho workshop này.
-{{% /notice %}}
+```bash
+cd ~/Code/Technology-News-Collection-and-Summarization-System
+bun install
+```
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/endpoints.png)
+#### Bước 2: Chạy production build
 
-3. Trong Create endpoint console:
-+ Đặt tên cho endpoint: s3-gwe
-+ Trong service category, chọn **aws services**
+```bash
+bun run build
+```
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/create-s3-gwe1.png)
+![Build OK](/images/5-Workshop/5.3-S3-vpc/build-ok.png)
 
-+ Trong **Services**, gõ "s3" trong hộp tìm kiếm và chọn dịch vụ với loại **gateway**
+#### Bước 3: Chạy regression tests
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/services.png)
+```bash
+bun run test
+```
 
-+ Đối với VPC, chọn **VPC Cloud** từ drop-down menu.
-+ Đối với Route tables, chọn bảng định tuyến mà đã liên kết với 2 subnets (lưu ý: đây không phải là bảng định tuyến chính cho VPC mà là bảng định tuyến thứ hai do CloudFormation tạo).
+![Tests OK](/images/5-Workshop/5.3-S3-vpc/tests-ok.png)
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/vpc.png)
+Test suite bao phủ route validation, API-key protection, SSRF-safe fetching, collection, extraction, image processing, social actions và infrastructure assertions.
 
-+ Đối với Policy, để tùy chọn mặc định là Full access để cho phép toàn quyền truy cập vào dịch vụ. Bạn sẽ triển khai VPC endpoint policy trong phần sau để chứng minh việc hạn chế quyền truy cập vào S3 bucket dựa trên các policies.
+#### Bước 4: Synth CloudFormation
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/policy.png)
+```bash
+bun run cdk synth
+```
 
-+ Không thêm tag vào VPC endpoint.
-+ Click Create endpoint, click x sau khi nhận được thông báo tạo thành công.
+![CDK Synth OK](/images/5-Workshop/5.3-S3-vpc/cdk-synth-ok.png)
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/complete.png)
+Synth là local gate cuối trước khi deploy. Bước này xác nhận CDK app tạo được CloudFormation template mà chưa thay đổi tài nguyên AWS.
+
+#### Bước 5: Kiểm tra giá trị nhạy cảm
+
+Trước khi deploy, xác nhận các giá trị sau đến từ local configuration, Keychain hoặc AWS store được phê duyệt và không nằm trong Git:
+
+- Admin API key và hash.
+- CloudFront origin header secret.
+- Google OAuth client configuration.
+- Notification email.
+- AWS access key.

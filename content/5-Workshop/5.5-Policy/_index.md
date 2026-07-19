@@ -1,93 +1,43 @@
 ---
-title : "VPC Endpoint Policies"
+title : "Security, cost, and architecture decisions"
 date : 2024-01-01
 weight : 5
 chapter : false
 pre : " <b> 5.5. </b> "
 ---
 
-When you create an interface or gateway endpoint, you can attach an endpoint policy to it that controls access to the service to which you are connecting. A VPC endpoint policy is an IAM resource policy that you attach to an endpoint. If you do not attach a policy when you create an endpoint, AWS attaches a default policy for you that allows full access to the service through the endpoint.
+#### Security controls
 
-You can create a policy that restricts access to specific S3 buckets only. This is useful if you only want certain S3 Buckets to be accessible through the endpoint.
+| Boundary | Control |
+| --- | --- |
+| Public edge | AWS WAF in front of CloudFront distribution |
+| Frontend | Private, versioned S3 bucket via Origin Access Control |
+| API origin | CloudFront origin secret and ALB routing; EC2 has no public IP |
+| Compute | Two EC2 in private subnet, managed by fixed-capacity ASG |
+| Host access | Systems Manager instead of inbound SSH |
+| Managed services | SQS/Bedrock interface endpoint and S3/DynamoDB gateway endpoint |
+| Publisher fetches | SSRF-safe fetcher blocks private, loopback, link-local and reserved destinations |
+| Article images | Validate, resize, convert to WebP and store in private S3 bucket |
+| Admin API | HttpOnly admin session; static frontend does not contain `x-api-key` |
+| Reader data | Read public; like/comment require login; edit/delete verify owner |
+| Alerts | KMS-encrypted SNS topic with publish permission limited to EC2 |
 
-In this section you will create a VPC endpoint policy that restricts access to the S3 bucket specified in the VPC endpoint policy.
+#### IAM lesson
 
-![endpoint diagram](/images/5-Workshop/5.5-Policy/s3-bucket-policy.png)
+Screenshot 5.2 shows the `AdministratorAccess` policy used temporarily during the initial student deploy. This is valid historical evidence but too broad for long-term production use. The recommended improvement is a dedicated CDK deployment role with only the service actions and `iam:PassRole` resources the stack needs, enabling MFA for the console and using short-lived credentials via IAM Identity Center whenever possible.
 
-#### Connect to an EC2 instance and verify connectivity to S3
+#### Cost model
 
-1. Start a new AWS Session Manager session on the instance named Test-Gateway-Endpoint. From the session, verify that you can list the contents of the bucket you created in Part 1: Access S3 from VPC:
+The current architecture prioritizes high availability and private compute over the cheapest demo option:
 
-```
-aws s3 ls s3://\<your-bucket-name\>
-```
-![test](/images/5-Workshop/5.5-Policy/test1.png)
+- Two EC2 `t4g.small`.
+- One Application Load Balancer.
+- One NAT Gateway.
+- Two paid interface endpoints and two gateway endpoints.
+- CloudFront, WAF, S3, DynamoDB on-demand, SQS, CloudWatch, SNS, Backup and Bedrock usage.
 
-The bucket contents include the two 1 GB files uploaded in earlier.
+Cost controls include Nova Micro, 256 output token limit, article cap, short log retention, S3 lifecycle, DynamoDB on-demand, budget alert and a documented cleanup procedure.
 
-2. Create a new S3 bucket; follow the naming pattern you used in Part 1, but add a '-2' to the name. Leave other fields as default and click create
+#### Architecture tradeoff
 
-![create bucket](/images/5-Workshop/5.5-Policy/create-bucket.png)
-
-Successfully create bucket
-
-![Success](/images/5-Workshop/5.5-Policy/create-bucket-success.png)
-
-The default policy allows access to all S3 Buckets through the VPC endpoint.
-
-3. In Edit Policy console, copy & Paste the following policy, then replace yourbucketname-2 with your 2nd bucket name. This policy will allow access through the VPC endpoint to your new bucket, but not any other bucket in Amazon S3. Click Save to apply the policy.
-
-```
-{
-  "Id": "Policy1631305502445",
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "Stmt1631305501021",
-      "Action": "s3:*",
-      "Effect": "Allow",
-      "Resource": [
-      				"arn:aws:s3:::yourbucketname-2",
-       				"arn:aws:s3:::yourbucketname-2/*"
-       ],
-      "Principal": "*"
-    }
-  ]
-}
-```
-
-![custom policy](/images/5-Workshop/5.5-Policy/policy2.png)
-
-Successfully customize policy
-
-![success](/images/5-Workshop/5.5-Policy/success.png)
-
-5. From your session on the Test-Gateway-Endpoint instance, test access to the S3 bucket you created in Part 1: Access S3 from VPC
-```
-aws s3 ls s3://<yourbucketname>
-```
-
-This command will return an error because access to this bucket is not permitted by your new VPC endpoint policy:
-
-![error](/images/5-Workshop/5.5-Policy/error.png)
-
-6. Return to your home directory on your EC2 instance ` cd~ `
-
-+ Create a file ```fallocate -l 1G test-bucket2.xyz ```
-+ Copy file to 2nd bucket ```aws s3 cp test-bucket2.xyz s3://<your-2nd-bucket-name>```
-
-![success](/images/5-Workshop/5.5-Policy/test2.png)
-
-This operation succeeds because it is permitted by the VPC endpoint policy.
-
-![success](/images/5-Workshop/5.5-Policy/test2-success.png)
-
-+ Then we test access to the first bucket by copy the file to 1st bucket `aws s3 cp test-bucket2.xyz s3://<your-1st-bucket-name>`
-
-![fail](/images/5-Workshop/5.5-Policy/test2-fail.png)
-
-This command will return an error because access to this bucket is not permitted by your new VPC endpoint policy.
-
-In this section, you created a VPC endpoint policy for Amazon S3, and used the AWS CLI to test the policy. AWS CLI actions targeted to your original S3 bucket failed because you applied a policy that only allowed access to the second bucket you created. AWS CLI actions targeted for your second bucket succeeded because the policy allowed them. These policies can be useful in situations where you need to control access to resources through VPC endpoints.
-
-
+A single public EC2 design would have been cheaper but did not match the final architecture. The deployed design added ALB, private subnet, ASG redundancy, WAF and service endpoints. Cost is higher but the production story is clearer: protected public edge, instance with no public IP, compute across two AZs, limited outbound access, queue isolation and failure handling with observability.

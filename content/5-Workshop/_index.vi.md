@@ -5,26 +5,29 @@ weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
+# CloudBrief Workshop
 
+## Hệ thống thu thập và tóm tắt tin tức công nghệ theo hướng EC2-first
 
+Workshop này ghi lại phần triển khai cá nhân của tôi trong dự án nhóm CloudBrief. Mục tiêu là trình bày một use-case AWS thực tế từ kiến trúc, triển khai, kiểm thử đến dọn dẹp tài nguyên bằng nội dung tự viết.
 
-# Đảm bảo truy cập Hybrid an toàn đến S3 bằng cách sử dụng VPC endpoint
+CloudBrief thu thập tin tức công nghệ từ RSS feeds và Hacker News, loại bỏ trùng lặp, trích xuất nội dung sạch, tóm tắt bằng Amazon Bedrock, xử lý cover image sang WebP và cung cấp public magazine cùng reader/admin workflow có xác thực.
 
-#### Tổng quan
+#### Nội dung workshop
 
-**AWS PrivateLink** cung cấp kết nối riêng tư đến các dịch vụ aws từ VPCs hoặc trung tâm dữ liệu (on-premise) mà không làm lộ lưu lượng truy cập ra ngoài public internet.
+1. [Tổng quan dự án và kiến trúc](5.1-Workshop-overview/)
+2. [Chuẩn bị tài khoản AWS và môi trường local](5.2-Prerequiste/)
+3. [Build và deploy CloudBrief](5.3-S3-vpc/)
+4. [Verify hệ thống production](5.4-S3-onprem/)
+5. [Quyết định security, cost và architecture](5.5-Policy/)
+6. [Kế hoạch cleanup và recovery](5.6-Cleanup/)
 
-Trong bài lab này, chúng ta sẽ học cách tạo, cấu hình, và kiểm tra VPC endpoints để cho phép workload của bạn tiếp cận các dịch vụ AWS mà không cần đi qua Internet công cộng.
+#### Đối chiếu yêu cầu
 
-Chúng ta sẽ tạo hai loại endpoints để truy cập đến Amazon S3: gateway vpc endpoint và interface vpc endpoint. Hai loại vpc endpoints này mang đến nhiều lợi ích tùy thuộc vào việc bạn truy cập đến S3 từ môi trường cloud hay từ trung tâm dữ liệu (on-premise).
-+ **Gateway** - Tạo gateway endpoint để gửi lưu lượng đến Amazon S3 hoặc DynamoDB using private IP addresses. Bạn điều hướng lưu lượng từ VPC của bạn đến gateway endpoint bằng các bảng định tuyến (route tables)
-+ **Interface** - Tạo interface endpoint để gửi lưu lượng đến các dịch vụ điểm cuối (endpoints) sử dụng Network Load Balancer để phân phối lưu lượng. Lưu lượng dành cho dịch vụ điểm cuối được resolved bằng DNS.
+Workshop đáp ứng rubric project:
 
-#### Nội dung
-
-1. [Tổng quan về workshop](5.1-Workshop-overview/)
-2. [Chuẩn bị](5.2-Prerequiste/)
-3. [Truy cập đến S3 từ VPC](5.3-S3-vpc/)
-4. [Truy cập đến S3 từ TTDL On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (làm thêm)](5.5-Policy/)
-6. [Dọn dẹp tài nguyên](5.6-Cleanup/)
+* Use-case AWS thực tế: dashboard tóm tắt tin tức công nghệ.
+* Sử dụng hơn 3 dịch vụ AWS: WAF, CloudFront, S3, ALB, EC2 Auto Scaling, VPC, SQS, DynamoDB, Bedrock, EventBridge, CloudWatch, SNS, SSM, Backup, Budgets và IAM.
+* Có sơ đồ kiến trúc và lý do chọn dịch vụ.
+* Có hướng dẫn triển khai và kiểm thử từng bước.
+* Có logs, metrics, alarms, cost controls, security controls, backup và cleanup.

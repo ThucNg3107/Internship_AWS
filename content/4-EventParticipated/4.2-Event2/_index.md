@@ -87,3 +87,7 @@ Participating in this meetup brought a lot of emotions and practical knowledge:
 - Connected with senior mentors, gaining a better understanding of the real working environment at AWS and tech enterprises.
 - Inspired by the stories of overcoming difficulties and the relentless efforts of student speakers.
 - The event completely changed my preconceptions about "laziness" and gave me a more realistic view of the journey to becoming a professional Cloud Engineer/DevOps.
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+  <img src="/images/4-EventParticipated/sk2.jpg" alt="sk2" style="width: 50%; min-width: 250px; height: auto;" />
+</div>

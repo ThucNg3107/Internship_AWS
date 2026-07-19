@@ -1,242 +1,202 @@
 ---
-title : "Các bước chuẩn bị"
+title : "Chuẩn bị tài khoản AWS và môi trường local"
 date : 2024-01-01 
 weight : 2
 chapter : false
 pre : " <b> 5.2. </b> "
 ---
 
-#### IAM permissions
-Gắn IAM permission policy sau vào tài khoản aws user của bạn để triển khai và dọn dẹp tài nguyên trong workshop này.
-```
+Phần này giữ cấu trúc hướng dẫn và bằng chứng như workshop mẫu, nhưng toàn bộ thao tác, công cụ, quyền và ảnh đều thuộc dự án CloudBrief.
+
+#### 1. Quyền IAM
+
+Người chuẩn bị tài khoản workshop cần cấp cho deployment user quyền tạo và xóa CloudBrief stack. [Tải policy JSON](/files/cloudbrief-workshop-deployer-policy.json) với tên `cloudbrief-workshop-deployer-policy.json`, hoặc lưu nội dung bên dưới bằng đúng tên file đó.
+
+```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "cloudformation:*",
-                "cloudwatch:*",
-                "ec2:AcceptTransitGatewayPeeringAttachment",
-                "ec2:AcceptTransitGatewayVpcAttachment",
-                "ec2:AllocateAddress",
-                "ec2:AssociateAddress",
-                "ec2:AssociateIamInstanceProfile",
-                "ec2:AssociateRouteTable",
-                "ec2:AssociateSubnetCidrBlock",
-                "ec2:AssociateTransitGatewayRouteTable",
-                "ec2:AssociateVpcCidrBlock",
-                "ec2:AttachInternetGateway",
-                "ec2:AttachNetworkInterface",
-                "ec2:AttachVolume",
-                "ec2:AttachVpnGateway",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:CreateClientVpnEndpoint",
-                "ec2:CreateClientVpnRoute",
-                "ec2:CreateCustomerGateway",
-                "ec2:CreateDhcpOptions",
-                "ec2:CreateFlowLogs",
-                "ec2:CreateInternetGateway",
-                "ec2:CreateLaunchTemplate",
-                "ec2:CreateNetworkAcl",
-                "ec2:CreateNetworkInterface",
-                "ec2:CreateNetworkInterfacePermission",
-                "ec2:CreateRoute",
-                "ec2:CreateRouteTable",
-                "ec2:CreateSecurityGroup",
-                "ec2:CreateSubnet",
-                "ec2:CreateSubnetCidrReservation",
-                "ec2:CreateTags",
-                "ec2:CreateTransitGateway",
-                "ec2:CreateTransitGatewayPeeringAttachment",
-                "ec2:CreateTransitGatewayPrefixListReference",
-                "ec2:CreateTransitGatewayRoute",
-                "ec2:CreateTransitGatewayRouteTable",
-                "ec2:CreateTransitGatewayVpcAttachment",
-                "ec2:CreateVpc",
-                "ec2:CreateVpcEndpoint",
-                "ec2:CreateVpcEndpointConnectionNotification",
-                "ec2:CreateVpcEndpointServiceConfiguration",
-                "ec2:CreateVpnConnection",
-                "ec2:CreateVpnConnectionRoute",
-                "ec2:CreateVpnGateway",
-                "ec2:DeleteCustomerGateway",
-                "ec2:DeleteFlowLogs",
-                "ec2:DeleteInternetGateway",
-                "ec2:DeleteNetworkInterface",
-                "ec2:DeleteNetworkInterfacePermission",
-                "ec2:DeleteRoute",
-                "ec2:DeleteRouteTable",
-                "ec2:DeleteSecurityGroup",
-                "ec2:DeleteSubnet",
-                "ec2:DeleteSubnetCidrReservation",
-                "ec2:DeleteTags",
-                "ec2:DeleteTransitGateway",
-                "ec2:DeleteTransitGatewayPeeringAttachment",
-                "ec2:DeleteTransitGatewayPrefixListReference",
-                "ec2:DeleteTransitGatewayRoute",
-                "ec2:DeleteTransitGatewayRouteTable",
-                "ec2:DeleteTransitGatewayVpcAttachment",
-                "ec2:DeleteVpc",
-                "ec2:DeleteVpcEndpoints",
-                "ec2:DeleteVpcEndpointServiceConfigurations",
-                "ec2:DeleteVpnConnection",
-                "ec2:DeleteVpnConnectionRoute",
-                "ec2:Describe*",
-                "ec2:DetachInternetGateway",
-                "ec2:DisassociateAddress",
-                "ec2:DisassociateRouteTable",
-                "ec2:GetLaunchTemplateData",
-                "ec2:GetTransitGatewayAttachmentPropagations",
-                "ec2:ModifyInstanceAttribute",
-                "ec2:ModifySecurityGroupRules",
-                "ec2:ModifyTransitGatewayVpcAttachment",
-                "ec2:ModifyVpcAttribute",
-                "ec2:ModifyVpcEndpoint",
-                "ec2:ReleaseAddress",
-                "ec2:ReplaceRoute",
-                "ec2:RevokeSecurityGroupEgress",
-                "ec2:RevokeSecurityGroupIngress",
-                "ec2:RunInstances",
-                "ec2:StartInstances",
-                "ec2:StopInstances",
-                "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
-                "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
-                "iam:AddRoleToInstanceProfile",
-                "iam:AttachRolePolicy",
-                "iam:CreateInstanceProfile",
-                "iam:CreatePolicy",
-                "iam:CreateRole",
-                "iam:DeleteInstanceProfile",
-                "iam:DeletePolicy",
-                "iam:DeleteRole",
-                "iam:DeleteRolePolicy",
-                "iam:DetachRolePolicy",
-                "iam:GetInstanceProfile",
-                "iam:GetPolicy",
-                "iam:GetRole",
-                "iam:GetRolePolicy",
-                "iam:ListPolicyVersions",
-                "iam:ListRoles",
-                "iam:PassRole",
-                "iam:PutRolePolicy",
-                "iam:RemoveRoleFromInstanceProfile",
-                "lambda:CreateFunction",
-                "lambda:DeleteFunction",
-                "lambda:DeleteLayerVersion",
-                "lambda:GetFunction",
-                "lambda:GetLayerVersion",
-                "lambda:InvokeFunction",
-                "lambda:PublishLayerVersion",
-                "logs:CreateLogGroup",
-                "logs:DeleteLogGroup",
-                "logs:DescribeLogGroups",
-                "logs:PutRetentionPolicy",
-                "route53:ChangeTagsForResource",
-                "route53:CreateHealthCheck",
-                "route53:CreateHostedZone",
-                "route53:CreateTrafficPolicy",
-                "route53:DeleteHostedZone",
-                "route53:DisassociateVPCFromHostedZone",
-                "route53:GetHostedZone",
-                "route53:ListHostedZones",
-                "route53domains:ListDomains",
-                "route53domains:ListOperations",
-                "route53domains:ListTagsForDomain",
-                "route53resolver:AssociateResolverEndpointIpAddress",
-                "route53resolver:AssociateResolverRule",
-                "route53resolver:CreateResolverEndpoint",
-                "route53resolver:CreateResolverRule",
-                "route53resolver:DeleteResolverEndpoint",
-                "route53resolver:DeleteResolverRule",
-                "route53resolver:DisassociateResolverEndpointIpAddress",
-                "route53resolver:DisassociateResolverRule",
-                "route53resolver:GetResolverEndpoint",
-                "route53resolver:GetResolverRule",
-                "route53resolver:ListResolverEndpointIpAddresses",
-                "route53resolver:ListResolverEndpoints",
-                "route53resolver:ListResolverRuleAssociations",
-                "route53resolver:ListResolverRules",
-                "route53resolver:ListTagsForResource",
-                "route53resolver:UpdateResolverEndpoint",
-                "route53resolver:UpdateResolverRule",
-                "s3:AbortMultipartUpload",
-                "s3:CreateBucket",
-                "s3:DeleteBucket",
-                "s3:DeleteObject",
-                "s3:GetAccountPublicAccessBlock",
-                "s3:GetBucketAcl",
-                "s3:GetBucketOwnershipControls",
-                "s3:GetBucketPolicy",
-                "s3:GetBucketPolicyStatus",
-                "s3:GetBucketPublicAccessBlock",
-                "s3:GetObject",
-                "s3:GetObjectVersion",
-                "s3:GetBucketVersioning",
-                "s3:ListAccessPoints",
-                "s3:ListAccessPointsForObjectLambda",
-                "s3:ListAllMyBuckets",
-                "s3:ListBucket",
-                "s3:ListBucketMultipartUploads",
-                "s3:ListBucketVersions",
-                "s3:ListJobs",
-                "s3:ListMultipartUploadParts",
-                "s3:ListMultiRegionAccessPoints",
-                "s3:ListStorageLensConfigurations",
-                "s3:PutAccountPublicAccessBlock",
-                "s3:PutBucketAcl",
-                "s3:PutBucketPolicy",
-                "s3:PutBucketPublicAccessBlock",
-                "s3:PutObject",
-                "secretsmanager:CreateSecret",
-                "secretsmanager:DeleteSecret",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:ListSecrets",
-                "secretsmanager:ListSecretVersionIds",
-                "secretsmanager:PutResourcePolicy",
-                "secretsmanager:TagResource",
-                "secretsmanager:UpdateSecret",
-                "sns:ListTopics",
-                "ssm:DescribeInstanceProperties",
-                "ssm:DescribeSessions",
-                "ssm:GetConnectionStatus",
-                "ssm:GetParameters",
-                "ssm:ListAssociations",
-                "ssm:ResumeSession",
-                "ssm:StartSession",
-                "ssm:TerminateSession"
-            ],
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CloudBriefInfrastructure",
+      "Effect": "Allow",
+      "Action": [
+        "autoscaling:*",
+        "backup:*",
+        "bedrock:*",
+        "budgets:*",
+        "cloudformation:*",
+        "cloudfront:*",
+        "cloudwatch:*",
+        "dynamodb:*",
+        "ec2:*",
+        "elasticloadbalancing:*",
+        "events:*",
+        "kms:*",
+        "logs:*",
+        "s3:*",
+        "sns:*",
+        "sqs:*",
+        "ssm:*",
+        "wafv2:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "CloudBriefDeploymentRoles",
+      "Effect": "Allow",
+      "Action": [
+        "iam:AttachRolePolicy",
+        "iam:CreateInstanceProfile",
+        "iam:CreatePolicy",
+        "iam:CreateRole",
+        "iam:DeleteInstanceProfile",
+        "iam:DeletePolicy",
+        "iam:DeleteRole",
+        "iam:DeleteRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:GetInstanceProfile",
+        "iam:GetPolicy",
+        "iam:GetRole",
+        "iam:PassRole",
+        "iam:PutRolePolicy",
+        "iam:RemoveRoleFromInstanceProfile",
+        "iam:AddRoleToInstanceProfile",
+        "iam:TagInstanceProfile",
+        "iam:TagPolicy",
+        "iam:TagRole",
+        "iam:UntagInstanceProfile",
+        "iam:UntagPolicy",
+        "iam:UntagRole",
+        "iam:UpdateAssumeRolePolicy",
+        "sts:AssumeRole"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:role/cloudbrief-*",
+        "arn:aws:iam::*:role/cdk-hnb659fds-*",
+        "arn:aws:iam::*:instance-profile/cloudbrief-*",
+        "arn:aws:iam::*:policy/cloudbrief-*"
+      ]
+    }
+  ]
 }
-
 ```
 
-#### Khởi tạo tài nguyên bằng CloudFormation
+Chạy các lệnh sau bằng administrator profile hoặc account-bootstrap profile. Chuỗi lệnh sẽ tạo user nếu chưa có, tạo hoặc dùng lại customer-managed policy, attach policy và hiển thị kết quả cuối mà không in credential.
 
-Trong lab này, chúng ta sẽ dùng N.Virginia region (us-east-1).
+```bash
+ADMIN_PROFILE=cloudbrief-bootstrap-admin
+DEPLOY_USER=cloudbrief-workshop
+POLICY_NAME=cloudbrief-workshop-deployer
+POLICY_FILE=cloudbrief-workshop-deployer-policy.json
 
-Để chuẩn bị cho môi trường làm workshop, chúng ta deploy CloudFormation template sau (click link): [PrivateLinkWorkshop ](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.us-east-1.amazonaws.com/reinvent-endpoints-builders-session/Nested.yaml&stackName=PLCloudSetup). Để nguyên các lựa chọn mặc định.
+aws iam get-user \
+  --user-name "$DEPLOY_USER" \
+  --profile "$ADMIN_PROFILE" >/dev/null 2>&1 || \
+aws iam create-user \
+  --user-name "$DEPLOY_USER" \
+  --profile "$ADMIN_PROFILE"
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack1.png)
+POLICY_ARN=$(aws iam list-policies \
+  --scope Local \
+  --query "Policies[?PolicyName=='${POLICY_NAME}'].Arn | [0]" \
+  --output text \
+  --profile "$ADMIN_PROFILE")
 
-+ Lựa chọn 2 mục acknowledgement 
-+ Chọn Create stack
+if [ "$POLICY_ARN" = "None" ]; then
+  POLICY_ARN=$(aws iam create-policy \
+    --policy-name "$POLICY_NAME" \
+    --policy-document "file://${POLICY_FILE}" \
+    --query 'Policy.Arn' \
+    --output text \
+    --profile "$ADMIN_PROFILE")
+fi
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack2.png)
+aws iam attach-user-policy \
+  --user-name "$DEPLOY_USER" \
+  --policy-arn "$POLICY_ARN" \
+  --profile "$ADMIN_PROFILE"
 
-Quá trình triển khai CloudFormation cần khoảng 15 phút để hoàn thành.
+aws iam list-attached-user-policies \
+  --user-name "$DEPLOY_USER" \
+  --profile "$ADMIN_PROFILE"
+```
 
-![complete](/images/5-Workshop/5.2-Prerequisite/complete.png)
+{{% notice warning %}}
+Policy này chủ đích phục vụ deployment và dùng wildcard theo service vì CDK phải tạo các resource chưa có identifier trước khi deploy. Chỉ dùng policy trong tài khoản workshop. Với production, hãy deploy qua AWS IAM Identity Center hoặc CI role, giới hạn resource và condition, đồng thời tách deployment permission khỏi runtime permission.
+{{% /notice %}}
 
-+ 2 VPCs đã được tạo
+#### 2. Công cụ cần có
 
-![vpcs](/images/5-Workshop/5.2-Prerequisite/vpcs.png)
+| Công cụ | Mục đích |
+| --- | --- |
+| AWS account và IAM user | Deploy và kiểm tra tài nguyên workshop |
+| AWS CLI v2 | Kiểm tra identity và thu thập bằng chứng hạ tầng read-only |
+| `Bun 1.3.x` | Cài monorepo, build, test và chạy scripts |
+| AWS CDK v2 | Synth và deploy CloudFormation stack |
+| Git | Quản lý source và bằng chứng triển khai |
 
-+ 3 EC2s đã được tạo
+Dự án deploy tại `us-east-1`. Amazon Bedrock cần cho phép model `amazon.nova-micro-v1:0`.
 
-![EC2](/images/5-Workshop/5.2-Prerequisite/ec2.png)
+#### 3. Tạo IAM user riêng cho workshop
+
+Mở **IAM > Users**, sau đó chọn **Create user**.
+
+![IAM 01](/images/5-Workshop/5.2-Prerequisite/iam-01-existing-user.png)
+
+Nhập tên user dành riêng cho workshop. Console access là tùy chọn nếu AWS CLI là công cụ deploy chính.
+![IAM 02](/images/5-Workshop/5.2-Prerequisite/iam-02-user-details.png)
+
+Trong lần deploy demo ban đầu, nhóm tạm gán `AdministratorAccess` để CDK tạo đầy đủ stack. Đây là bằng chứng lịch sử của workshop, không phải khuyến nghị production. Tài khoản production nên dùng deployment role giới hạn quyền và gỡ policy tạm sau khi deploy.
+![IAM 03](/images/5-Workshop/5.2-Prerequisite/iam-03-permissions.png)
+Kiểm tra lại user và policy trước khi chọn **Create user**.
+![IAM 04](/images/5-Workshop/5.2-Prerequisite/iam-04-review-create.png)
+Xác nhận user mới xuất hiện trong danh sách IAM.
+![IAM 05](/images/5-Workshop/5.2-Prerequisite/iam-05-user-created.png)
+#### 4. Tạo credential cho AWS CLI
+Mở tab **Security credentials** của user và chọn **Create access key**.
+![IAM 06](/images/5-Workshop/5.2-Prerequisite/iam-06-security-credentials.png)
+Chọn **Command Line Interface (CLI)**, xác nhận khuyến nghị và tiếp tục.
+![IAM 07](/images/5-Workshop/5.2-Prerequisite/iam-07-cli-use-case.png)
+Thêm description tag để key có owner và mục đích rõ ràng.
+![IAM 08](/images/5-Workshop/5.2-Prerequisite/iam-08-key-description.png)
+Chỉ tải CSV một lần và lưu ngoài repository. Ảnh public đã che access-key ID và secret vì các giá trị này không được công khai.
+
+![IAM 09](/images/5-Workshop/5.2-Prerequisite/iam-09-key-created.png)
+
+{{% notice warning %}}
+Không commit hai file credentials CSV, `backend/.env`, API key, origin secret hoặc AWS account identifier. Hãy rotate hoặc deactivate long-lived key sau workshop.
+{{% /notice %}}
+
+#### 5. Cấu hình và kiểm tra AWS CLI
+
+```bash
+aws configure --profile cloudbrief-workshop
+aws sts get-caller-identity --profile cloudbrief-workshop
+aws configure get region --profile cloudbrief-workshop
+```
+
+Đặt region mặc định là `us-east-1` và output format là `json`. Ngày 16/07/2026, access key được cung cấp đã xác thực thành công với dedicated CloudBrief teammate user. Account identifier đã được loại khỏi báo cáo.
+
+#### 6. Chuẩn bị repository
+
+```bash
+cd ~/Code/Technology-News-Collection-and-Summarization-System
+bun install
+cp backend/.env.example backend/.env
+```
+
+Cấu hình local cho `DEMO_API_KEY`, `BUDGET_EMAIL`, `AWS_REGION`, `BEDROCK_REGION` và `SUMMARY_MODEL_ID`. Chỉ giữ giá trị thật trong local environment hoặc AWS configuration store được phê duyệt.
+
+#### Checklist sẵn sàng
+
+- Đã tạo IAM user và CLI key.
+- AWS CLI identity check thành công.
+- Region là `us-east-1`.
+- Bun và CDK đã sẵn sàng.
+- Có quyền dùng Bedrock Nova Micro.
+- Credential và secret được loại khỏi Git.
+
+
+
+
+

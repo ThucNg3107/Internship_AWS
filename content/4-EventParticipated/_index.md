@@ -75,9 +75,9 @@ During my internship, I participated in 5 events. Each one was a memorable exper
 
 
 ### [Event 5](4.5-Event5/)
-&emsp;**Event Name:** FIRST CLOUD AI JOURNEY - AWS SLA, SECURITY & EXAM ROADMAPS - June 2026
+&emsp;**Event Name:** FIRST CLOUD AI JOURNEY - AWS SLA, SECURITY & EXAM ROADMAPS - July 2026
 
-&emsp;**Date & Time:** 09:00, June 25, 2026
+&emsp;**Date & Time:** 09:00, July 11, 2026
 
 &emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City
 

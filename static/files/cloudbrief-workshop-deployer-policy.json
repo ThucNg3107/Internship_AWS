@@ -1,0 +1,66 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CloudBriefInfrastructure",
+      "Effect": "Allow",
+      "Action": [
+        "autoscaling:*",
+        "backup:*",
+        "bedrock:*",
+        "budgets:*",
+        "cloudformation:*",
+        "cloudfront:*",
+        "cloudwatch:*",
+        "dynamodb:*",
+        "ec2:*",
+        "elasticloadbalancing:*",
+        "events:*",
+        "kms:*",
+        "logs:*",
+        "s3:*",
+        "sns:*",
+        "sqs:*",
+        "ssm:*",
+        "wafv2:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "CloudBriefDeploymentRoles",
+      "Effect": "Allow",
+      "Action": [
+        "iam:AttachRolePolicy",
+        "iam:CreateInstanceProfile",
+        "iam:CreatePolicy",
+        "iam:CreateRole",
+        "iam:DeleteInstanceProfile",
+        "iam:DeletePolicy",
+        "iam:DeleteRole",
+        "iam:DeleteRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:GetInstanceProfile",
+        "iam:GetPolicy",
+        "iam:GetRole",
+        "iam:PassRole",
+        "iam:PutRolePolicy",
+        "iam:RemoveRoleFromInstanceProfile",
+        "iam:AddRoleToInstanceProfile",
+        "iam:TagInstanceProfile",
+        "iam:TagPolicy",
+        "iam:TagRole",
+        "iam:UntagInstanceProfile",
+        "iam:UntagPolicy",
+        "iam:UntagRole",
+        "iam:UpdateAssumeRolePolicy",
+        "sts:AssumeRole"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:role/cloudbrief-*",
+        "arn:aws:iam::*:role/cdk-hnb659fds-*",
+        "arn:aws:iam::*:instance-profile/cloudbrief-*",
+        "arn:aws:iam::*:policy/cloudbrief-*"
+      ]
+    }
+  ]
+}

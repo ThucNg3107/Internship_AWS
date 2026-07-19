@@ -1,19 +1,33 @@
 ---
-title : "Giới thiệu"
+title : "Tổng quan dự án và kiến trúc"
 date : 2024-01-01 
 weight : 1
 chapter : false
 pre : " <b> 5.1. </b> "
 ---
 
-#### Giới thiệu về VPC Endpoint
+#### Tổng quan dự án
 
-+ Điểm cuối VPC (endpoint) là thiết bị ảo. Chúng là các thành phần VPC có thể mở rộng theo chiều ngang, dự phòng và có tính sẵn sàng cao. Chúng cho phép giao tiếp giữa tài nguyên điện toán của bạn và dịch vụ AWS mà không gây ra rủi ro về tính sẵn sàng.
-+ Tài nguyên điện toán đang chạy trong VPC có thể truy cập Amazon S3 bằng cách sử dụng điểm cuối Gateway. Interface Endpoint  PrivateLink có thể được sử dụng bởi tài nguyên chạy trong VPC hoặc tại TTDL.
+CloudBrief là ứng dụng AWS theo hướng EC2-first để thu thập và tóm tắt tin tức công nghệ. Dự án phục vụ sinh viên, người nghiên cứu, người chấm demo và người dùng dashboard cần theo dõi tin tức cloud/phần mềm/bảo mật nhanh hơn.
 
-#### Tổng quan về workshop
-Trong workshop này, bạn sẽ sử dụng hai VPC.
-+ **"VPC Cloud"** dành cho các tài nguyên cloud như Gateway endpoint và EC2 instance để kiểm tra.
-+ **"VPC On-Prem"** mô phỏng môi trường truyền thống như nhà máy hoặc trung tâm dữ liệu của công ty. Một EC2 Instance chạy phần mềm StrongSwan VPN đã được triển khai trong "VPC On-prem" và được cấu hình tự động để thiết lập đường hầm VPN Site-to-Site với AWS Transit Gateway. VPN này mô phỏng kết nối từ một vị trí tại TTDL (on-prem) với AWS cloud. Để giảm thiểu chi phí, chỉ một phiên bản VPN được cung cấp để hỗ trợ workshop này. Khi lập kế hoạch kết nối VPN cho production workloads của bạn, AWS khuyên bạn nên sử dụng nhiều thiết bị VPN để có tính sẵn sàng cao.
+Ứng dụng thu thập bài viết từ RSS feeds và Hacker News, loại bỏ trùng lặp, trích xuất nội dung sạch, tóm tắt bằng Amazon Bedrock Nova Micro hoặc deterministic fallback, xử lý cover image sang WebP và cung cấp public magazine, article reader, reader community cùng protected operations page.
 
-![overview](/images/5-Workshop/5.1-Workshop-overview/diagram1.png)
+#### Sơ đồ kiến trúc
+
+![CloudBrief Architecture](/images/5-Workshop/5.1-Workshop-overview/cloudbrief.png)
+
+
+#### Luồng dữ liệu chính
+
+1. Reader mở AWS WAF-protected CloudFront distribution.
+2. CloudFront phục vụ private S3 frontend hoặc forward `/api/*` đến ALB.
+3. ALB phân phối API traffic đến hai EC2 trong private subnet.
+4. EventBridge hoặc protected admin request queue collection từ RSS và Hacker News.
+5. Worker extract cleaned text, process cover image sang WebP và queue summary qua SQS.
+6. Amazon Bedrock Nova Micro hoặc deterministic fallback tạo article summary.
+7. DynamoDB lưu article/social state; private S3 bucket lưu cleaned text và processed image.
+8. CloudWatch, SNS, Systems Manager, AWS Backup, Budgets và IAM cung cấp operations/recovery controls.
+
+#### Phạm vi cá nhân
+
+Dự án nhóm là CloudBrief. Phạm vi báo cáo của tôi là phần workshop có thể triển khai: giải thích kiến trúc, CDK deployment flow, kiểm thử API/dashboard, kiểm soát chi phí/bảo mật, monitoring evidence, backup evidence và cleanup verification.

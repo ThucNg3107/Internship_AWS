@@ -1,37 +1,46 @@
 ---
-title : "Dọn dẹp tài nguyên"
+title : "Kế hoạch cleanup và recovery"
 date : 2024-01-01
 weight : 6
 chapter : false
 pre : " <b> 5.6. </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+{{% notice warning %}}
+Production demo vẫn đang live. Các lệnh dưới đây là cleanup procedure đã review và chưa được chạy trong lúc viết workshop.
+{{% /notice %}}
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+#### 1. Lưu bằng chứng
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+Trước cleanup, export bằng chứng đã sanitize cho CloudFormation, CloudFront/WAF, ALB target health, ASG instance, VPC endpoint, queue/DLQ, DynamoDB, S3, CloudWatch, SNS, Backup, Budgets, API response và browser test.
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+#### 2. Xử lý operations còn tồn tại
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+Audit ngày 16/07 phát hiện ba visible message trong image-processing DLQ. Kiểm tra và phân loại các message này trước khi destroy để báo cáo ghi rõ failure cause và remediation decision. Không public article content từ failed message.
 
-2. Hủy liên kết Route 53 Resolver Rule - myS3Rule khỏi "VPC Onprem" và xóa nó.
+#### 3. Destroy CDK stack
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+```bash
+cd ~/Code/Technology-News-Collection-and-Summarization-System
+AWS_PROFILE=cloudbrief-workshop AWS_REGION=us-east-1 \
+  bun run cdk destroy
+```
 
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
+Đây là thao tác destructive và cần được phê duyệt tại thời điểm chạy.
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+#### 4. Xử lý retained data
 
-5. Xóa các S3 bucket
+Nếu CDK cố ý retain versioned S3 object, backup recovery point hoặc durable data khác, cần quyết định từng item sẽ được giữ làm bằng chứng hay xóa. Empty versioned bucket cần xóa cả object version và delete marker.
 
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+#### 5. Verify cleanup read-only
+
+Xác nhận các tài nguyên dự kiến không còn tồn tại:
+
+- CloudFormation stack, CloudFront distribution và WAF Web ACL.
+- ALB, target group, ASG, EC2 instance, EBS volume và NAT Gateway.
+- VPC endpoint, SQS queue/DLQ, DynamoDB table và S3 bucket.
+- CloudWatch alarm/log group, SNS topic, Backup resource và project budget.
+
+#### Trạng thái hiện tại
+
+Cleanup đang **pending** vì CloudBrief vẫn là production demo active. Báo cáo không được claim cleanup thành công cho đến khi destroy được phê duyệt, chạy và verify.

@@ -1,41 +1,55 @@
 ---
-title : "Tạo một S3 Interface endpoint"
+title : "Test pipeline RSS và Hacker News thật"
 date : 2024-01-01
 weight : 2
 chapter : false
 pre : " <b> 5.4.2 </b> "
 ---
 
-Trong phần này, bạn sẽ tạo và kiểm tra Interface Endpoint  S3 bằng cách sử dụng môi trường truyền thống mô phỏng.
+#### Bước 1: Verify public health route
 
-1. Quay lại Amazon VPC menu. Trong thanh điều hướng bên trái, chọn Endpoints, sau đó click Create Endpoint.
+```bash
+curl -i https://d3uspkyxnd3uus.cloudfront.net/api/health
+```
 
-2. Trong Create endpoint console:
-+ Đặt tên interface endpoint
-+ Trong Service category, chọn **aws services** 
+Kết quả verify ngày 16/07/2026: HTTP `200`, project `cloudbrief`, stage `dev`, status `healthy`.
 
-![name](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint1.png)
+#### Bước 2: Verify protected collection
 
-3.  Trong Search box, gõ S3 và nhấn Enter. Chọn endpoint có tên com.amazonaws.us-east-1.s3. Đảm bảo rằng cột Type có giá trị Interface.
+Khi gọi admin collection route không có credential, API phải trả unauthorized. Request admin hợp lệ nhận source RSS và Hacker News, sau đó queue công việc qua collection, extraction, summarization và image processing.
 
-![service](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint2.png)
+```bash
+curl -X POST https://d3uspkyxnd3uus.cloudfront.net/api/v1/collect \
+  -H 'content-type: application/json' \
+  -d '{"sources":["rss","hackernews"],"limit":5}'
+```
 
-4. Đối với VPC, chọn VPC Cloud từ drop-down.
+Không đưa admin key thật vào screenshot hoặc shell history.
 
-+ Mở rộng **Additional settings** và đảm bảo rằng Enable DNS name *không* được chọn (sẽ sử dụng điều này trong phần tiếp theo của workshop)
+#### Bước 3: Đọc brief thật
 
-![vpc](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint3.png)
+```bash
+curl 'https://d3uspkyxnd3uus.cloudfront.net/api/v1/brief?limit=5'
+```
 
-5. Chọn 2 subnets trong AZs sau: us-east-1a and us-east-1b
+Article contract mong đợi:
 
-![subnets](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint4.png)
+```json
+{
+  "id": "article-id",
+  "title": "Publisher title",
+  "summary": "Bedrock hoặc deterministic fallback summary",
+  "canonicalUrl": "https://publisher.example/article",
+  "imageUrl": "https://cloudfront.example/article-images/cover.webp"
+}
+```
 
-6. Đối với Security group, chọn SGforS3Endpoint:
+Worker nhận ảnh publisher PNG, JPEG hoặc WebP, validate và convert sang WebP, upload vào private S3 bucket rồi chỉ lưu CloudFront URL trong DynamoDB.
 
-![sg](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint5.png)
+Live response ngày 16/07 trả về năm bài article Hacker News. Cả năm đều có canonical publisher URL, status `SUMMARIZED` và processed CloudFront WebP cover URL. Một title đã verify là Bluesky Trademarks ATProto từ trang AT Protocol.
 
-7. Giữ default policy - full access và click Create endpoint
+![API Smoke OK](/images/5-Workshop/5.4-S3-onprem/api-smoke-ok.png)
 
-![success](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint-success.png)
+#### Kết quả Bedrock
 
-Chúc mừng bạn đã tạo thành công S3 interface endpoint. Ở bước tiếp theo, chúng ta sẽ kiểm tra interface endpoint.
+Nova Micro được cấu hình là model chi phí thấp với giới hạn 256 output token. Trong deployment đã ghi nhận, tài khoản AWS chạm daily Nova token allowance. CloudBrief vì vậy lưu deterministic fallback summary thay vì làm mất article; CloudWatch hiển thị trạng thái này.

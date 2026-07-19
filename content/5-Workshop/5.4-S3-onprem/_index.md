@@ -1,20 +1,27 @@
 ---
-title : "Access S3 from on-premises"
-date : 2024-01-01
-weight : 4
+title : "Verify production system"
+date : 2024-01-01 
+weight : 4 
 chapter : false
 pre : " <b> 5.4. </b> "
 ---
 
-#### Overview
+This section verifies the deployed system from infrastructure to a real article on the reader UI.
 
-+ In this section, you will create an Interface endpoint to access Amazon S3 from a simulated on-premises environment. The Interface endpoint will allow you to route to Amazon S3 over a VPN connection from your simulated on-premises environment.
+1. [Verify network and compute](5.4.1-prepare/)
+2. [Test real RSS and Hacker News pipeline](5.4.2-create-interface-enpoint/)
+3. [Verify public magazine and article reader](5.4.3-test-endpoint/)
+4. [Check monitoring, queue, and operations](5.4.4-dns-simulation/)
 
-+ Why using **Interface endpoint**: 
-    + Gateway endpoints only work with resources running in the VPC where they are created. Interface endpoints work with resources running in VPC, and also resources running in on-premises environments. Connectivty from your on-premises environment to the cloud can be provided by AWS Site-to-Site VPN or AWS Direct Connect.
-    + Interface endpoints allow you to connect to services powered by AWS PrivateLink. These services include some AWS services, services hosted by other AWS customers and partners in their own VPCs (referred to as PrivateLink Endpoint Services), and supported AWS Marketplace Partner services. For this workshop, we will focus on connecting to Amazon S3.
+#### Acceptance results
 
-![Interface endpoint architecture](/images/5-Workshop/5.4-S3-onprem/diagram3.png)
-
-
-
+| Layer | Evidence |
+| --- | --- |
+| Edge | CloudFront distribution and WAF present |
+| Compute | ALB active; two private EC2 managed by ASG |
+| Network | NAT available; four VPC endpoints available |
+| Data plane | Eight SQS queues and six DynamoDB tables |
+| API | CloudFront `/api/health` and real brief endpoint responding |
+| Content | Real RSS/Hacker News article, summary, cleaned text, and WebP image |
+| Frontend | Magazine and article-reader load via CloudFront |
+| Operations | CloudWatch alarm, SNS, Backup, and Budgets configured |

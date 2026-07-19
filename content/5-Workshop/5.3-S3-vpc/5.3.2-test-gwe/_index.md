@@ -1,82 +1,237 @@
 ---
-title : "Test the Gateway Endpoint"
+title : "Deploy production stack"
 date : 2024-01-01 
 weight : 2
 chapter : false
-pre : " <b> 5.3.2 </b> "
+pre : " <b> 5.3.2. </b> "
 ---
 
-#### Create S3 bucket
+{{% notice warning %}}
+Bootstrap and deploy commands will create or update AWS resources. Only run when approved, with active budget and a rollback plan.
+{{% /notice %}}
 
-1. Navigate to **S3 management console**
-2. In the Bucket console, choose **Create bucket**
+#### Step 1: Check identity and current stack
 
-![Create bucket](/images/5-Workshop/5.3-S3-vpc/create-bucket.png)
+```bash
+AWS_PROFILE=cloudbrief-workshop aws sts get-caller-identity
+AWS_PROFILE=cloudbrief-workshop aws cloudformation describe-stacks \
+  --region us-east-1 --stack-name cloudbrief-dev
+```
 
-3. In **the Create bucket console**
-+ **Name the bucket**: choose a name that hasn't been given to any bucket globally (hint: lab number and your name)
+Mask account IDs and resource identifiers before publishing output.
 
-![Bucket name](/images/5-Workshop/5.3-S3-vpc/bucket-name.png)
+#### Step 2: Bootstrap CDK
 
-+ Leave other fields as they are (default)
-+ Scroll down and choose **Create bucket**
+```bash
+AWS_PROFILE=cloudbrief-workshop AWS_REGION=us-east-1 \
+  bun run cdk bootstrap
+```
 
-![Create](/images/5-Workshop/5.3-S3-vpc/create-button.png) 
+#### Step 3: Deploy CloudBrief
 
-+ Successfully create S3 bucket.
+```bash
+AWS_PROFILE=cloudbrief-workshop AWS_REGION=us-east-1 \
+  DEMO_API_KEY='<read from protected local storage>' \
+  bunx cdk deploy --require-approval never \
+  -c originSecretHeaderValue='<new random value>'
+```
 
-![Success](/images/5-Workshop/5.3-S3-vpc/bucket-success.png)
+![CDK Deploy OK](/images/5-Workshop/5.3-S3-vpc/cdk-deploy-ok.png)
+Deployment creates CloudFront, WAF, private S3 origin, ALB, VPC, private Auto Scaling compute, NAT, VPC endpoints, SQS queues and DLQ, DynamoDB tables, EventBridge schedule, observability, SNS, Backup, Budgets, IAM, and Systems Manager configuration.
 
-#### Connect to EC2 with session manager
+#### Step 4: Publish frontend
 
-+ For this workshop, you will use **AWS Session Manager** to access several **EC2 instances**. **Session Manager** is a fully managed **AWS Systems Manager** capability that allows you to manage your **Amazon EC2 instances**  and on-premises virtual machines (VMs) through an interactive one-click browser-based shell. Session Manager provides secure and auditable instance management without the need to open inbound ports, maintain bastion hosts, or manage SSH keys.
+```bash
+bun run --cwd frontend build
+AWS_PROFILE=cloudbrief-workshop aws s3 sync \
+  frontend/out s3://<frontend-bucket> --delete
+AWS_PROFILE=cloudbrief-workshop aws cloudfront create-invalidation \
+  --distribution-id <distribution-id> --paths '/*'
+```
 
-+ First cloud journey [Lab](https://000058.awsstudygroup.com/1-introduce/) for indepth understanding of Session manager.
+#### Step 5: Verify production resources (step by step)
 
-1. In the **AWS Management Console**, start typing ```Systems Manager``` in the quick search box and press **Enter**:
+After deployment, verify each resource using read-only AWS CLI. The images below were captured on **July 18, 2026** from the workshop account; sensitive account IDs, private IPs, and identifiers have been redacted.
 
-![system manager](/images/5-Workshop/5.3-S3-vpc/sm.png)
+Set profile before running the commands:
 
-2. From the **Systems Manager** menu, find **Node Management** in the left menu and click **Session Manager**:
+```bash
+export AWS_PROFILE=cloudbrief-workshop
+export AWS_REGION=us-east-1
+```
 
-![system manager](/images/5-Workshop/5.3-S3-vpc/sm1.png)
+##### 5.1 CloudFormation stack
 
-3. Click **Start Session**, and select **the EC2 instance** named **Test-Gateway-Endpoint**. 
-{{% notice info %}}
-This EC2 instance is already running in "VPC Cloud" and will be used to test connectivity to Amazon S3 through the Gateway endpoint you just created (s3-gwe). {{% /notice %}}
+Confirm that stack `cloudbrief-dev` is in a stable state.
 
-![Start session](/images/5-Workshop/5.3-S3-vpc/start-session.png)
+```bash
+aws cloudformation describe-stacks \
+  --region us-east-1 \
+  --stack-name cloudbrief-dev \
+  --query 'Stacks[].{Name:StackName,Status:StackStatus}' \
+  --output table
+```
 
-**Session Manager** will open a new browser tab with a shell prompt: sh-4.2 $
+Expected: `UPDATE_COMPLETE` (or `CREATE_COMPLETE` for initial deployment).
+![cli-cloudformation](/images/5-Workshop/5.3-S3-vpc/cli-cloudformation.png)
 
-![Success](/images/5-Workshop/5.3-S3-vpc/start-session-success.png)
+##### 5.2 EC2 workers
 
-You have successfully start a session - connect to the EC2 instance in VPC cloud. In the next step, we will create a S3 bucket and a file in it. 
+Two workers in private subnets, without public IP.
 
-#### Create a file and upload to s3 bucket
+```bash
+aws ec2 describe-instances \
+  --filters Name=instance-state-name,Values=running \
+  --query 'Reservations[].Instances[].[Name:Tags[?Key==`Name`]|[0].Value,State:State.Name,Type:InstanceType,PublicIp:PublicIpAddress]' \
+  --output table
+```
 
-1. Change to the ssm-user's home directory by typing ```cd ~``` in the CLI
+Expected: 2 instances `cloudbrief-dev-api-worker`, state `running`, `PublicIp = None`.
 
-![Change user's dir](/images/5-Workshop/5.3-S3-vpc/cli1.png)
+![cli-ec2](/images/5-Workshop/5.3-S3-vpc/cli-ec2.png)
 
-2. Create a new file to use for testing with the command ```fallocate -l 1G testfile.xyz```, which will create a file of 1GB size named "testfile.xyz".
+##### 5.3 Auto Scaling group
 
-![Create file](/images/5-Workshop/5.3-S3-vpc/cli-file.png)
+```bash
+aws autoscaling describe-auto-scaling-groups \
+  --query 'AutoScalingGroups[].[Name:AutoScalingGroupName,Desired:DesiredCapacity,Min:MinSize,Max:MaxSize,Instances:length(Instances)]' \
+  --output table
+```
 
-3. Upload file to S3 bucket with command ```aws s3 cp testfile.xyz s3://your-bucket-name```. Replace your-bucket-name with the name of S3 bucket that you created earlier.
+Expected: Desired / Min / Max / Instances = `2`.
 
-![Uploaded](/images/5-Workshop/5.3-S3-vpc/uploaded.png)
+![cli-asg](/images/5-Workshop/5.3-S3-vpc/cli-asg.png)
 
-You have successfully uploaded the file to your S3 bucket. You can now terminate the session.
+##### 5.4 Application Load Balancer
 
-#### Check object in S3 bucket
+```bash
+aws elbv2 describe-load-balancers \
+  --query 'LoadBalancers[].[Name:LoadBalancerName,Type:Type,Scheme:Scheme,State:State.Code]' \
+  --output table
+```
 
-1. Navigate to S3 console.  
-2. Click the name of your s3 bucket
-3. In the Bucket console, you will see the file you have uploaded to your S3 bucket
+Expected: type `application`, scheme `internet-facing`, state `active`.
 
-![Check S3](/images/5-Workshop/5.3-S3-vpc/check-s3-bucket.png)
+![cli-alb](/images/5-Workshop/5.3-S3-vpc/cli-alb.png)
 
-#### Section summary
+##### 5.5 NAT Gateway
 
-Congratulation on completing access to S3 from VPC. In this section, you created a Gateway endpoint for Amazon S3, and used the AWS CLI to upload an object. The upload worked because the Gateway endpoint allowed communication to S3, without needing an Internet Gateway attached to "VPC Cloud". This demonstrates the functionality of the Gateway endpoint as a secure path to S3 without traversing the Public Internet.
+Worker egress to internet (RSS, Hacker News, article fetching) via NAT.
+
+```bash
+aws ec2 describe-nat-gateways \
+  --filter Name=state,Values=available \
+  --query 'NatGateways[].[Id:NatGatewayId,State:State,Connectivity:ConnectivityType]' \
+  --output table
+```
+
+Expected: 1 NAT `available`, connectivity `public`.
+
+![cli-nat-gateway](/images/5-Workshop/5.3-S3-vpc/cli-nat-gateway.png)
+
+##### 5.6 VPC endpoints (Interface + gateway)
+
+Internal AWS traffic does not go through public internet: SQS, Bedrock (Interface), S3, DynamoDB (Gateway).
+
+```bash
+aws ec2 describe-vpc-endpoints \
+  --query 'VpcEndpoints[].[Service:ServiceName,Type:VpcEndpointType,State:State]' \
+  --output table
+```
+
+Expected: 4 endpoints, all `available`:
+
+| Service | Type |
+| --- | --- |
+| `sqs` | Interface |
+| `bedrock-runtime` | Interface |
+| `dynamodb` | Gateway |
+| `s3` | Gateway |
+
+![cli-vpc-endpoints](/images/5-Workshop/5.3-S3-vpc/cli-vpc-endpoints.png)
+
+##### 5.7 CloudFront
+
+```bash
+aws cloudfront list-distributions \
+  --query 'DistributionList.Items[].{Id:Id,Status:Status,Enabled:Enabled,Origins:length(Origins.Items)}' \
+  --output table
+```
+
+Expected: status `Deployed`, enabled `True`, with origins (S3 frontend + ALB + image bucket).
+
+![cli-cloudfront](/images/5-Workshop/5.3-S3-vpc/cli-cloudfront.png)
+
+##### 5.8 AWS WAF
+
+```bash
+aws wafv2 list-web-acls \
+  --scope CLOUDFRONT \
+  --query 'WebACLs[].{Name:Name}' \
+  --output table
+```
+
+Expected: Web ACL attached to entry path (name prefixed with `ApiEntryWebAcl...`).
+
+![cli-waf](/images/5-Workshop/5.3-S3-vpc/cli-waf.png)
+
+##### 5.9 S3 buckets
+
+```bash
+aws s3api list-buckets \
+  --query "Buckets[?contains(Name, 'cloudbrief')].Name" \
+  --output table
+```
+
+Expected: frontend bucket, cleaned-content bucket, image bucket.
+
+![cli-s3-bucket](/images/5-Workshop/5.3-S3-vpc/cli-s3-bucket.png)
+
+##### 5.10 DynamoDB tables
+
+```bash
+aws dynamodb list-tables --output table
+```
+
+Expected: 6 CloudBrief tables (articles, search tokens, daily counters, dedupe, social, source runs).
+
+![cli-dynamodb](/images/5-Workshop/5.3-S3-vpc/cli-dynamodb.png)
+
+##### 5.11 SQS queues and DLQs
+
+```bash
+aws sqs list-queues --query 'QueueUrls' --output table
+```
+
+Expected: 4 main queues + 4 DLQs (collection, extraction, image process, summary).
+
+![cli-sqs](/images/5-Workshop/5.3-S3-vpc/cli-sqs.png)
+
+##### 5.12 Bedrock Nova Micro
+
+```bash
+aws bedrock list-foundation-models \
+  --query "modelSummaries[?modelId=='amazon.nova-micro-v1:0'].{Id:modelId,Name:modelName}" \
+  --output table
+```
+
+Expected: model `amazon.nova-micro-v1:0` appears (account is permitted to use the model).
+
+![cli-bedrock](/images/5-Workshop/5.3-S3-vpc/cli-bedrock.png)
+
+#### Post-Step 5 Checklist
+
+| # | Resource | Pass condition |
+| --- | --- | --- |
+| 5.1 | CloudFormation | `UPDATE_COMPLETE` |
+| 5.2 | EC2 | 2 running, no public IP |
+| 5.3 | ASG | capacity = 2 |
+| 5.4 | ALB | active, internet-facing |
+| 5.5 | NAT | available |
+| 5.6 | VPC endpoints | 4 available |
+| 5.7 | CloudFront | Deployed |
+| 5.8 | WAF | Web ACL exists |
+| 5.9 | S3 | 3 cloudbrief buckets |
+| 5.10 | DynamoDB | 6 tables |
+| 5.11 | SQS | 8 queues (4 + 4 DLQ) |
+| 5.12 | Bedrock | Nova Micro listed |

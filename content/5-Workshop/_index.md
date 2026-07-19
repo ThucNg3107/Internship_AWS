@@ -6,23 +6,27 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# Secure Hybrid Access to S3 using VPC Endpoints
+## EC2-first technology news collection and summarization system
 
-#### Overview
+This workshop documents my personal implementation within the CloudBrief team project. The goal is to present a practical AWS use case from architecture, deployment, testing to resource cleanup using self-written content.
 
-**AWS PrivateLink** provides private connectivity to AWS services from VPCs and your on-premises networks, without exposing your traffic to the Public Internet.
+CloudBrief collects technology news from RSS feeds and Hacker News, removes duplicates, extracts clean content, summarizes with Amazon Bedrock, processes cover images to WebP, and provides a public magazine along with an authenticated reader/admin workflow.
 
-In this lab, you will learn how to create, configure, and test VPC endpoints that enable your workloads to reach AWS services without traversing the Public Internet.
+#### Workshop content
 
-You will create two types of endpoints to access Amazon S3: a Gateway VPC endpoint, and an Interface VPC endpoint. These two types of VPC endpoints offer different benefits depending on if you are accessing Amazon S3 from the cloud or your on-premises location
-+ **Gateway** - Create a gateway endpoint to send traffic to Amazon S3 or DynamoDB using private IP addresses.You route traffic from your VPC to the gateway endpoint using route tables.
-+ **Interface** - Create an interface endpoint to send traffic to endpoint services that use a Network Load Balancer to distribute traffic. Traffic destined for the endpoint service is resolved using DNS.
+1. [Project overview and architecture](5.1-Workshop-overview/)
+2. [AWS account and local environment setup](5.2-Prerequiste/)
+3. [Build and deploy CloudBrief](5.3-S3-vpc/)
+4. [Verify production system](5.4-S3-onprem/)
+5. [Security, cost, and architecture decisions](5.5-Policy/)
+6. [Cleanup and recovery plan](5.6-Cleanup/)
 
-#### Content
+#### Requirement mapping
 
-1. [Workshop overview](5.1-Workshop-overview/)
-2. [Prerequiste](5.2-Prerequiste/)
-3. [Access S3 from VPC](5.3-S3-vpc/)
-4. [Access S3 from On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (Bonus)](5.5-Policy/)
-6. [Clean up](5.6-Cleanup/)
+The workshop meets the project rubric:
+
+* Practical AWS use-case: technology news summarization dashboard.
+* Uses more than 3 AWS services: WAF, CloudFront, S3, ALB, EC2 Auto Scaling, VPC, SQS, DynamoDB, Bedrock, EventBridge, CloudWatch, SNS, SSM, Backup, Budgets, and IAM.
+* Includes architecture diagrams and service selection rationale.
+* Includes step-by-step deployment and testing guide.
+* Includes logs, metrics, alarms, cost controls, security controls, backup, and cleanup.

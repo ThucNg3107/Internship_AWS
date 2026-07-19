@@ -89,3 +89,7 @@ Tham gia meetup lần này mang lại nhiều cảm xúc và kiến thức thự
 - Được truyền cảm hứng từ những câu chuyện “vượt sướng” và nỗ lực không ngừng của các diễn giả sinh viên.
 - Sự kiện đã thay đổi hoàn toàn định kiến về “lười biếng” và giúp tôi có cái nhìn thực tế hơn về lộ trình trở thành một Cloud Engineer/DevOps chuyên nghiệp.
 
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+  <img src="/images/4-EventParticipated/sk2.jpg" alt="sk2" style="width: 50%; min-width: 250px; height: auto;" />
+</div>
+

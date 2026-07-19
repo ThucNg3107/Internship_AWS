@@ -1,57 +1,46 @@
 ---
-title : "Prepare the environment"
+title : "Verify network and compute"
 date : 2024-01-01
 weight : 1
 chapter : false
 pre : " <b> 5.4.1 </b> "
 ---
 
-To prepare for this part of the workshop you will need to:
-+ Deploying a CloudFormation stack 
-+ Modifying a VPC route table. 
+Use read-only AWS CLI so the verification process does not alter deployment.
 
-These components work together to simulate on-premises DNS forwarding and name resolution.
+#### Stack and compute
 
-#### Deploy the CloudFormation stack
+```bash
+aws cloudformation describe-stacks --profile cloudbrief-workshop \
+  --region us-east-1 --stack-name cloudbrief-dev
 
-The CloudFormation template will create additional services to support an on-premises simulation:
-+ One Route 53 Private Hosted Zone that hosts Alias records for the PrivateLink S3 endpoint
-+ One Route 53 Inbound Resolver endpoint that enables "VPC Cloud" to resolve inbound DNS resolution requests to the Private Hosted Zone
-+ One Route 53 Outbound Resolver endpoint that enables "VPC On-prem" to forward DNS requests for S3 to "VPC Cloud"
+aws autoscaling describe-auto-scaling-groups \
+  --profile cloudbrief-workshop --region us-east-1
 
-![route 53 diagram](/images/5-Workshop/5.4-S3-onprem/route53.png)
+aws ec2 describe-instances --profile cloudbrief-workshop \
+  --region us-east-1
+```
 
-1. Click the following link to open the [AWS CloudFormation console](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.amazonaws.com/reinvent-endpoints-builders-session/R53CF.yaml&stackName=PLOnpremSetup). The required template will be pre-loaded into the menu. Accept all default and click Create stack.
+Verification results on July 16, 2026:
 
-![Create stack](/images/5-Workshop/5.4-S3-onprem/create-stack.png)
+- CloudFormation status: `UPDATE_COMPLETE`.
+- Auto Scaling desired/min/max capacity: `2/2/2` across two Availability Zones.
+- Two EC2 instances running, both using private IP only.
+- One active internet-facing Application Load Balancer.
 
-![Button](/images/5-Workshop/5.4-S3-onprem/create-stack-button.png)
+#### Network path
 
-It may take a few minutes for stack deployment to complete. You can continue with the next step without waiting for the deployemnt to finish.
+```bash
+aws ec2 describe-nat-gateways --profile cloudbrief-workshop \
+  --region us-east-1
+aws ec2 describe-vpc-endpoints --profile cloudbrief-workshop \
+  --region us-east-1
+```
 
-#### Update on-premise private route table
+Verification results:
 
-This workshop uses a strongSwan VPN running on an EC2 instance to simulate connectivty between an on-premises datacenter and the AWS cloud. Most of the required components are provisioned before your start. To finalize the VPN configuration, you will modify the "VPC On-prem" routing table to direct traffic destined for the cloud to the strongSwan VPN instance.
+- One NAT Gateway available for traffic to external publishers.
+- Two interface endpoints available for SQS and Bedrock Runtime.
+- Two gateway endpoints available for S3 and DynamoDB.
 
-1. Open the Amazon EC2 console 
-
-2. Select the instance named infra-vpngw-test. From the Details tab, copy the Instance ID and paste this into your text editor
-
-![ec2 id](/images/5-Workshop/5.4-S3-onprem/ec2-onprem-id.png)
-
-3. Navigate to the VPC menu by using the Search box at the top of the browser window.
-
-4. Click on Route Tables, select the RT Private On-prem route table, select the Routes tab, and click Edit Routes.
-
-![rt](/images/5-Workshop/5.4-S3-onprem/rt.png)
-
-5. Click Add route.
-+ Destination: your Cloud VPC cidr range
-+ Target: ID of your infra-vpngw-test instance (you saved in your editor at step 1)
-
-![add route](/images/5-Workshop/5.4-S3-onprem/add-route.png)
-
-6. Click Save changes
-
-
-
+This isolation allows workers to access public RSS/articles while traffic to AWS managed services stays inside the AWS network.
