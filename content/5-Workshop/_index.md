@@ -6,6 +6,8 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
+# CloudBrief Workshop
+
 ## EC2-first technology news collection and summarization system
 
 This workshop documents my personal implementation within the CloudBrief team project. The goal is to present a practical AWS use case from architecture, deployment, testing to resource cleanup using self-written content.

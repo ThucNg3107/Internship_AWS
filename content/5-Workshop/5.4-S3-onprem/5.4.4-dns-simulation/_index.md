@@ -34,3 +34,4 @@ AWS Backup protects durable DynamoDB tables. Notifications for account registrat
 #### Budget evidence
 
 ![Budget Evidence](/images/5-Workshop/5.4-S3-onprem/budget.png)
+Budget notifications act as deployment gates because ALB, NAT Gateway, interface endpoints, WAF, and two EC2 instances incur recurring costs.
