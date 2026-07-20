@@ -6,16 +6,15 @@ chapter: false
 pre: " <b> 2.2. </b> "
 ---
 
-# PROJECT VIDEO DEMO
+# PROPOSAL 2
 
-<div style="text-align: center; margin: 20px 0;">
-  <video width="50%" controls style="max-width: 50%; height: auto; border-radius: 8px;">
-    <source src="../../files/clip.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
+## PROJECT VIDEO DEMO
 
-### Access Links
+### Access Links 🌐
 
 * **User Web Portal:** [https://d3u5pkyxnd3uus.cloudfront.net/](https://d3u5pkyxnd3uus.cloudfront.net/)
 * **Admin Web Portal:** [https://d3u5pkyxnd3uus.cloudfront.net/ops.html](https://d3u5pkyxnd3uus.cloudfront.net/ops.html)
+
+### Video Demo
+
+<iframe src="https://drive.google.com/file/d/YOUR_FILE_ID/preview" width="100%" height="500" allow="autoplay" style="border:none; border-radius: 8px;"></iframe>
