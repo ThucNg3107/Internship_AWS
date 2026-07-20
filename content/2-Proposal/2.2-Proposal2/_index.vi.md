@@ -10,7 +10,7 @@ pre: " <b> 2.2. </b> "
 
 <div style="text-align: center; margin: 20px 0;">
   <video width="50%" controls style="max-width: 50%; height: auto; border-radius: 8px;">
-    <source src="/files/clip.mp4" type="video/mp4">
+    <source src="../../files/clip.mp4" type="video/mp4">
     Trình duyệt của bạn không hỗ trợ thẻ video.
   </video>
 </div>
