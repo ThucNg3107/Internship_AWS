@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 
-## AI-POWERED DATA EXTRACTION & SUMMARIZATION PLATFORM
+# AI-POWERED DATA EXTRACTION & SUMMARIZATION PLATFORM
 
 ### Group Project: Automated Data Collection and Summarization Solution using AWS & Amazon Bedrock
 
