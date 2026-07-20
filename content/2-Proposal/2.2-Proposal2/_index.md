@@ -17,4 +17,6 @@ pre: " <b> 2.2. </b> "
 
 ### Video Demo
 
-<iframe src="https://drive.google.com/file/d/1K2GEhB9J6h5FmZDMiZGJycesOqZLxu2y/preview" width="50%" height="500" allow="autoplay" style="border:none; border-radius: 8px;"></iframe>
+<div style="text-align: center; margin: 20px 0;">
+  <iframe src="https://drive.google.com/file/d/1K2GEhB9J6h5FmZDMiZGJycesOqZLxu2y/preview" width="100%" height="500" allow="autoplay" style="border:none; border-radius: 8px;"></iframe>
+</div>
