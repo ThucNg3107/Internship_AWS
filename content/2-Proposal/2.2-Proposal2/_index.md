@@ -6,11 +6,7 @@ chapter: false
 pre: " <b> 2.2. </b> "
 ---
 
-# PROPOSAL 2
-
-## PROJECT VIDEO DEMO
-
-### Access Links 🌐
+### Access Links 
 
 * **User Web Portal:** [https://d3u5pkyxnd3uus.cloudfront.net/](https://d3u5pkyxnd3uus.cloudfront.net/)
 * **Admin Web Portal:** [https://d3u5pkyxnd3uus.cloudfront.net/ops.html](https://d3u5pkyxnd3uus.cloudfront.net/ops.html)

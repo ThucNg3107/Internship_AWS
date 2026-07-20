@@ -6,11 +6,9 @@ chapter: false
 pre: " <b> 2.2. </b> "
 ---
 
-# PROPOSAL 2
 
-## PROJECT VIDEO DEMO
 
-### Access Links 🌐
+### Link Truy Cập
 
 * **Giao diện người dùng (User Web):** [https://d3u5pkyxnd3uus.cloudfront.net/](https://d3u5pkyxnd3uus.cloudfront.net/)
 * **Giao diện quản trị (Admin Web):** [https://d3u5pkyxnd3uus.cloudfront.net/ops.html](https://d3u5pkyxnd3uus.cloudfront.net/ops.html)
