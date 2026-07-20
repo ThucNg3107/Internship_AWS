@@ -6,22 +6,22 @@ chapter : false
 pre : " <b> 5.4. </b> "
 ---
 
-Phần này verify hệ thống đã deploy từ hạ tầng đến một bài viết thật trên reader UI.
+Phần này kiểm tra hệ thống đã triển khai từ hạ tầng đến một bài viết thực tế được hiển thị trên giao diện người đọc (reader UI).
 
-1. [Verify network và compute](5.4.1-prepare/)
-2. [Test pipeline RSS và Hacker News thật](5.4.2-create-interface-enpoint/)
-3. [Verify magazine và article reader public](5.4.3-test-endpoint/)
-4. [Kiểm tra monitoring, queue và operations](5.4.4-dns-simulation/)
+1. [Verify network and compute](5.4.1-prepare/)
+2. [Test the real RSS and Hacker News pipeline](5.4.2-create-interface-enpoint/)
+3. [Verify the public magazine and article reader](5.4.3-test-endpoint/)
+4. [Inspect monitoring, queues, and operations](5.4.4-dns-simulation/)
 
-#### Kết quả acceptance
+#### Acceptance result
 
 | Layer | Bằng chứng |
 | --- | --- |
-| Edge | Có CloudFront distribution và WAF |
-| Compute | ALB active; hai private EC2 được ASG quản lý |
-| Network | NAT available; bốn VPC endpoint available |
-| Data plane | Tám SQS queue và sáu DynamoDB table |
-| API | CloudFront `/api/health` và real brief endpoint phản hồi |
-| Content | Bài RSS/Hacker News thật, summary, cleaned text và WebP image |
-| Frontend | Magazine và article-reader load qua CloudFront |
-| Operations | CloudWatch alarm, SNS, Backup và Budgets đã cấu hình |
+| Edge | CloudFront distribution và WAF tồn tại |
+| Compute | ALB active; hai private EC2 instances hoạt động tốt thông qua ASG |
+| Network | NAT available; bốn VPC endpoints available |
+| Data plane | Tám SQS queues và sáu DynamoDB tables |
+| API | CloudFront `/api/health` và các real brief endpoints phản hồi |
+| Content | Bài viết RSS/Hacker News thật, summary, cleaned text và ảnh WebP |
+| Frontend | Các trang Magazine và article-reader tải thông qua CloudFront |
+| Operations | CloudWatch alarms, SNS, Backup và Budgets đã được cấu hình |

@@ -1,14 +1,11 @@
 ---
-title : "Deploy production stack"
+title : "Deploy the production stack"
 date : 2024-01-01 
 weight : 2
 chapter : false
-pre : " <b> 5.3.2. </b> "
+pre : " <b> 5.3.2 </b> "
 ---
 
-{{% notice warning %}}
-Bootstrap and deploy commands will create or update AWS resources. Only run when approved, with active budget and a rollback plan.
-{{% /notice %}}
 
 #### Step 1: Check identity and current stack
 
@@ -219,9 +216,9 @@ Expected: model `amazon.nova-micro-v1:0` appears (account is permitted to use th
 
 ![cli-bedrock](/images/5-Workshop/5.3-S3-vpc/cli-bedrock.png)
 
-#### Post-Step 5 Checklist
+#### Checklist after Step 5
 
-| # | Resource | Pass condition |
+| # | Resource | Pass when |
 | --- | --- | --- |
 | 5.1 | CloudFormation | `UPDATE_COMPLETE` |
 | 5.2 | EC2 | 2 running, no public IP |

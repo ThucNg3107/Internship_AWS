@@ -63,7 +63,7 @@ pre: " <b> 4. </b> "
 
 
 ### [Event 5](4.5-Event5/)
-&emsp;**Event Name:** FIRST CLOUD AI JOURNEY - AWS SLA, SECURITY & EXAM ROADMAPS - July 2026
+&emsp;**Event Name:** Fi    rst Cloud AI Journey - AWS SLA, Security & Exam Roadmaps - July 2026
 
 &emsp;**Date & Time:** 09:00, July 11, 2026
 

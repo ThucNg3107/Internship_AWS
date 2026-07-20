@@ -6,50 +6,50 @@ chapter : false
 pre : " <b> 5.4.2 </b> "
 ---
 
-#### Bước 1: Verify public health route
+#### Step 1: Verify the public health route
 
 ```bash
-curl -i https://d3uspkyxnd3uus.cloudfront.net/api/health
+curl -i https://d3u5pkyxnd3uus.cloudfront.net/api/health
 ```
 
-Kết quả verify ngày 16/07/2026: HTTP `200`, project `cloudbrief`, stage `dev`, status `healthy`.
+Verified on 16 July 2026: HTTP `200`, project `cloudbrief`, stage `dev`, status `healthy`.
 
-#### Bước 2: Verify protected collection
+#### Step 2: Verify protected collection
 
-Khi gọi admin collection route không có credential, API phải trả unauthorized. Request admin hợp lệ nhận source RSS và Hacker News, sau đó queue công việc qua collection, extraction, summarization và image processing.
+Việc gọi đường dẫn admin collection mà không có thông tin xác thực phải trả về phản hồi không có quyền (unauthorized). Một yêu cầu admin hợp lệ sẽ chấp nhận các nguồn RSS và Hacker News, sau đó đưa công việc vào hàng đợi thông qua thu thập, trích xuất, tóm tắt và xử lý hình ảnh.
 
 ```bash
-curl -X POST https://d3uspkyxnd3uus.cloudfront.net/api/v1/collect \
+curl -X POST https://d3u5pkyxnd3uus.cloudfront.net/api/v1/collect \
   -H 'content-type: application/json' \
   -d '{"sources":["rss","hackernews"],"limit":5}'
 ```
 
-Không đưa admin key thật vào screenshot hoặc shell history.
+Do not place the real admin key in a screenshot or shell history.
 
-#### Bước 3: Đọc brief thật
+#### Step 3: Read a real brief
 
 ```bash
-curl 'https://d3uspkyxnd3uus.cloudfront.net/api/v1/brief?limit=5'
+curl 'https://d3u5pkyxnd3uus.cloudfront.net/api/v1/brief?limit=5'
 ```
 
-Article contract mong đợi:
+Expected article contract:
 
 ```json
 {
   "id": "article-id",
   "title": "Publisher title",
-  "summary": "Bedrock hoặc deterministic fallback summary",
+  "summary": "Bedrock or deterministic fallback summary",
   "canonicalUrl": "https://publisher.example/article",
   "imageUrl": "https://cloudfront.example/article-images/cover.webp"
 }
 ```
 
-Worker nhận ảnh publisher PNG, JPEG hoặc WebP, validate và convert sang WebP, upload vào private S3 bucket rồi chỉ lưu CloudFront URL trong DynamoDB.
+Worker chấp nhận hình ảnh PNG, JPEG hoặc WebP của nhà xuất bản, xác thực và chuyển đổi chúng sang WebP, tải chúng lên một private S3 bucket và chỉ lưu trữ CloudFront URL trong DynamoDB.
 
-Live response ngày 16/07 trả về năm bài article Hacker News. Cả năm đều có canonical publisher URL, status `SUMMARIZED` và processed CloudFront WebP cover URL. Một title đã verify là Bluesky Trademarks ATProto từ trang AT Protocol.
+Phản hồi trực tiếp vào ngày 16 tháng 7 đã trả về 5 bài viết Hacker News. Cả 5 bài viết đều có canonical publisher URL, trạng thái `SUMMARIZED` và CloudFront WebP cover URL đã qua xử lý. Một tiêu đề đã được xác minh là **Bluesky Trademarks ATProto** từ trang web AT Protocol.
 
-![API Smoke OK](/images/5-Workshop/5.4-S3-onprem/api-smoke-ok.png)
+![api-smoke-ok](/images/5-Workshop/5.4-S3-onprem/api-smoke-ok.png)
 
-#### Kết quả Bedrock
+#### Bedrock result
 
-Nova Micro được cấu hình là model chi phí thấp với giới hạn 256 output token. Trong deployment đã ghi nhận, tài khoản AWS chạm daily Nova token allowance. CloudBrief vì vậy lưu deterministic fallback summary thay vì làm mất article; CloudWatch hiển thị trạng thái này.
+Nova Micro được cấu hình làm mô hình chi phí thấp với giới hạn đầu ra 256 token. Trong quá trình triển khai đã ghi lại, tài khoản AWS đã đạt đến giới hạn token Nova hàng ngày. Do đó, CloudBrief đã lưu trữ các bản tóm tắt dự phòng (deterministic fallback summaries) thay vì bỏ qua các bài viết; CloudWatch hiển thị điều kiện này.

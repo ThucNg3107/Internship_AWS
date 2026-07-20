@@ -1,5 +1,5 @@
 ---
-title : "Check monitoring, queue, and operations"
+title : "Inspect monitoring, queues, and operations"
 date : 2024-01-01
 weight : 4
 chapter : false

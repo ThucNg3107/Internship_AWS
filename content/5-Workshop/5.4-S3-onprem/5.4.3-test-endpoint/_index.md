@@ -1,24 +1,24 @@
 ---
-title : "Verify public magazine and article reader"
+title : "Verify the public magazine and article reader"
 date : 2024-01-01
 weight : 3
 chapter : false
 pre : " <b> 5.4.3 </b> "
 ---
 
-Open production site:
+Open the production site:
 
 [https://d3u5pkyxnd3uus.cloudfront.net/](https://d3u5pkyxnd3uus.cloudfront.net/)
 
 #### Public behavior
 
-- Magazine can be read without an account.
-- Article card uses processed CloudFront WebP URL returned by API.
-- Reader can open full cleaned article text, generated summary, source attribution, and original publisher link.
-- Only like and comment require login.
-- Operations page uses dedicated admin session and does not embed admin API key.
+- **The magazine is readable without an account.**
+- **Article cards use the processed CloudFront WebP URL returned by the API.**
+- **A reader can open full cleaned article text, the generated summary, source attribution, and the original publisher link.**
+- **Login is required only for likes and comments.**
+- **The operations page uses a separate admin session and never embeds the admin API key.**
 
-![Article Reader](/images/5-Workshop/5.4-S3-onprem/article-reader.png)
+![article-reader](/images/5-Workshop/5.4-S3-onprem/article-reader.png)
 
 #### Real article evidence
 

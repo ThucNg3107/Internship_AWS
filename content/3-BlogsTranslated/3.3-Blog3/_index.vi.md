@@ -1,7 +1,7 @@
 ---
 title: "Blog 3: Ghi nhật ký kiểm tra Amazon S3 – Phần 2: Phân tích và ghi nhật ký tập trung"
 date: 2024-01-01
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
@@ -12,9 +12,14 @@ Khi xảy ra sự cố bảo mật—như tải xuống trái phép hoặc xóa 
 
 Bài viết này (Phần 2 trong chuỗi bài viết về kiểm toán S3) hướng dẫn cách triển khai hệ thống kiểm toán bảo mật dựa trên định danh sử dụng **AWS CloudTrail data events** và **Amazon Athena**.
 
-![Sơ đồ luồng kiến trúc: Từ IAM User/Assumed Role qua S3 API Call, Amazon S3, AWS CloudTrail, Central S3 Bucket đến Amazon Athena và Security Investigator](/images/3-BlogsTranslated/cloudtrail-s3-flow.svg)
-
-*Sơ đồ luồng: Dữ liệu sự kiện S3 được ghi nhận bởi CloudTrail, lưu vào S3 tập trung và truy vấn qua Athena*
+```mermaid
+graph TD
+    IAM["IAM User / Assumed Role"] -->|"S3 API Call"| S3["Amazon S3"]
+    S3 -->|"Data Event Logs"| CloudTrail["AWS CloudTrail"]
+    CloudTrail -->|"Deliver .json.gz"| Bucket["Central S3 Bucket"]
+    Bucket -->|"Query via Partition Projection"| Athena["Amazon Athena"]
+    Athena -->|"Query Results"| Investigator["Security Investigator"]
+```
 
 ---
 
@@ -158,3 +163,5 @@ ORDER BY eventtime DESC;
 ## Kết luận
 
 Việc tập trung hóa S3 data events qua CloudTrail cung cấp ngữ cảnh định danh và ủy quyền vô cùng quan trọng cho công tác bảo mật và tuân thủ. Bằng cách kết hợp với Athena partition projection, bạn có thể thực hiện các cuộc điều tra bảo mật hiệu quả và tối ưu chi phí trên hàng nghìn tỷ sự kiện hành động.
+
+**Link dịch bài viết:** [https://www.facebook.com/share/p/1UDZGdgAx6/?](https://www.facebook.com/share/p/1UDZGdgAx6/?)

@@ -1,146 +1,151 @@
 ---
-title: "Blog 3: Amazon S3 Audit Logging – Part 2: Centralized Analysis and Logging"
+title: "Blog 3: Amazon S3 Audit Logging – Part 2: Centralized Logging and Analysis"
 date: 2024-01-01
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-# Centralized Analysis and Logging of S3 Data Events in AWS CloudTrail
+# CENTRALIZED LOGGING AND ANALYSIS OF S3 DATA EVENTS IN AWS CLOUDTRAIL
 
-When a security incident occurs—such as unauthorized downloads or bulk deletion of data in an S3 bucket—the first question is always: **"Who did this?"**. Standard S3 server access logs show which requests were made, but lack IAM identity information needed to pinpoint exactly which user or role performed the action.
+When a security incident occurs—such as unauthorized access or a bulk deletion in an S3 bucket—the first question is always: **"Who did this?"** Traditional S3 server access logs show *what* request happened, but lack the full IAM identity context to identify the specific user or assumed role.
 
-This post (Part 2 in the S3 audit logging series) guides you through deploying an identity-based security auditing system using **AWS CloudTrail data events** and **Amazon Athena**.
+This post (Part 2 of our S3 audit series) explores how to implement an identity-driven audit system using **AWS CloudTrail data events** and **Amazon Athena**.
 
-![Architecture flow diagram: From IAM User/Assumed Role through S3 API Call, Amazon S3, AWS CloudTrail, Central S3 Bucket to Amazon Athena and Security Investigator](/images/3-BlogsTranslated/cloudtrail-s3-flow.svg)
-
-*Flow Diagram: S3 event data is captured by CloudTrail, stored in a centralized S3 bucket, and queried via Athena*
+```mermaid
+graph TD
+    IAM["IAM User / Assumed Role"] -->|"S3 API Call"| S3["Amazon S3"]
+    S3 -->|"Data Event Logs"| CloudTrail["AWS CloudTrail"]
+    CloudTrail -->|"Deliver .json.gz"| Bucket["Central S3 Bucket"]
+    Bucket -->|"Query via Partition Projection"| Athena["Amazon Athena"]
+    Athena -->|"Query Results"| Investigator["Security Investigator"]
+```
 
 ---
 
 ## S3 Data Events vs. Server Access Logs
 
-CloudTrail data events provide API-level detail tracking for S3 object operations along with full identity information, serving as a powerful complement to standard access logs.
+CloudTrail data events capture granular API-level tracking for S3 object operations with identity information, complementing HTTP-level access logs.
 
-- **What is recorded:** Detailed IAM user/role identity, API operations (`GetObject`, `PutObject`, `DeleteObject`), authentication context (MFA, role assumption chain), and cross-account access.
-- **What is not recorded:** HTTP performance metrics or exact response timestamps (these require server access logs as discussed in Part 1).
-- **Latency & Cost:** Compressed JSON logs are delivered within ~5 minutes. Cost is $0.10 per 100,000 data events recorded *(Note: No free tier for data events)*.
+- **What is Captured:** Detailed IAM user/role identities, API operations (`GetObject`, `PutObject`, `DeleteObject`), authentication context (MFA, role assumption chains), and cross-account access details.
+- **What is Not Captured:** HTTP-level performance metrics, status codes, or precise response times (these require S3 server access logs as discussed in Part 1).
+- **Delivery & Cost:** Logs are delivered as compressed JSON within ~5 minutes. Cost is $0.10 per 100,000 recorded data events. (Note: Data events do not have a free tier).
 
 ---
 
 ## Step-by-Step Configuration
 
-To set up centralized S3 audit logging for the entire organization:
+To set up centralized, organization-wide S3 audit logging:
 
-1. **Create a CloudTrail Trail:** In the CloudTrail console, create a new trail (e.g., `s3-data-events-trail`) and point it to a central S3 bucket.
-2. **Enable for the entire organization:** If using AWS Organizations, select **Enable for all accounts in my organization** from the management account to automatically apply this trail to all member accounts.
-3. **Configure Advanced Event Selectors:** Uncheck management events (to avoid duplicate costs if other trails exist) and select **Data Events** with resource type **S3**. You can filter by bucket or prefix.
-4. **Set up S3 Lifecycle Policy:** Configure lifecycle rules on the central bucket to move logs to **Standard-IA** after 90 days, **Glacier** after 180 days, and auto-delete after 7 years to optimize storage costs.
+1. **Create a CloudTrail Trail:** Under the CloudTrail console, create a new trail (e.g., `s3-data-events-trail`) and target a centralized S3 bucket.
+2. **Enable Organization-Wide Logging:** If using AWS Organizations, check **Enable for all accounts in my organization** in the management account to automatically deploy the trail to all member accounts.
+3. **Configure Advanced Event Selectors:** Deselect management events (to avoid duplicate logging charges if another trail exists) and select **Data Events** with **S3** as the resource type. You can filter by bucket or prefix.
+4. **Configure S3 Lifecycle Policy:** On the central bucket, set a lifecycle rule to transition logs to **Standard-IA** after 90 days, **Glacier** after 180 days, and expire them after 7 years to minimize storage costs.
 
 ---
 
-## Creating an Athena Table with Partition Projection
+## Creating the Athena Table with Partition Projection
 
-**Partition projection** allows Athena to dynamically calculate partition values directly from the S3 path, speeding up queries and reducing metadata scan costs. Use the statement below to create the external table:
+Partition projection calculates partition values dynamically from the S3 path, speeding up queries and reducing metadata scanning costs. Use the query below to create the table:
 
 ```sql
 CREATE EXTERNAL TABLE cloudtrail_s3_events (
-    eventversion STRING,
-    useridentity STRUCT<
-        type: STRING, principalid: STRING, arn: STRING, accountid: STRING,
-        username: STRING, sessioncontext: STRUCT<
-            attributes: STRUCT<mfaauthenticated: STRING, creationdate: STRING>,
-            sessionissuer: STRUCT<arn: STRING, accountid: STRING, username: STRING>
-        >
-    >,
-    eventtime STRING, eventsource STRING, eventname STRING, awsregion STRING,
-    sourceipaddress STRING, useragent STRING, errorcode STRING, errormessage STRING,
-    requestparameters STRING, responseelements STRING, additionaleventdata STRING,
-    requestaccountid STRING, sharedeventid STRING
+  eventversion STRING,
+  useridentity STRUCT<
+    type: STRING, principalid: STRING, arn: STRING, accountid: STRING,
+    username: STRING, sessioncontext: STRUCT<
+      attributes: STRUCT<mfaauthenticated: STRING, creationdate: STRING>,
+      sessionissuer: STRUCT<arn: STRING, accountid: STRING, username: STRING>
+    >
+  >,
+  eventtime STRING, eventsource STRING, eventname STRING, awsregion STRING,
+  sourceipaddress STRING, useragent STRING, errorcode STRING, errormessage STRING,
+  requestparameters STRING, responseelements STRING, additionaleventdata STRING,
+  recipientaccountid STRING, sharedeventId STRING
 )
 PARTITIONED BY (
-    account STRING,
-    region STRING,
-    timestamp STRING
+  account STRING,
+  region STRING,
+  timestamp STRING
 )
 ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
 STORED AS INPUTFORMAT 'com.amazon.emr.cloudtrail.CloudTrailInputFormat'
 OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
 LOCATION 's3://centralized-s3-cloudtrail-logs/AWSLogs/'
 TBLPROPERTIES (
-    'projection.enabled' = 'true',
-    'projection.account.type' = 'injected',
-    'projection.region.type' = 'injected',
-    'projection.timestamp.type' = 'date',
-    'projection.timestamp.format' = 'yyyy/MM/dd',
-    'projection.timestamp.range' = '2024/01/01,NOW',
-    'projection.timestamp.interval' = '1',
-    'projection.timestamp.interval.unit' = 'DAYS',
-    'storage.location.template' = 's3://centralized-s3-cloudtrail-logs/AWSLogs/${account}/CloudTrail/${region}/${timestamp}/'
+  'projection.enabled' = 'true',
+  'projection.account.type' = 'injected',
+  'projection.region.type' = 'injected',
+  'projection.timestamp.type' = 'date',
+  'projection.timestamp.format' = 'yyyy/MM/dd',
+  'projection.timestamp.range' = '2024/01/01,NOW',
+  'projection.timestamp.interval' = '1',
+  'projection.timestamp.interval.unit' = 'DAYS',
+  'storage.location.template' = 's3://centralized-s3-cloudtrail-logs/AWSLogs/${account}/CloudTrail/${region}/${timestamp}/'
 );
 ```
 
-*Note: For an Organization trail, add the `organization_id STRING` partition column first and update the `storage.location.template` accordingly.*
+*Note: For Organization-wide trails, add `organization_id STRING` as the first partition column and inject it into the `storage.location.template`.*
 
 ---
 
 ## Key Security Query Patterns
 
-Athena tables using partition projection require you to specify the `account`, `region`, and `timestamp` partition values in the `WHERE` clause to narrow the scope of data and avoid full table scans that generate large costs.
+Athena partition projection requires specifying `account`, `region`, and `timestamp` in the `WHERE` clause of every query to prune partitions and avoid expensive full-table scans.
 
-### 1. Tracing Activity of a Specific User
+### 1. Trace Specific User Activity
 
-Find all S3 data plane operations performed by a specific IAM user/role on a given day:
+Identifies S3 data-plane actions performed by an IAM user or role on a given day:
 
 ```sql
 SELECT eventtime, useridentity.arn as user_arn, eventname, sourceipaddress,
-    JSON_EXTRACT_SCALAR(requestparameters, '$.bucketName') as bucket,
-    JSON_EXTRACT_SCALAR(requestparameters, '$.key') as object_key
+       JSON_EXTRACT_SCALAR(requestparameters, '$.bucketName') as bucket,
+       JSON_EXTRACT_SCALAR(requestparameters, '$.key') as object_key
 FROM cloudtrail_s3_events
 WHERE account = '123456789012' AND region = 'us-east-1' AND timestamp = '2026/05/15'
-AND (useridentity.username = 'specific-user' OR useridentity.arn LIKE '%specific-user%')
-AND eventname IN ('GetObject', 'PutObject', 'DeleteObject')
+  AND (useridentity.username = 'specific-user' OR useridentity.arn LIKE '%specific-user%')
+  AND eventname IN ('GetObject', 'PutObject', 'DeleteObject')
 ORDER BY eventtime DESC;
 ```
 
-### 2. Monitoring Cross-Account Access
+### 2. Cross-Account Access Monitoring
 
-Detect S3 access requests originating from external AWS accounts:
+Flags S3 operations originating from external AWS accounts:
 
 ```sql
 SELECT eventtime, useridentity.accountid as source_account, recipientaccountid as target_account,
-    useridentity.arn as user_arn, eventname, sourceipaddress
+       useridentity.arn as user_arn, eventname, sourceipaddress
 FROM cloudtrail_s3_events
 WHERE account = '123456789012' AND region = 'us-east-1' AND timestamp = '2026/05/15'
-    AND useridentity.accountid != recipientaccountid
+  AND useridentity.accountid != recipientaccountid
 ORDER BY eventtime DESC;
 ```
 
-### 3. Tracking Failed Access Attempts
+### 3. Surface Failed Access Attempts
 
-List operations that encountered permission errors (`AccessDenied`, `ForbiddenKey`), helping identify unauthorized resource scanning behavior:
+Detects permission errors (`AccessDenied`, `NoSuchKey`), highlighting potential scanning or brute-force attempts:
 
 ```sql
 SELECT eventtime, useridentity.arn as user_arn, eventname, sourceipaddress, errorcode, errormessage
 FROM cloudtrail_s3_events
 WHERE account = '123456789012' AND region = 'us-east-1' AND timestamp = '2026/05/15'
-    AND errorcode IS NOT NULL
+  AND errorcode IS NOT NULL
 ORDER BY eventtime DESC LIMIT 100;
 ```
 
-### 4. Auditing Object Deletion Operations
+### 4. Delete Operations Audit
 
-Track deletion operations within a time window, recording the role and MFA authentication status:
+Audits object deletions over a date range, tracking assumed roles and MFA status:
 
 ```sql
 SELECT eventtime, useridentity.arn as user_arn, sourceipaddress,
-    JSON_EXTRACT_SCALAR(requestparameters, '$.bucketName') as bucket,
-    JSON_EXTRACT_SCALAR(requestparameters, '$.key') as deleted_object,
-    sessioncontext.attributes.mfaauthenticated as mfa_used
+       JSON_EXTRACT_SCALAR(requestparameters, '$.bucketName') as bucket,
+       JSON_EXTRACT_SCALAR(requestparameters, '$.key') as deleted_object,
+       useridentity.sessioncontext.attributes.mfaauthenticated as mfa_used
 FROM cloudtrail_s3_events
 WHERE account = '123456789012' AND region = 'us-east-1'
-    AND timestamp BETWEEN '2026/05/15' AND '2026/05/27'
-    AND eventname IN ('DeleteObject', 'DeleteObjects')
+  AND timestamp BETWEEN '2026/05/15' AND '2026/05/17'
+  AND eventname IN ('DeleteObject', 'DeleteObjects')
 ORDER BY eventtime DESC;
 ```
 
@@ -148,13 +153,15 @@ ORDER BY eventtime DESC;
 
 ## Best Practices & Troubleshooting
 
-- **Prioritize Partition Filtering:** Always filter by partition columns (`account`, `region`, `timestamp`) first. Using `eventtime` to filter time will cause a full data scan, increasing costs.
-- **HiveHeadObject Error:** If costs increase due to metadata operations, configure CloudTrail advanced event selectors to exclude the `HeadObject` API call.
-- **Integrity and Security:** Enable log file validation to prevent tampering. Store all logs in a dedicated AWS account (Log Archive account in AWS Organization).
-- **HIVE_PARTITION_SCHEMA_MISMATCH Error:** When encountering this error, verify that `storage.location.template` exactly matches the actual folder structure in S3.
+- **Partition Pruning is Crucial:** Always filter on partition columns (`account`, `region`, `timestamp`) first. Using `eventtime` alone leads to scanning the entire table, increasing cost.
+- **Exclude HeadObject:** If you experience high costs from metadata operations, configure CloudTrail event selectors to exclude `HeadObject` API calls.
+- **Integrity and Security:** Enable log file validation to ensure logs are tamper-proof. For maximum security, isolate logs in a dedicated AWS log-archive account.
+- **HIVE_PARTITION_SCHEMA_MISMATCH:** If this error occurs, verify that the `storage.location.template` matches your actual S3 path structure.
 
 ---
 
 ## Conclusion
 
-Centralizing S3 data events through CloudTrail provides rich identity and authorization context critical for security and compliance. Combined with Athena partition projection, you can conduct efficient security investigations at trillion-event scale at very low cost per operation.
+Centralizing S3 data events via CloudTrail provides the vital identity context needed for security compliance. When combined with Athena partition projection, you can cost-effectively run security investigations across millions of actions.
+
+**Link dịch bài viết:** [https://www.facebook.com/share/p/1UDZGdgAx6/?](https://www.facebook.com/share/p/1UDZGdgAx6/?)

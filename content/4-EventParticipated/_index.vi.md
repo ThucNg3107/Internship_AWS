@@ -63,7 +63,7 @@ pre: " <b> 4. </b> "
 
 
 ### [Event 5](4.5-Event5/)
-&emsp;**Tên sự kiện:** FIRST CLOUD AI JOURNEY - AWS SLA, SECURITY & EXAM ROADMAPS - Tháng 7 2026
+&emsp;**Tên sự kiện:** First Cloud AI Journey - AWS SLA, Security & Exam Roadmaps - Tháng 7 2026
 
 &emsp;**Thời gian:** 09:00 ngày 11/07/2026
 

@@ -6,7 +6,7 @@ chapter : false
 pre : " <b> 5.4.1 </b> "
 ---
 
-Use read-only AWS CLI so the verification process does not alter deployment.
+Use read-only AWS CLI commands so verification cannot change the deployment.
 
 #### Stack and compute
 
@@ -21,12 +21,12 @@ aws ec2 describe-instances --profile cloudbrief-workshop \
   --region us-east-1
 ```
 
-Verification results on July 16, 2026:
+Verified result on 16 July 2026:
 
-- CloudFormation status: `UPDATE_COMPLETE`.
-- Auto Scaling desired/min/max capacity: `2/2/2` across two Availability Zones.
-- Two EC2 instances running, both using private IP only.
-- One active internet-facing Application Load Balancer.
+- **CloudFormation status: `UPDATE_COMPLETE`.**
+- **Auto Scaling desired/min/max capacity: `2/2/2` across two Availability Zones.**
+- **Two EC2 instances running; both use private IP addresses only.**
+- **One internet-facing Application Load Balancer is active.**
 
 #### Network path
 
@@ -37,10 +37,10 @@ aws ec2 describe-vpc-endpoints --profile cloudbrief-workshop \
   --region us-east-1
 ```
 
-Verification results:
+Verified result:
 
-- One NAT Gateway available for traffic to external publishers.
-- Two interface endpoints available for SQS and Bedrock Runtime.
-- Two gateway endpoints available for S3 and DynamoDB.
+- **One NAT Gateway is available for external publisher traffic.**
+- **Two interface endpoints are available for SQS and Bedrock Runtime.**
+- **Two gateway endpoints are available for S3 and DynamoDB.**
 
-This isolation allows workers to access public RSS/articles while traffic to AWS managed services stays inside the AWS network.
+This separation lets the worker reach public RSS/article sources while AWS managed-service traffic remains on AWS networking.

@@ -3,12 +3,8 @@ title : "Deploy production stack"
 date : 2024-01-01 
 weight : 2
 chapter : false
-pre : " <b> 5.3.2. </b> "
+pre : " <b> 5.3.2 </b> "
 ---
-
-{{% notice warning %}}
-Lệnh bootstrap và deploy sẽ tạo hoặc cập nhật tài nguyên AWS. Chỉ chạy khi đã được phê duyệt, có budget active và có rollback plan.
-{{% /notice %}}
 
 #### Bước 1: Kiểm tra identity và stack hiện tại
 

@@ -6,7 +6,7 @@ chapter : false
 pre : " <b> 5.4.1 </b> "
 ---
 
-Dùng AWS CLI read-only để quá trình verify không thay đổi deployment.
+Sử dụng các lệnh AWS CLI read-only để việc kiểm tra không làm thay đổi bản triển khai.
 
 #### Stack và compute
 
@@ -21,12 +21,12 @@ aws ec2 describe-instances --profile cloudbrief-workshop \
   --region us-east-1
 ```
 
-Kết quả verify ngày 16/07/2026:
+Verified result on 16 July 2026:
 
-- CloudFormation status: `UPDATE_COMPLETE`.
-- Auto Scaling desired/min/max capacity: `2/2/2` trên hai Availability Zone.
-- Hai EC2 đang chạy, cả hai chỉ dùng private IP.
-- Một Application Load Balancer internet-facing đang active.
+- **CloudFormation status: `UPDATE_COMPLETE`.**
+- **Auto Scaling desired/min/max capacity: `2/2/2` trên hai Availability Zones.**
+- **Hai EC2 instances đang chạy; cả hai chỉ sử dụng địa chỉ IP nội bộ (private IP).**
+- **Một Application Load Balancer hướng ra internet đang hoạt động.**
 
 #### Network path
 
@@ -37,10 +37,10 @@ aws ec2 describe-vpc-endpoints --profile cloudbrief-workshop \
   --region us-east-1
 ```
 
-Kết quả verify:
+Verified result:
 
-- Một NAT Gateway available cho traffic đến publisher bên ngoài.
-- Hai interface endpoint available cho SQS và Bedrock Runtime.
-- Hai gateway endpoint available cho S3 và DynamoDB.
+- **Một NAT Gateway có sẵn cho lưu lượng truy cập nguồn tin bên ngoài.**
+- **Hai interface endpoints có sẵn cho SQS và Bedrock Runtime.**
+- **Hai gateway endpoints có sẵn cho S3 và DynamoDB.**
 
-Cách tách này giúp worker truy cập RSS/article public trong khi traffic đến AWS managed service vẫn đi trong mạng AWS.
+Sự phân tách này cho phép worker truy cập các nguồn RSS/bài viết công khai trong khi lưu lượng dịch vụ được quản lý bởi AWS vẫn nằm trên mạng nội bộ AWS.

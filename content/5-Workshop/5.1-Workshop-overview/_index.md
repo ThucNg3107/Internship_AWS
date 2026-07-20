@@ -8,9 +8,9 @@ pre : " <b> 5.1. </b> "
 
 #### Project overview
 
-CloudBrief is an EC2-first AWS application for collecting and summarizing technology news. The project serves students, researchers, reviewers, and dashboard users who need to track cloud, software, and security news faster.
+CloudBrief is an EC2-first AWS application for technology news collection and summarization. It is designed for students, researchers, demo evaluators, and future dashboard users who need a faster way to follow cloud/software/security news.
 
-The application collects articles from RSS feeds and Hacker News, removes duplicates, extracts clean content, summarizes using Amazon Bedrock Nova Micro or deterministic fallback, processes cover images to WebP, and provides a public magazine, article reader, reader community, along with a protected operations page.
+The application collects candidate articles from RSS feeds and Hacker News, deduplicates them, extracts cleaned article text, summarizes articles with Amazon Bedrock Nova Micro or a deterministic fallback, processes cover images to WebP, and serves a public magazine, article reader, reader community, and protected operations page.
 
 #### Architecture diagram
 
@@ -19,15 +19,15 @@ The application collects articles from RSS feeds and Hacker News, removes duplic
 
 #### Main data flow
 
-1. Reader opens the AWS WAF-protected CloudFront distribution.
-2. CloudFront serves private S3 frontend or forwards `/api/*` to ALB.
-3. ALB distributes API traffic to two EC2 instances in private subnets.
-4. EventBridge or protected admin request queues collection from RSS and Hacker News.
-5. Worker extracts cleaned text, processes cover image to WebP, and queues summary via SQS.
-6. Amazon Bedrock Nova Micro or deterministic fallback creates article summary.
-7. DynamoDB stores article/social state; private S3 bucket stores cleaned text and processed images.
-8. CloudWatch, SNS, Systems Manager, AWS Backup, Budgets, and IAM provide operations/recovery controls.
+1. A reader opens the AWS WAF-protected CloudFront distribution.
+2. CloudFront serves the private S3 frontend or forwards `/api/*` to the ALB.
+3. The ALB distributes API traffic to two EC2 instances in private subnets.
+4. EventBridge or a protected admin request queues RSS and Hacker News collection.
+5. Workers extract cleaned text, process cover images to WebP, and queue summaries through SQS.
+6. Amazon Bedrock Nova Micro or the deterministic fallback produces the article summary.
+7. DynamoDB stores article/social state while private S3 buckets store cleaned text and processed images.
+8. CloudWatch, SNS, Systems Manager, AWS Backup, Budgets, and IAM provide operations and recovery controls.
 
 #### Personal scope
 
-The team project is CloudBrief. My report scope is the deployable workshop section: architecture explanation, CDK deployment flow, API/dashboard testing, cost/security controls, monitoring evidence, backup evidence, and cleanup verification.
+The group project is CloudBrief. My report scope is the deployable AWS workshop slice: architecture explanation, CDK deployment flow, API/dashboard validation, cost and security controls, monitoring evidence, backup evidence, and cleanup verification.

@@ -151,3 +151,5 @@ Bằng cách đưa khả năng tìm kiếm ngữ nghĩa vào lịch sử đơn h
 
 - [Tìm kiếm exact k-NN trong OpenSearch](https://docs.opensearch.org/latest/vector-search/vector-search-techniques/knn-score-script/)
 - [Tài liệu hướng dẫn phát triển Amazon OpenSearch Service](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/gsg.html)
+
+**Link dịch bài viết:** [https://www.facebook.com/share/p/191tDRSXB7/](https://www.facebook.com/share/p/191tDRSXB7/)

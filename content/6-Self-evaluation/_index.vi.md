@@ -5,8 +5,8 @@ weight: 6
 chapter: false
 pre: " <b> 6. </b> "
 ---
-Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam** từ **17/04/2026** đến **30/07/2026**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.  
-Tôi đã tham gia **[mô tả ngắn gọn dự án hoặc công việc chính]**, qua đó cải thiện kỹ năng **[liệt kê kỹ năng: lập trình, phân tích, viết báo cáo, giao tiếp…]**.  
+Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam** từ **17/04/2026** đến **30/07/2026**, em đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.
+em đã tham gia **thiết kế, phát triển và triển khai dự án CloudBrief - hệ thống tự động thu thập và tóm tắt dữ liệu bằng AI trên nền tảng AWS**, qua đó cải thiện đáng kể các kỹ năng **Thiết kế Kiến trúc Đám mây (VPC, EC2 Auto Scaling), Tích hợp Serverless (EventBridge, SQS), Tích hợp GenAI (Amazon Bedrock), Kiểm thử API và Đánh giá Bảo mật hệ thống**.
 
 Về tác phong, tôi luôn cố gắng hoàn thành tốt nhiệm vụ, tuân thủ nội quy, và tích cực trao đổi với đồng nghiệp để nâng cao hiệu quả công việc.
 

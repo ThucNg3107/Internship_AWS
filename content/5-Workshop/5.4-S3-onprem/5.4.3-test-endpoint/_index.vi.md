@@ -6,19 +6,19 @@ chapter : false
 pre : " <b> 5.4.3 </b> "
 ---
 
-Mở production site:
+Open the production site:
 
 [https://d3u5pkyxnd3uus.cloudfront.net/](https://d3u5pkyxnd3uus.cloudfront.net/)
 
-#### Hành vi public
+#### Public behavior
 
-- Có thể đọc magazine mà không cần account.
-- Article card dùng processed CloudFront WebP URL do API trả về.
-- Reader có thể mở full cleaned article text, generated summary, source attribution và link publisher gốc.
-- Chỉ like và comment mới cần login.
-- Operations page dùng admin session riêng và không embed admin API key.
+- **Tạp chí (magazine) có thể đọc được mà không cần tài khoản.**
+- **Thẻ bài viết (article cards) sử dụng CloudFront WebP URL đã qua xử lý do API trả về.**
+- **Người đọc có thể mở toàn bộ văn bản bài viết sạch, bản tóm tắt được tạo, nguồn dẫn và liên kết gốc của nhà xuất bản.**
+- **Chỉ yêu cầu đăng nhập đối với lượt thích (likes) và bình luận (comments).**
+- **Trang vận hành (operations page) sử dụng phiên admin riêng biệt và không bao giờ chèn admin API key.**
 
-![Article Reader](/images/5-Workshop/5.4-S3-onprem/article-reader.png)
+![article-reader](/images/5-Workshop/5.4-S3-onprem/article-reader.png)
 
 #### Bằng chứng article thật
 

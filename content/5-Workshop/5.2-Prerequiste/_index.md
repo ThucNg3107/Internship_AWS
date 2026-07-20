@@ -1,16 +1,16 @@
 ---
-title : "AWS account and local environment setup"
+title : "Prepare the AWS account and local environment"
 date : 2024-01-01 
 weight : 2
 chapter : false
 pre : " <b> 5.2. </b> "
 ---
 
-This section preserves the structure of instructions and evidence as in the sample workshop, but all operations, tools, permissions, and images belong to the CloudBrief project.
+This section follows the same evidence-first structure as the reference workshop, but the account setup, tools, permissions, and screenshots below are for CloudBrief.
 
 #### 1. IAM permissions
 
-The person preparing the workshop account needs to grant the deployment user permissions to create and delete the CloudBrief stack. [Download JSON policy](/files/cloudbrief-workshop-deployer-policy.json) named `cloudbrief-workshop-deployer-policy.json`, or save the content below with that exact filename.
+The operator who prepares the workshop account must grant the deployment user permission to create and remove the CloudBrief stack. [Download the policy JSON](/files/cloudbrief-workshop-deployer-policy.json) as `cloudbrief-workshop-deployer-policy.json`, or save the following document with that filename.
 
 ```json
 {
@@ -80,8 +80,13 @@ The person preparing the workshop account needs to grant the deployment user per
   ]
 }
 ```
+{{% notice warning %}}
+This policy is intentionally deployment-oriented and uses service-level wildcards because CDK creates resources whose identifiers do not exist yet. Use it only in the workshop account. For production, deploy through AWS IAM Identity Center or a CI role, restrict resources and conditions, and separate deployment from runtime permissions.
+{{% /notice %}}
 
-Run the following commands using an administrator profile or account-bootstrap profile. The command sequence will create the user if it doesn't exist, create or reuse the customer-managed policy, attach the policy, and display the final result without printing credentials.
+Run these commands with an administrator or account-bootstrap profile. They create the user when absent, create or reuse the customer-managed policy, attach it, and display the final attachment without printing credentials.
+
+
 
 ```bash
 ADMIN_PROFILE=cloudbrief-bootstrap-admin
@@ -137,7 +142,7 @@ This policy is intentionally intended for deployment and uses service-level wild
 
 The project is deployed in `us-east-1`. Amazon Bedrock needs access to model `amazon.nova-micro-v1:0`.
 
-#### 3. Create a dedicated IAM user for the workshop
+#### 3. Create a dedicated IAM user
 
 Open **IAM > Users**, then select **Create user**.
 
@@ -147,35 +152,37 @@ Enter the dedicated user name for the workshop. Console access is optional if AW
 
 ![IAM 02](/images/5-Workshop/5.2-Prerequisite/iam-02-user-details.png)
 
-During the initial demo deployment, the team temporarily attached `AdministratorAccess` so that CDK could create the full stack. This is historical evidence of the workshop, not a production recommendation. Production accounts should use deployment roles with restricted permissions and remove temporary policies after deployment.
+For the original demo deployment, the team attached `AdministratorAccess` temporarily so CDK could create the complete stack. This is historical workshop evidence, not a production recommendation. A production account should use a scoped deployment role and remove the temporary policy after deployment.
 
 ![IAM 03](/images/5-Workshop/5.2-Prerequisite/iam-03-permissions.png)
 
 Review the user and policy details before selecting **Create user**.
 ![IAM 04](/images/5-Workshop/5.2-Prerequisite/iam-04-review-create.png)
 
-Confirm that the new user appears in the IAM list.
+Confirm that the new user appears in the IAM user list.
 ![IAM 05](/images/5-Workshop/5.2-Prerequisite/iam-05-user-created.png)
 
-#### 4. Create credentials for AWS CLI
+#### 4. Create CLI credentials
 
 Open the user's **Security credentials** tab and select **Create access key**.
 ![IAM 06](/images/5-Workshop/5.2-Prerequisite/iam-06-security-credentials.png)
 
-Select **Command Line Interface (CLI)**, acknowledge the recommendation, and proceed.
+Select **Command Line Interface (CLI)**, acknowledge the recommendation, and continue .
 ![IAM 07](/images/5-Workshop/5.2-Prerequisite/iam-07-cli-use-case.png)
 
 Add a description tag so the key has a clear owner and purpose.
 ![IAM 08](/images/5-Workshop/5.2-Prerequisite/iam-08-key-description.png)
 
-Download the CSV once and store it outside the repository. Public images have masked access key IDs and secrets as these values are not public.
+Download the CSV once and store it outside the repository. The public screenshot is redacted because an access-key ID and secret must never be published.
+
+
 ![IAM 09](/images/5-Workshop/5.2-Prerequisite/iam-09-key-created.png)
 
 {{% notice warning %}}
-Do not commit credentials CSV files, `backend/.env`, API keys, origin secrets, or AWS account identifiers. Rotate or deactivate long-lived keys after the workshop.
+Never commit either credentials CSV, `backend/.env`, an API key, an origin secret, or an AWS account identifier. Rotate or deactivate long-lived keys after the workshop.
 {{% /notice %}}
 
-#### 5. Configure and verify AWS CLI
+#### 5. Configure and verify the AWS CLI
 
 ```bash
 aws configure --profile cloudbrief-workshop
@@ -183,23 +190,23 @@ aws sts get-caller-identity --profile cloudbrief-workshop
 aws configure get region --profile cloudbrief-workshop
 ```
 
-Set default region to `us-east-1` and output format to `json`. On July 16, 2026, the provided access key successfully authenticated with the dedicated CloudBrief teammate user. Account identifiers have been removed from the report.
+Enter `us-east-1` as the default region and `json` as the output format. On 16 July 2026, the supplied key authenticated successfully as the dedicated CloudBrief teammate user. Account identifiers were removed from the report.
 
-#### 6. Prepare repository
+#### 6. Prepare the repository
 
 ```bash
-cd ~/Code/Technology-News-Collection-and-Summarization-System
+cd ~/code/Technology-News-Collection-and-Summarization-System
 bun install
 cp backend/.env.example backend/.env
 ```
 
-Configure local variables for `DEMO_API_KEY`, `BUDGET_EMAIL`, `AWS_REGION`, `BEDROCK_REGION`, and `SUMMARY_MODEL_ID`. Only keep real values in the local environment or approved AWS configuration store.
+Set local demo values for `DEMO_API_KEY`, `BUDGET_EMAIL`, `AWS_REGION`, `BEDROCK_REGION`, and `SUMMARY_MODEL_ID`. Keep the real values only in the local environment or approved AWS configuration stores.
 
-#### Readiness Checklist
+#### Readiness checklist
 
-- Created IAM user and CLI key.
-- AWS CLI identity check succeeded.
-- Region is `us-east-1`.
-- Bun and CDK are ready.
-- Access to Bedrock Nova Micro granted.
-- Credentials and secrets excluded from Git.
+- **IAM user and CLI key created.**
+- **AWS CLI identity check succeeds.**
+- **Region is `us-east-1`.**
+- **Bun and CDK are available.**
+- **Bedrock Nova Micro access is available.**
+- **Credentials and secrets are excluded from Git.**

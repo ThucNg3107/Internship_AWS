@@ -1,35 +1,35 @@
 ---
-title : "Test real RSS and Hacker News pipeline"
+title : "Test the real RSS and Hacker News pipeline"
 date : 2024-01-01
 weight : 2
 chapter : false
 pre : " <b> 5.4.2 </b> "
 ---
 
-#### Step 1: Verify public health route
+#### Step 1: Verify the public health route
 
 ```bash
-curl -i https://d3uspkyxnd3uus.cloudfront.net/api/health
+curl -i https://d3u5pkyxnd3uus.cloudfront.net/api/health
 ```
 
-Verification result on July 16, 2026: HTTP `200`, project `cloudbrief`, stage `dev`, status `healthy`.
+Verified on 16 July 2026: HTTP `200`, project `cloudbrief`, stage `dev`, status `healthy`.
 
 #### Step 2: Verify protected collection
 
-When calling the admin collection route without credentials, the API must return unauthorized. A valid admin request receives RSS and Hacker News sources, then queues work through collection, extraction, summarization, and image processing.
+Calling the admin collection route without credentials must return an unauthorized response. A valid admin request accepts RSS and Hacker News sources and queues work through collection, extraction, summarization, and image processing.
 
 ```bash
-curl -X POST https://d3uspkyxnd3uus.cloudfront.net/api/v1/collect \
+curl -X POST https://d3u5pkyxnd3uus.cloudfront.net/api/v1/collect \
   -H 'content-type: application/json' \
   -d '{"sources":["rss","hackernews"],"limit":5}'
 ```
 
-Do not include real admin keys in screenshots or shell history.
+Do not place the real admin key in a screenshot or shell history.
 
-#### Step 3: Read real brief
+#### Step 3: Read a real brief
 
 ```bash
-curl 'https://d3uspkyxnd3uus.cloudfront.net/api/v1/brief?limit=5'
+curl 'https://d3u5pkyxnd3uus.cloudfront.net/api/v1/brief?limit=5'
 ```
 
 Expected article contract:
@@ -44,12 +44,12 @@ Expected article contract:
 }
 ```
 
-Workers receive publisher PNG, JPEG, or WebP images, validate and convert them to WebP, upload to private S3 bucket, and store only the CloudFront URL in DynamoDB.
+The worker accepts publisher PNG, JPEG, or WebP images, validates and converts them to WebP, uploads them to a private S3 bucket, and stores only the CloudFront URL in DynamoDB.
 
-Live response on July 16 returned five Hacker News articles. All five have canonical publisher URLs, `SUMMARIZED` status, and processed CloudFront WebP cover URLs. One verified title is Bluesky Trademarks ATProto from the AT Protocol page.
+The live response on 16 July returned five Hacker News articles. All five had a canonical publisher URL, `SUMMARIZED` status, and a processed CloudFront WebP cover URL. One verified title was **Bluesky Trademarks ATProto** from the AT Protocol site.
 
-![API Smoke OK](/images/5-Workshop/5.4-S3-onprem/api-smoke-ok.png)
+![api-smoke-ok](/images/5-Workshop/5.4-S3-onprem/api-smoke-ok.png)
 
-#### Bedrock results
+#### Bedrock result
 
-Nova Micro is configured as a low-cost model with a 256 output token limit. In recorded deployments, the AWS account hit the daily Nova token allowance. CloudBrief therefore stores a deterministic fallback summary instead of losing the article; CloudWatch displays this status.
+Nova Micro is configured as the low-cost model with a 256-token output cap. During the recorded deployment, the AWS account reached its daily Nova token allowance. CloudBrief therefore stored deterministic fallback summaries instead of dropping articles; CloudWatch exposes this condition.
